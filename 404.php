@@ -211,19 +211,7 @@
     <!-- HEADER START -->
     <header class="ul-2-header">
         <!-- header top -->
-        <div class="ul-2-header-top">
-            <div class="ul-2-header-container">
-                <div class="ul-2-header-top-left">
-                    <p class="mb-0">Welcome to our online banking platform</p>
-                </div>
-                <div class="ul-2-header-top-right">
-                    <a href="#">Money Exchange</a>
-                    <a href="#">Life of cashflow</a>
-                    <a href="#">ATM Booth</a>
-                    <span class="helpline">Help line <a href="#"><i class="flaticon-telephone"></i> 203010</a></span>
-                </div>
-            </div>
-        </div>
+      
 
         <!-- header bottom -->
         <div class="ul-2-header-bottom">
