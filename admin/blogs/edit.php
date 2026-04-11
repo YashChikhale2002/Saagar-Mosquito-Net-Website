@@ -490,14 +490,14 @@ a
                                         <div class="mb-4">
                                             <label class="form-label">Canonical URL</label>
                                             <input type="text" name="canonical_url" class="form-control"
-                                                   placeholder="https://nirajindustries.com/blog/..."
+                                                   placeholder="https://Saagar-Mosquito-Net-Website.com/blog/..."
                                                    value="<?= $p('canonical_url') ?>">
                                         </div>
                                         <!-- SERP Preview -->
                                         <div class="mt-3">
                                             <label class="form-label"><i class="fab fa-google text-muted me-1"></i>Google SERP Preview</label>
                                             <div class="serp-preview">
-                                                <div class="serp-url">nirajindustries.com › blog › <span id="serpSlug"><?= htmlspecialchars($blog['slug'] ?? '') ?></span></div>
+                                                <div class="serp-url">Saagar-Mosquito-Net-Website.com › blog › <span id="serpSlug"><?= htmlspecialchars($blog['slug'] ?? '') ?></span></div>
                                                 <div class="serp-title" id="serpTitle">
                                                     <?php if (!empty($blog['meta_title'])): ?>
                                                         <?= htmlspecialchars($blog['meta_title']) ?>

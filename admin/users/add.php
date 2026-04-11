@@ -262,7 +262,7 @@ require_once '../include/head.php';
                                         <span class="input-group-text bg-light border-end-0 text-muted"><i class="fa fa-envelope"></i></span>
                                         <input type="email" name="email"
                                                class="form-control border-start-0 ps-0"
-                                               placeholder="admin@nirajindustries.com"
+                                               placeholder="admin@Saagar-Mosquito-Net-Website.com"
                                                value="<?= $p('email') ?>" required>
                                     </div>
                                 </div>

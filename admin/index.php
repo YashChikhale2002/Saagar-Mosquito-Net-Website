@@ -2,19 +2,26 @@
 require_once __DIR__ . '/../include/config.php';
 require_once __DIR__ . '/include/auth.php';
 
-// ── Products Stats ────────────────────────────────────────────────────────────
-$totalProducts    = (int)$conn->query("SELECT COUNT(*) AS c FROM products")->fetch_assoc()['c'];
-$activeProducts   = (int)$conn->query("SELECT COUNT(*) AS c FROM products WHERE is_active=1")->fetch_assoc()['c'];
-$inactiveProducts = $totalProducts - $activeProducts;
+// ── Services Stats ────────────────────────────────────────────────────────────
+$totalServices   = (int)$conn->query("SELECT COUNT(*) AS c FROM mosquito_services")->fetch_assoc()['c'];
+$activeServices  = (int)$conn->query("SELECT COUNT(*) AS c FROM mosquito_services WHERE is_active=1")->fetch_assoc()['c'];
+$inactiveServices = $totalServices - $activeServices;
 
-// ── Products by Category ──────────────────────────────────────────────────────
-$catStats = [];
-$res = $conn->query("SELECT category, COUNT(*) AS total FROM products WHERE is_active=1 GROUP BY category ORDER BY total DESC");
-if ($res) while ($r = $res->fetch_assoc()) $catStats[] = $r;
+$withImageServices = (int)$conn->query("SELECT COUNT(*) AS c FROM mosquito_services WHERE image != '' AND image IS NOT NULL")->fetch_assoc()['c'];
 
-// ── In Stock vs Out of Stock ──────────────────────────────────────────────────
-$inStock    = (int)$conn->query("SELECT COUNT(*) AS c FROM products WHERE in_stock=1 AND is_active=1")->fetch_assoc()['c'];
-$outOfStock = (int)$conn->query("SELECT COUNT(*) AS c FROM products WHERE in_stock=0 AND is_active=1")->fetch_assoc()['c'];
+$totalFaqs = 0;
+$faqRes = $conn->query("SELECT faqs FROM mosquito_services WHERE faqs IS NOT NULL AND faqs != '' AND faqs != '[]'");
+if ($faqRes) {
+    while ($fr = $faqRes->fetch_assoc()) {
+        $decoded = json_decode($fr['faqs'], true);
+        if (is_array($decoded)) $totalFaqs += count($decoded);
+    }
+}
+
+// ── Services by Schema Type ───────────────────────────────────────────────────
+$schemaStats = [];
+$res = $conn->query("SELECT schema_type, COUNT(*) AS total FROM mosquito_services WHERE is_active=1 AND schema_type != '' GROUP BY schema_type ORDER BY total DESC");
+if ($res) while ($r = $res->fetch_assoc()) $schemaStats[] = $r;
 
 // ── Admin Users ───────────────────────────────────────────────────────────────
 $totalUsers  = (int)$conn->query("SELECT COUNT(*) AS c FROM admin_users")->fetch_assoc()['c'];
@@ -37,15 +44,16 @@ $res = $conn->query("
 ");
 if ($res) while ($r = $res->fetch_assoc()) $blogCatStats[] = $r;
 
-// ── Recent Products ───────────────────────────────────────────────────────────
-$recentProducts = [];
+// ── Recent Services ───────────────────────────────────────────────────────────
+$recentServices = [];
 $res = $conn->query("
-    SELECT id, name, category, image, badge, badge_type, moq, rating, reviews, in_stock, is_active, created_at
-    FROM products
+    SELECT id, title, slug, image, schema_type, focus_keyword,
+           is_active, faqs, services_list, features_list, created_at
+    FROM mosquito_services
     ORDER BY created_at DESC
     LIMIT 8
 ");
-if ($res) while ($r = $res->fetch_assoc()) $recentProducts[] = $r;
+if ($res) while ($r = $res->fetch_assoc()) $recentServices[] = $r;
 
 // ── Recent Blogs ──────────────────────────────────────────────────────────────
 $recentBlogs = [];
@@ -112,43 +120,44 @@ require_once __DIR__ . '/include/head.php';
                         <i class="fa fa-plus me-1"></i>Add Blog
                     </a>
                     <?php endif; ?>
-                    <?php if (canAccess('products') && !hasRole('viewer')): ?>
-                    <a href="<?= SITE_URL ?>/admin/products/add" class="btn btn-warning fw-semibold px-4" style="border-radius:10px;background:#f5c518;border:none;color:#1a1a1a;">
-                        <i class="fa fa-plus me-2"></i>Add Product
+                    <?php if (canAccess('services') && !hasRole('viewer')): ?>
+                    <a href="<?= SITE_URL ?>/admin/services/add" class="btn fw-semibold px-4" style="border-radius:10px;background:#dcfce7;border:none;color:#15803d;font-size:.85rem;">
+                        <i class="fa fa-plus me-2"></i>Add Service
                     </a>
                     <?php endif; ?>
                 </div>
             </div>
 
-            <!-- ── Row 1: Product Stat Cards ── -->
+            <!-- ── Row 1: Services Stat Cards ── -->
+            <?php if (canAccess('services')): ?>
             <p class="text-muted fw-semibold mb-2" style="font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;">
-                <i class="fa fa-box me-1"></i> Products Overview
+                <i class="fa fa-concierge-bell me-1"></i> Services Overview
             </p>
             <div class="row g-3 mb-4">
 
-                <!-- Total Products -->
+                <!-- Total Services -->
                 <div class="col-xl-3 col-sm-6">
                     <div class="card border-0 shadow-sm h-100" style="border-radius:14px;">
                         <div class="card-body p-4">
                             <div class="d-flex align-items-center justify-content-between mb-3">
-                                <div style="width:48px;height:48px;background:#fffbeb;border-radius:12px;display:flex;align-items:center;justify-content:center;">
-                                    <i class="fa fa-box" style="color:#f5c518;font-size:1.2rem;"></i>
+                                <div style="width:48px;height:48px;background:#dcfce7;border-radius:12px;display:flex;align-items:center;justify-content:center;">
+                                    <i class="fa fa-concierge-bell" style="color:#16a34a;font-size:1.2rem;"></i>
                                 </div>
-                                <span class="badge rounded-pill" style="background:#fffbeb;color:#d4a017;font-size:.72rem;font-weight:600;">
-                                    <?= $activeProducts ?> active
+                                <span class="badge rounded-pill" style="background:#dcfce7;color:#15803d;font-size:.72rem;font-weight:600;">
+                                    <?= $activeServices ?> active
                                 </span>
                             </div>
-                            <h2 class="fw-bold mb-1" style="font-size:2rem;color:#1a1a1a;"><?= $totalProducts ?></h2>
-                            <p class="text-muted mb-2" style="font-size:.82rem;">Total Products</p>
+                            <h2 class="fw-bold mb-1" style="font-size:2rem;color:#1a1a1a;"><?= $totalServices ?></h2>
+                            <p class="text-muted mb-2" style="font-size:.82rem;">Total Services</p>
                             <div class="progress" style="height:4px;border-radius:4px;background:#f0f0f0;">
-                                <div class="progress-bar" style="width:<?= $totalProducts > 0 ? round(($activeProducts/$totalProducts)*100) : 0 ?>%;background:#f5c518;border-radius:4px;"></div>
+                                <div class="progress-bar" style="width:<?= $totalServices > 0 ? round(($activeServices/$totalServices)*100) : 0 ?>%;background:#16a34a;border-radius:4px;"></div>
                             </div>
-                            <p class="text-muted mt-1 mb-0" style="font-size:.72rem;"><?= $totalProducts > 0 ? round(($activeProducts/$totalProducts)*100) : 0 ?>% active</p>
+                            <p class="text-muted mt-1 mb-0" style="font-size:.72rem;"><?= $totalServices > 0 ? round(($activeServices/$totalServices)*100) : 0 ?>% active</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- In Stock -->
+                <!-- Active Services -->
                 <div class="col-xl-3 col-sm-6">
                     <div class="card border-0 shadow-sm h-100" style="border-radius:14px;">
                         <div class="card-body p-4">
@@ -156,59 +165,60 @@ require_once __DIR__ . '/include/head.php';
                                 <div style="width:48px;height:48px;background:#f0fdf4;border-radius:12px;display:flex;align-items:center;justify-content:center;">
                                     <i class="fa fa-check-circle" style="color:#22c55e;font-size:1.2rem;"></i>
                                 </div>
-                                <span class="badge rounded-pill" style="background:#f0fdf4;color:#16a34a;font-size:.72rem;font-weight:600;">in stock</span>
+                                <span class="badge rounded-pill" style="background:#f0fdf4;color:#16a34a;font-size:.72rem;font-weight:600;">live</span>
                             </div>
-                            <h2 class="fw-bold mb-1" style="font-size:2rem;color:#1a1a1a;"><?= $inStock ?></h2>
-                            <p class="text-muted mb-2" style="font-size:.82rem;">In Stock</p>
+                            <h2 class="fw-bold mb-1" style="font-size:2rem;color:#1a1a1a;"><?= $activeServices ?></h2>
+                            <p class="text-muted mb-2" style="font-size:.82rem;">Active Services</p>
                             <div class="progress" style="height:4px;border-radius:4px;background:#f0f0f0;">
-                                <div class="progress-bar" style="width:<?= $activeProducts > 0 ? round(($inStock/$activeProducts)*100) : 0 ?>%;background:#22c55e;border-radius:4px;"></div>
+                                <div class="progress-bar" style="width:<?= $totalServices > 0 ? round(($activeServices/$totalServices)*100) : 0 ?>%;background:#22c55e;border-radius:4px;"></div>
                             </div>
-                            <p class="text-muted mt-1 mb-0" style="font-size:.72rem;"><?= $outOfStock ?> out of stock</p>
+                            <p class="text-muted mt-1 mb-0" style="font-size:.72rem;"><?= $inactiveServices ?> inactive</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Categories -->
+                <!-- With Images -->
                 <div class="col-xl-3 col-sm-6">
                     <div class="card border-0 shadow-sm h-100" style="border-radius:14px;">
                         <div class="card-body p-4">
                             <div class="d-flex align-items-center justify-content-between mb-3">
-                                <div style="width:48px;height:48px;background:#eff6ff;border-radius:12px;display:flex;align-items:center;justify-content:center;">
-                                    <i class="fa fa-tags" style="color:#3b82f6;font-size:1.2rem;"></i>
+                                <div style="width:48px;height:48px;background:#fff7ed;border-radius:12px;display:flex;align-items:center;justify-content:center;">
+                                    <i class="fa fa-image" style="color:#f97316;font-size:1.2rem;"></i>
                                 </div>
-                                <span class="badge rounded-pill" style="background:#eff6ff;color:#1d4ed8;font-size:.72rem;font-weight:600;">categories</span>
+                                <span class="badge rounded-pill" style="background:#fff7ed;color:#c2410c;font-size:.72rem;font-weight:600;">images</span>
                             </div>
-                            <h2 class="fw-bold mb-1" style="font-size:2rem;color:#1a1a1a;"><?= count($catStats) ?></h2>
-                            <p class="text-muted mb-2" style="font-size:.82rem;">Product Categories</p>
+                            <h2 class="fw-bold mb-1" style="font-size:2rem;color:#1a1a1a;"><?= $withImageServices ?></h2>
+                            <p class="text-muted mb-2" style="font-size:.82rem;">With Images</p>
                             <div class="progress" style="height:4px;border-radius:4px;background:#f0f0f0;">
-                                <div class="progress-bar" style="width:100%;background:#3b82f6;border-radius:4px;"></div>
+                                <div class="progress-bar" style="width:<?= $totalServices > 0 ? round(($withImageServices/$totalServices)*100) : 0 ?>%;background:#f97316;border-radius:4px;"></div>
                             </div>
-                            <p class="text-muted mt-1 mb-0" style="font-size:.72rem;">across all products</p>
+                            <p class="text-muted mt-1 mb-0" style="font-size:.72rem;"><?= $totalServices - $withImageServices ?> without image</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Admin Users -->
+                <!-- Total FAQs -->
                 <div class="col-xl-3 col-sm-6">
                     <div class="card border-0 shadow-sm h-100" style="border-radius:14px;">
                         <div class="card-body p-4">
                             <div class="d-flex align-items-center justify-content-between mb-3">
                                 <div style="width:48px;height:48px;background:#fdf4ff;border-radius:12px;display:flex;align-items:center;justify-content:center;">
-                                    <i class="fa fa-users" style="color:#a855f7;font-size:1.2rem;"></i>
+                                    <i class="fa fa-question-circle" style="color:#a855f7;font-size:1.2rem;"></i>
                                 </div>
-                                <span class="badge rounded-pill" style="background:#fdf4ff;color:#7e22ce;font-size:.72rem;font-weight:600;"><?= $activeUsers ?> active</span>
+                                <span class="badge rounded-pill" style="background:#fdf4ff;color:#7e22ce;font-size:.72rem;font-weight:600;">rich results</span>
                             </div>
-                            <h2 class="fw-bold mb-1" style="font-size:2rem;color:#1a1a1a;"><?= $totalUsers ?></h2>
-                            <p class="text-muted mb-2" style="font-size:.82rem;">Admin Users</p>
+                            <h2 class="fw-bold mb-1" style="font-size:2rem;color:#1a1a1a;"><?= $totalFaqs ?></h2>
+                            <p class="text-muted mb-2" style="font-size:.82rem;">Total FAQs</p>
                             <div class="progress" style="height:4px;border-radius:4px;background:#f0f0f0;">
-                                <div class="progress-bar" style="width:<?= $totalUsers > 0 ? round(($activeUsers/$totalUsers)*100) : 0 ?>%;background:#a855f7;border-radius:4px;"></div>
+                                <div class="progress-bar" style="width:100%;background:#a855f7;border-radius:4px;"></div>
                             </div>
-                            <p class="text-muted mt-1 mb-0" style="font-size:.72rem;"><?= $totalUsers > 0 ? round(($activeUsers/$totalUsers)*100) : 0 ?>% active</p>
+                            <p class="text-muted mt-1 mb-0" style="font-size:.72rem;">across all services</p>
                         </div>
                     </div>
                 </div>
 
             </div>
+            <?php endif; ?>
 
             <!-- ── Row 2: Blog Stat Cards ── -->
             <?php if (canAccess('blogs')): ?>
@@ -302,18 +312,19 @@ require_once __DIR__ . '/include/head.php';
             </div>
             <?php endif; ?>
 
-            <!-- ── Row 3: Recent Products + Category Breakdown ── -->
+            <!-- ── Row 3: Recent Services + Schema Breakdown ── -->
+            <?php if (canAccess('services')): ?>
             <div class="row g-3 mb-4">
 
-                <!-- Recent Products Table -->
+                <!-- Recent Services Table -->
                 <div class="col-xl-8">
                     <div class="card border-0 shadow-sm h-100" style="border-radius:14px;">
                         <div class="card-header bg-white border-0 px-4 pt-4 pb-3 d-flex align-items-center justify-content-between" style="border-radius:14px 14px 0 0;">
                             <div>
-                                <h5 class="fw-bold mb-0 text-dark">Recent Products</h5>
-                                <p class="text-muted mb-0" style="font-size:.78rem;">Latest added products</p>
+                                <h5 class="fw-bold mb-0 text-dark">Recent Services</h5>
+                                <p class="text-muted mb-0" style="font-size:.78rem;">Latest added services</p>
                             </div>
-                            <a href="<?= SITE_URL ?>/admin/products/" class="btn btn-sm fw-semibold" style="background:#fffbeb;color:#d4a017;border:1px solid #fcd34d;border-radius:8px;font-size:.8rem;">
+                            <a href="<?= SITE_URL ?>/admin/services/" class="btn btn-sm fw-semibold" style="background:#dcfce7;color:#15803d;border:1px solid #bbf7d0;border-radius:8px;font-size:.8rem;">
                                 View All <i class="fa fa-arrow-right ms-1"></i>
                             </a>
                         </div>
@@ -322,82 +333,92 @@ require_once __DIR__ . '/include/head.php';
                                 <table class="table table-hover mb-0" style="font-size:.85rem;">
                                     <thead style="background:#f8f9fa;">
                                         <tr>
-                                            <th class="px-4 py-3 text-muted fw-semibold" style="font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;border:none;">Product</th>
-                                            <th class="py-3 text-muted fw-semibold" style="font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;border:none;">Category</th>
-                                            <th class="py-3 text-muted fw-semibold" style="font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;border:none;">MOQ</th>
-                                            <th class="py-3 text-muted fw-semibold" style="font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;border:none;">Rating</th>
-                                            <th class="py-3 text-muted fw-semibold" style="font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;border:none;">Stock</th>
+                                            <th class="px-4 py-3 text-muted fw-semibold" style="font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;border:none;">Service</th>
+                                            <th class="py-3 text-muted fw-semibold" style="font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;border:none;">Schema</th>
+                                            <th class="py-3 text-muted fw-semibold" style="font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;border:none;">Keyword</th>
+                                            <th class="py-3 text-muted fw-semibold" style="font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;border:none;">FAQs</th>
                                             <th class="py-3 text-muted fw-semibold" style="font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;border:none;">Status</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php if (empty($recentProducts)): ?>
+                                        <?php if (empty($recentServices)): ?>
                                         <tr>
-                                            <td colspan="6" class="text-center text-muted py-5">
-                                                <i class="fa fa-box-open fa-2x mb-2 d-block" style="color:#e5e7eb;"></i>
-                                                No products found.
+                                            <td colspan="5" class="text-center text-muted py-5">
+                                                <i class="fa fa-concierge-bell fa-2x mb-2 d-block" style="color:#e5e7eb;"></i>
+                                                No services found.
                                             </td>
                                         </tr>
-                                        <?php else: foreach ($recentProducts as $p):
-                                            $imgUrl = !empty($p['image'])
-                                                ? SITE_URL . '/' . ltrim($p['image'], '/')
-                                                : SITE_URL . '/assets/img/all-images/service/service-img13.png';
-                                            $badgeColors = [
-                                                'new'  => ['#eff6ff','#1d4ed8'],
-                                                'hot'  => ['#fef2f2','#dc2626'],
-                                                'best' => ['#fffbeb','#d4a017'],
-                                                'sale' => ['#f0fdf4','#16a34a'],
-                                            ];
-                                            $bc = $badgeColors[$p['badge_type']] ?? ['#f3f4f6','#6b7280'];
+                                        <?php else: foreach ($recentServices as $s):
+                                            $sImgUrl = !empty($s['image'])
+                                                ? SITE_URL . '/' . ltrim($s['image'], '/')
+                                                : '';
+                                            $sFaqs   = json_decode($s['faqs'] ?? '[]', true) ?: [];
+                                            $faqCount = count($sFaqs);
+                                            $keyword  = trim(explode(',', $s['focus_keyword'] ?? '')[0]);
                                         ?>
                                         <tr>
                                             <td class="px-4 py-3" style="border:none;">
                                                 <div class="d-flex align-items-center gap-3">
-                                                    <img src="<?= htmlspecialchars($imgUrl) ?>"
-                                                         alt="<?= htmlspecialchars($p['name']) ?>"
-                                                         onerror="this.src='<?= SITE_URL ?>/assets/img/all-images/service/service-img13.png'"
-                                                         style="width:44px;height:44px;object-fit:cover;border-radius:10px;border:1px solid #f0f0f0;">
+                                                    <?php if (!empty($sImgUrl)): ?>
+                                                    <img src="<?= htmlspecialchars($sImgUrl) ?>"
+                                                         alt="<?= htmlspecialchars($s['title']) ?>"
+                                                         onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+                                                         style="width:44px;height:44px;object-fit:cover;border-radius:10px;border:1px solid #bbf7d0;">
+                                                    <div style="width:44px;height:44px;background:#dcfce7;border-radius:10px;display:none;align-items:center;justify-content:center;flex-shrink:0;">
+                                                        <i class="fa fa-concierge-bell" style="color:#16a34a;"></i>
+                                                    </div>
+                                                    <?php else: ?>
+                                                    <div style="width:44px;height:44px;background:#dcfce7;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                                                        <i class="fa fa-concierge-bell" style="color:#16a34a;"></i>
+                                                    </div>
+                                                    <?php endif; ?>
                                                     <div>
                                                         <div class="fw-semibold text-dark" style="font-size:.85rem;line-height:1.3;">
-                                                            <?= htmlspecialchars(mb_strimwidth($p['name'], 0, 32, '…')) ?>
+                                                            <?= htmlspecialchars(mb_strimwidth($s['title'], 0, 34, '…')) ?>
                                                         </div>
-                                                        <?php if (!empty($p['badge'])): ?>
-                                                        <span style="font-size:.65rem;font-weight:700;background:<?= $bc[0] ?>;color:<?= $bc[1] ?>;padding:2px 7px;border-radius:20px;">
-                                                            <?= htmlspecialchars($p['badge']) ?>
-                                                        </span>
-                                                        <?php endif; ?>
+                                                        <div class="text-muted" style="font-size:.72rem;">
+                                                            <?= date('d M Y', strtotime($s['created_at'])) ?>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td class="py-3" style="border:none;">
-                                                <span style="font-size:.75rem;background:#f3f4f6;color:#374151;padding:3px 10px;border-radius:20px;font-weight:500;">
-                                                    <?= ucfirst(htmlspecialchars($p['category'])) ?>
-                                                </span>
-                                            </td>
-                                            <td class="py-3 text-muted" style="border:none;font-size:.82rem;"><?= htmlspecialchars($p['moq']) ?></td>
-                                            <td class="py-3" style="border:none;">
-                                                <div class="d-flex align-items-center gap-1">
-                                                    <i class="fa fa-star" style="color:#f5c518;font-size:.75rem;"></i>
-                                                    <span style="font-size:.82rem;font-weight:600;"><?= number_format($p['rating'], 1) ?></span>
-                                                    <span class="text-muted" style="font-size:.72rem;">(<?= $p['reviews'] ?>)</span>
-                                                </div>
-                                            </td>
-                                            <td class="py-3" style="border:none;">
-                                                <?php if ($p['in_stock']): ?>
-                                                <span style="font-size:.72rem;background:#f0fdf4;color:#16a34a;padding:3px 8px;border-radius:20px;font-weight:600;">
-                                                    <i class="fa fa-circle me-1" style="font-size:.45rem;"></i>In Stock
+                                                <?php if (!empty($s['schema_type'])): ?>
+                                                <span style="font-size:.75rem;background:#dcfce7;color:#15803d;padding:3px 10px;border-radius:20px;font-weight:500;">
+                                                    <?= htmlspecialchars($s['schema_type']) ?>
                                                 </span>
                                                 <?php else: ?>
-                                                <span style="font-size:.72rem;background:#fef2f2;color:#dc2626;padding:3px 8px;border-radius:20px;font-weight:600;">
-                                                    <i class="fa fa-circle me-1" style="font-size:.45rem;"></i>Out
-                                                </span>
+                                                <span class="text-muted" style="font-size:.75rem;">—</span>
                                                 <?php endif; ?>
                                             </td>
                                             <td class="py-3" style="border:none;">
-                                                <?php if ($p['is_active']): ?>
-                                                <span style="font-size:.72rem;background:#fffbeb;color:#d4a017;padding:3px 8px;border-radius:20px;font-weight:600;">Active</span>
+                                                <?php if (!empty($keyword)): ?>
+                                                <span style="font-size:.72rem;background:#fefce8;color:#854d0e;padding:3px 8px;border-radius:20px;font-weight:500;max-width:120px;display:inline-block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"
+                                                    title="<?= htmlspecialchars($s['focus_keyword']) ?>">
+                                                    🔑 <?= htmlspecialchars($keyword) ?>
+                                                </span>
                                                 <?php else: ?>
-                                                <span style="font-size:.72rem;background:#f3f4f6;color:#6b7280;padding:3px 8px;border-radius:20px;font-weight:600;">Inactive</span>
+                                                <span class="text-muted" style="font-size:.75rem;">—</span>
+                                                <?php endif; ?>
+                                            </td>
+                                            <td class="py-3" style="border:none;">
+                                                <span style="font-size:.75rem;font-weight:600;
+                                                    <?= $faqCount >= 3
+                                                        ? 'background:#f0fdf4;color:#16a34a;'
+                                                        : ($faqCount > 0 ? 'background:#fefce8;color:#854d0e;' : 'background:#fef2f2;color:#dc2626;') ?>
+                                                    padding:3px 8px;border-radius:20px;">
+                                                    <?= $faqCount ?> FAQ<?= $faqCount !== 1 ? 's' : '' ?>
+                                                </span>
+                                            </td>
+                                            <td class="py-3" style="border:none;">
+                                                <?php if ($s['is_active']): ?>
+                                                <span style="font-size:.72rem;background:#dcfce7;color:#15803d;padding:3px 8px;border-radius:20px;font-weight:600;">
+                                                    <i class="fa fa-circle me-1" style="font-size:.45rem;"></i>Active
+                                                </span>
+                                                <?php else: ?>
+                                                <span style="font-size:.72rem;background:#f3f4f6;color:#6b7280;padding:3px 8px;border-radius:20px;font-weight:600;">
+                                                    <i class="fa fa-circle me-1" style="font-size:.45rem;"></i>Inactive
+                                                </span>
                                                 <?php endif; ?>
                                             </td>
                                         </tr>
@@ -409,43 +430,64 @@ require_once __DIR__ . '/include/head.php';
                     </div>
                 </div>
 
-                <!-- Category Breakdown -->
+                <!-- Schema Type Breakdown -->
                 <div class="col-xl-4">
                     <div class="card border-0 shadow-sm h-100" style="border-radius:14px;">
                         <div class="card-header bg-white border-0 px-4 pt-4 pb-3" style="border-radius:14px 14px 0 0;">
-                            <h5 class="fw-bold mb-0 text-dark">By Category</h5>
-                            <p class="text-muted mb-0" style="font-size:.78rem;">Active products per category</p>
+                            <h5 class="fw-bold mb-0 text-dark">By Schema Type</h5>
+                            <p class="text-muted mb-0" style="font-size:.78rem;">Active services per schema</p>
                         </div>
                         <div class="card-body px-4">
                             <?php
-                            $catColors = ['#f5c518','#3b82f6','#22c55e','#a855f7','#ef4444','#f97316','#06b6d4'];
-                            $maxCat = max(array_column($catStats,'total') ?: [1]);
-                            foreach ($catStats as $ci => $cat):
-                                $pct = $maxCat > 0 ? round(($cat['total']/$maxCat)*100) : 0;
-                                $col = $catColors[$ci % count($catColors)];
+                            $schemaColors = ['#16a34a','#3b82f6','#a855f7','#f97316','#ef4444','#f5c518','#06b6d4'];
+                            $maxSchema = max(array_column($schemaStats,'total') ?: [1]);
+                            foreach ($schemaStats as $si => $sc):
+                                $spct = $maxSchema > 0 ? round(($sc['total']/$maxSchema)*100) : 0;
+                                $scol = $schemaColors[$si % count($schemaColors)];
                             ?>
                             <div class="mb-3">
                                 <div class="d-flex justify-content-between align-items-center mb-1">
                                     <span style="font-size:.83rem;font-weight:600;color:#1a1a1a;">
-                                        <?= ucfirst(htmlspecialchars($cat['category'])) ?>
+                                        <?= htmlspecialchars($sc['schema_type']) ?>
                                     </span>
                                     <span style="font-size:.75rem;color:#6b7280;font-weight:500;">
-                                        <?= $cat['total'] ?> product<?= $cat['total'] != 1 ? 's' : '' ?>
+                                        <?= $sc['total'] ?> service<?= $sc['total'] != 1 ? 's' : '' ?>
                                     </span>
                                 </div>
                                 <div style="height:6px;background:#f0f0f0;border-radius:4px;overflow:hidden;">
-                                    <div style="width:<?= $pct ?>%;height:100%;background:<?= $col ?>;border-radius:4px;transition:width .6s;"></div>
+                                    <div style="width:<?= $spct ?>%;height:100%;background:<?= $scol ?>;border-radius:4px;transition:width .6s;"></div>
                                 </div>
                             </div>
                             <?php endforeach;
-                            if (empty($catStats)): ?>
-                            <p class="text-muted text-center py-4" style="font-size:.85rem;">No categories found.</p>
+                            if (empty($schemaStats)): ?>
+                            <p class="text-muted text-center py-4" style="font-size:.85rem;">No schema types configured yet.</p>
                             <?php endif; ?>
+
+                            <!-- Admin Users mini stat at bottom -->
+                            <div class="mt-4 pt-3 border-top">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <div style="width:36px;height:36px;background:#fdf4ff;border-radius:10px;display:flex;align-items:center;justify-content:center;">
+                                            <i class="fa fa-users" style="color:#a855f7;font-size:.9rem;"></i>
+                                        </div>
+                                        <div>
+                                            <div style="font-size:.82rem;font-weight:600;color:#1a1a1a;">Admin Users</div>
+                                            <div style="font-size:.72rem;color:#9ca3af;"><?= $activeUsers ?> active of <?= $totalUsers ?></div>
+                                        </div>
+                                    </div>
+                                    <?php if (canAccess('users') && hasRole(['superadmin','admin'])): ?>
+                                    <a href="<?= SITE_URL ?>/admin/users/" class="btn btn-sm" style="background:#fdf4ff;color:#7e22ce;border:1px solid #e9d5ff;border-radius:8px;font-size:.75rem;">
+                                        Manage
+                                    </a>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
             </div>
+            <?php endif; ?>
 
             <!-- ── Row 4: Recent Blogs + Blog Categories ── -->
             <?php if (canAccess('blogs')): ?>
@@ -597,15 +639,16 @@ require_once __DIR__ . '/include/head.php';
                             <p class="text-muted text-center py-5" style="font-size:.85rem;">No activity yet.</p>
                             <?php else:
                             $actionColors = [
-                                'login'           => ['#f0fdf4','#16a34a'],
-                                'logout'          => ['#f3f4f6','#6b7280'],
-                                'user_created'    => ['#eff6ff','#1d4ed8'],
-                                'user_updated'    => ['#eff6ff','#1d4ed8'],
-                                'product_created' => ['#fffbeb','#d4a017'],
-                                'product_updated' => ['#fffbeb','#d4a017'],
-                                'blog_created'    => ['#f0f9ff','#0369a1'],
-                                'blog_updated'    => ['#f0f9ff','#0369a1'],
-                                'blog_deleted'    => ['#fef2f2','#dc2626'],
+                                'login'            => ['#f0fdf4','#16a34a'],
+                                'logout'           => ['#f3f4f6','#6b7280'],
+                                'user_created'     => ['#eff6ff','#1d4ed8'],
+                                'user_updated'     => ['#eff6ff','#1d4ed8'],
+                                'service_created'  => ['#dcfce7','#15803d'],
+                                'service_updated'  => ['#dcfce7','#15803d'],
+                                'service_deleted'  => ['#fef2f2','#dc2626'],
+                                'blog_created'     => ['#f0f9ff','#0369a1'],
+                                'blog_updated'     => ['#f0f9ff','#0369a1'],
+                                'blog_deleted'     => ['#fef2f2','#dc2626'],
                             ];
                             foreach ($activityLog as $log):
                                 $ac = $actionColors[$log['action']] ?? ['#f3f4f6','#374151'];

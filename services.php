@@ -122,49 +122,76 @@ $serviceChunks = array_chunk($services, 4);
 
 
         <!-- SERVICES LISTING SECTION START -->
-        <section class="ul-inner-services ul-section-spacing">
-            <div class="ul-container">
+        <!-- SERVICES LISTING SECTION START -->
+<section class="ul-inner-services ul-section-spacing">
+    <div class="ul-container">
 
-                <?php if (empty($services)): ?>
-                <!-- No services found -->
-                <div class="text-center py-5">
-                    <p class="text-muted fs-5">No services found. Please check back later.</p>
-                </div>
+        <?php if (empty($services)): ?>
+        <div class="text-center py-5">
+            <p class="text-muted fs-5">No services found. Please check back later.</p>
+        </div>
 
-                <?php else: ?>
-                <!-- Loop chunks of 4 per row -->
-                <?php foreach ($serviceChunks as $chunkIndex => $chunk): ?>
-                <div class="ul-2-investments-wrapper">
-                    <?php foreach ($chunk as $index => $service): ?>
-                    <?php
-                        // Global index for numbering (01, 02, 03...)
-                        $globalIndex = ($chunkIndex * 4) + $index + 1;
-                        // Fallback image if empty
-                        $img = !empty($service['image']) ? $service['image'] : 'assets/img/investment-img.jpg';
-                    ?>
-                    <div class="ul-2-investment-item">
-                        <div class="ul-2-investment-item-img">
-                            <img src="<?= htmlspecialchars($img) ?>"
-                                 alt="<?= htmlspecialchars($service['title']) ?>">
-                        </div>
-                        <div class="ul-2-investment-item-txt">
-                            <span class="ul-2-investment-item-index">
-                                <?= str_pad($globalIndex, 2, '0', STR_PAD_LEFT) ?>
-                            </span>
-                            <h3 class="ul-2-investment-item-title">
-                                <a href="service-details.php?slug=<?= urlencode($service['slug']) ?>">
-                                    <?= htmlspecialchars($service['title']) ?>
-                                </a>
-                            </h3>
-                        </div>
+        <?php else: ?>
+        <div class="row g-4">
+            <?php foreach ($services as $index => $service): ?>
+            <?php
+                $img = !empty($service['image'])
+                    ? htmlspecialchars($service['image'])
+                    : 'assets/img/investment-img.jpg';
+                $title    = htmlspecialchars($service['title']);
+                $desc     = htmlspecialchars(mb_strimwidth($service['short_desc'] ?? '', 0, 100, '…'));
+                $url      = 'service-details.php?slug=' . urlencode($service['slug']);
+                $num      = str_pad($index + 1, 2, '0', STR_PAD_LEFT);
+            ?>
+            <div class="col-lg-4 col-md-6 col-12">
+                <div class="ul-service-blog-card">
+
+                    <!-- Image -->
+                    <div class="ul-service-blog-card__img">
+                        <a href="<?= $url ?>">
+                            <img src="<?= $img ?>" alt="<?= $title ?>" loading="lazy">
+                        </a>
                     </div>
-                    <?php endforeach; ?>
-                </div>
-                <?php endforeach; ?>
-                <?php endif; ?>
 
+                    <!-- Body -->
+                    <div class="ul-service-blog-card__body">
+                        <!-- Meta -->
+                        <div class="ul-service-blog-card__meta">
+                            <span class="ul-service-blog-card__num">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                                Service <?= $num ?>
+                            </span>
+                            <span class="ul-service-blog-card__badge">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                                Mosquito Net
+                            </span>
+                        </div>
+
+                        <!-- Title -->
+                        <h3 class="ul-service-blog-card__title">
+                            <a href="<?= $url ?>"><?= $title ?></a>
+                        </h3>
+
+                        <!-- Desc -->
+                        <p class="ul-service-blog-card__desc"><?= $desc ?></p>
+
+                        <!-- Read More -->
+                        <a href="<?= $url ?>" class="ul-service-blog-card__link">
+                            Read More
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+                        </a>
+                    </div>
+
+                </div>
             </div>
-        </section>
+            <?php endforeach; ?>
+        </div>
+        <?php endif; ?>
+
+    </div>
+</section>
+<!-- SERVICES LISTING SECTION END -->
+
         <!-- SERVICES LISTING SECTION END -->
 
 

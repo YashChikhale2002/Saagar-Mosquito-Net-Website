@@ -43,7 +43,7 @@ $result = $conn->query("
 function resolveBlogImgAjax($field) {
     if (empty($field)) return '';
     if (str_starts_with($field, 'http://') || str_starts_with($field, 'https://')) return $field;
-    return '/nirajindustries/' . ltrim($field, '/');
+    return '/Saagar-Mosquito-Net-Website/' . ltrim($field, '/');
 }
 
 function calcBlogSeoScoreAjax($blog) {
@@ -180,7 +180,7 @@ if ($result && $result->num_rows > 0) {
             'readingTime'    => $readingTime,
             'publishedAt'    => $publishedDate,
             'editUrl'        => 'edit.php?id=' . $blog['id'],
-            'viewUrl'        => '/nirajindustries/blog/' . ($blog['slug'] ?? ''),
+            'viewUrl'        => '/Saagar-Mosquito-Net-Website/blog/' . ($blog['slug'] ?? ''),
         ];
 
         ob_start();

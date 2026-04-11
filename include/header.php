@@ -35,7 +35,7 @@ if ($_navDoctorsRes) {
 
              <div class="ul-2-header-logo-container">
                     <a href="index-2.html"><img src="assets/img/logo.svg" alt="logo"></a>
-                </div>
+             </div>
 
             <!-- RIGHT SECTION -->
             <div class="ul-2-header-bottom-right">

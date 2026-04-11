@@ -212,7 +212,7 @@ function _timeAgo(string $dt): string {
 
 <?php
 // ── Role-filtered menu for JS search ─────────────────────────────────────────
-$_base = defined('SITE_URL') ? SITE_URL . '/admin/' : '/nirajindustries/admin/';
+$_base = defined('SITE_URL') ? SITE_URL . '/admin/' : '/Saagar-Mosquito-Net-Website/admin/';
 $_menuItems = [];
 
 // Dashboard (everyone)

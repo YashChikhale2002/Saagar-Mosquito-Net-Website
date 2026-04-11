@@ -1,5 +1,5 @@
 <?php
-// C:\xamppnew\htdocs\nirajindustries\include\config.php
+// C:\xamppnew\htdocs\Saagar-Mosquito-Net-Website\include\config.php
 
 // ─── Database Configuration ───────────────────────────────────────────────────
 define('DB_HOST', 'localhost');

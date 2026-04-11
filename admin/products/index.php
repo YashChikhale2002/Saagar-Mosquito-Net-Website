@@ -58,7 +58,7 @@ $statsRes = $conn->query("SELECT
 $stats = $statsRes ? $statsRes->fetch_assoc() : [];
 
 // ── Helpers ───────────────────────────────────────────────────
-define('BASE_PATH', '/nirajindustries/');
+define('BASE_PATH', '/Saagar-Mosquito-Net-Website/');
 
 function resolveImageSrc($field) {
     if (empty($field)) return '';
@@ -725,7 +725,7 @@ foreach ($products as $prod) {
         'warranty'       => $prod['warranty'] ?? '',
         'certifications' => $prod['certifications'] ?? '',
         'editUrl'        => 'edit.php?id=' . $prod['id'],
-        'viewUrl'        => '/nirajindustries/products/' . ($prod['slug'] ?? ''),
+        'viewUrl'        => '/Saagar-Mosquito-Net-Website/products/' . ($prod['slug'] ?? ''),
     ];
 }
 
@@ -890,7 +890,7 @@ function openSeoModal(id) {
 
     var searchPreview = d.slug
         ? `<div class="card mb-4 border rounded-3 shadow-none" style="background:#f8f9fa;"><div class="card-body p-3">
-            <div class="small text-muted mb-1 font-monospace" style="font-size:0.75rem;">nirajindustries.com › products › ${d.slug}</div>
+            <div class="small text-muted mb-1 font-monospace" style="font-size:0.75rem;">Saagar-Mosquito-Net-Website.com › products › ${d.slug}</div>
             <div class="fs-5 fw-medium mb-1" style="color:#1a0dab;">${d.name}</div>
             <div class="small text-dark" style="line-height:1.4;">${d.category ? d.category + " — " : ""}${d.brand ? "by " + d.brand : ""}</div>
            </div></div>`

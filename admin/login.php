@@ -561,7 +561,7 @@ $opSym     = $opDisplay[$captcha['op']] ?? $captcha['op'];
                 <div class="input-group">
                     <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                     <input type="email" name="email" class="form-control"
-                           placeholder="admin@nirajindustries.com"
+                           placeholder="admin@Saagar-Mosquito-Net-Website.com"
                            value="<?= htmlspecialchars($_POST['email'] ?? '') ?>"
                            required autofocus>
                 </div>

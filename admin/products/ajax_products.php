@@ -43,7 +43,7 @@ $result = $conn->query("
 function resolveImgAjax($field) {
     if (empty($field)) return '';
     if (str_starts_with($field, 'http://') || str_starts_with($field, 'https://')) return $field;
-    return '/nirajindustries/' . ltrim($field, '/');
+    return '/Saagar-Mosquito-Net-Website/' . ltrim($field, '/');
 }
 
 function calcProductSeoScoreAjax($prod) {
@@ -164,7 +164,7 @@ if ($result && $result->num_rows > 0) {
             'warranty'       => $prod['warranty'] ?? '',
             'certifications' => $prod['certifications'] ?? '',
             'editUrl'        => 'edit.php?id=' . $prod['id'],
-            'viewUrl'        => '/nirajindustries/products/' . ($prod['slug'] ?? ''),
+            'viewUrl'        => '/Saagar-Mosquito-Net-Website/products/' . ($prod['slug'] ?? ''),
         ];
 
         ob_start();

@@ -243,7 +243,78 @@ $canonical_url       = $service['canonical_url']       ?: ((!empty($_SERVER['HTT
             </div>
         </section>
         <?php endif; ?>
+<?php
+// ── Related Services (current service ko exclude karke baaki active services) ──
+$currentId = (int)$service['id'];
+$relResult = $conn->query("
+    SELECT id, title, slug, short_desc, image
+    FROM mosquito_services
+    WHERE is_active = 1
+      AND id != $currentId
+    ORDER BY created_at DESC
+    LIMIT 3
+");
+$relatedServices = [];
+if ($relResult) while ($row = $relResult->fetch_assoc()) $relatedServices[] = $row;
+?>
 
+<?php if (!empty($relatedServices)): ?>
+<!-- RELATED SERVICES SECTION -->
+<section class="ul-related-services ul-section-spacing pt-0 pb-5">
+    <div class="ul-container">
+
+        <!-- Section Header -->
+        <div class="ul-section-title text-center mb-5">
+            <h2 class="ul-section-title__title">Related Services</h2>
+           
+        </div>
+
+        <!-- Cards Row -->
+        <div class="row g-4">
+            <?php foreach ($relatedServices as $rel): ?>
+            <?php
+                $relImg   = !empty($rel['image'])
+                    ? htmlspecialchars($rel['image'])
+                    : 'assets/img/service-placeholder.webp';
+                $relTitle = htmlspecialchars($rel['title']);
+                $relDesc  = htmlspecialchars(mb_strimwidth($rel['short_desc'] ?? '', 0, 100, '…'));
+                $relUrl   = 'service-details.php?slug=' . urlencode($rel['slug']);
+            ?>
+            <div class="col-lg-4 col-md-6 col-12">
+                <div class="ul-related-service-card h-100">
+
+                    <!-- Image -->
+                    <div class="ul-related-service-card__img">
+                        <img src="<?= $relImg ?>" alt="<?= $relTitle ?>" loading="lazy">
+                        <div class="ul-related-service-card__overlay">
+                            <a href="<?= $relUrl ?>" class="ul-related-service-card__view-btn">
+                                View Service
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Body -->
+                    <div class="ul-related-service-card__body">
+                        <h3 class="ul-related-service-card__title">
+                            <a href="<?= $relUrl ?>"><?= $relTitle ?></a>
+                        </h3>
+                        <p class="ul-related-service-card__desc"><?= $relDesc ?></p>
+                        <a href="<?= $relUrl ?>" class="ul-related-service-card__link">
+                            Read More <i class="flaticon-next"></i>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+            <?php endforeach; ?>
+        </div>
+
+       s
+
+    </div>
+</section>
+
+<?php endif; ?>
     </main>
 
     <?php include __DIR__ . '/include/footer.php'; ?>

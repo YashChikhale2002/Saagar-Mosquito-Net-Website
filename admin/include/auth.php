@@ -11,18 +11,19 @@ if (session_status() === PHP_SESSION_NONE) {
 
 // ── Guard: must be logged in ──────────────────────────────────────────────────
 if (empty($_SESSION['admin_id'])) {
-    $loginUrl = defined('SITE_URL') ? SITE_URL . '/admin/login.php' : '/nirajindustries/admin/login.php';
+    $loginUrl = defined('SITE_URL') ? SITE_URL . '/admin/login.php' : '/Saagar-Mosquito-Net-Website/admin/login.php';
     header("Location: $loginUrl");
     exit;
 }
 
 // ── Role → allowed modules map ────────────────────────────────────────────────
 $_ROLE_PERMS = [
-    'superadmin' => ['dashboard', 'users', 'products', 'blogs', 'settings', 'logs'],
-    'admin'      => ['dashboard', 'users', 'products', 'blogs'],
-    'editor'     => ['dashboard', 'products', 'blogs'],
+    'superadmin' => ['dashboard', 'users', 'products', 'blogs', 'services', 'settings', 'logs'],
+    'admin'      => ['dashboard', 'users', 'products', 'blogs', 'services'],
+    'editor'     => ['dashboard', 'products', 'blogs', 'services'],
     'viewer'     => ['dashboard'],
 ];
+
 /**
  * Check if logged-in admin has one of the given roles.
  * @param  string|string[] $roles
@@ -33,7 +34,7 @@ function hasRole($roles): bool {
 
 /**
  * Check if logged-in admin can access a module.
- * @param  string $module  e.g. 'users', 'products'
+ * @param  string $module  e.g. 'users', 'products', 'services'
  */
 function canAccess(string $module): bool {
     global $_ROLE_PERMS;
@@ -46,7 +47,7 @@ function canAccess(string $module): bool {
  */
 function requireAccess(string $module): void {
     if (!canAccess($module)) {
-        $base = defined('SITE_URL') ? SITE_URL . '/admin/' : '/nirajindustries/admin/';
+        $base = defined('SITE_URL') ? SITE_URL . '/admin/' : '/Saagar-Mosquito-Net-Website/admin/';
         header("Location: {$base}index.php?err=noperm");
         exit;
     }
@@ -55,7 +56,7 @@ function requireAccess(string $module): void {
 // ── Convenience shorthand for templates ──────────────────────────────────────
 $_ADMIN = [
     'id'    => (int)($_SESSION['admin_id'] ?? 0),
-    'name'  => $_SESSION['admin_name']      ?? 'Admin',
-    'email' => $_SESSION['admin_email']     ?? '',
-    'role'  => $_SESSION['admin_role']      ?? 'admin',
+    'name'  => $_SESSION['admin_name']  ?? 'Admin',
+    'email' => $_SESSION['admin_email'] ?? '',
+    'role'  => $_SESSION['admin_role']  ?? 'admin',
 ];
