@@ -1,3 +1,11 @@
+<?php
+// Start session (for login systems later)
+session_start();
+
+include 'include/config.php';
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 

@@ -1,3 +1,11 @@
+<?php
+// Start session (for login systems later)
+session_start();
+
+include 'include/config.php';
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -209,97 +217,8 @@
     </div>
 
 
-    <!-- HEADER START -->
-    <header class="ul-2-header">
-        <!-- header top -->
-        <div class="ul-2-header-top">
-            <div class="ul-2-header-container">
-                <div class="ul-2-header-top-left">
-                    <p class="mb-0">Welcome to our online banking platform</p>
-                </div>
-                <div class="ul-2-header-top-right">
-                    <a href="#">Money Exchange</a>
-                    <a href="#">Life of cashflow</a>
-                    <a href="#">ATM Booth</a>
-                    <span class="helpline">Help line <a href="#"><i class="flaticon-telephone"></i> 203010</a></span>
-                </div>
-            </div>
-        </div>
+   <?php include 'include/header.php'; ?>
 
-        <!-- header bottom -->
-        <div class="ul-2-header-bottom">
-            <div class="ul-2-header-container">
-                <div class="ul-2-header-logo-container">
-                    <a href="index-2.html"><img src="assets/img/logo.svg" alt="logo"></a>
-                </div>
-
-                <div class="ul-2-header-bottom-right">
-                    <!-- header nav -->
-                    <div class="ul-header-nav-wrapper">
-
-                        <div class="to-go-to-sidebar-in-mobile">
-                            <nav class="ul-header-nav">
-                                <div class="has-sub-menu">
-                                    <a role="button">Home</a>
-
-                                    <div class="ul-header-submenu">
-                                        <ul>
-                                            <li><a href="index.html">Home 1</a></li>
-                                            <li><a href="index-2.html">Home 2</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <a href="about.html">About</a>
-                                <div class="has-sub-menu">
-                                    <a role="button">Services</a>
-
-                                    <div class="ul-header-submenu">
-                                        <ul>
-                                            <li><a href="services.html">Services</a></li>
-                                            <li><a href="service-details.html">Service Details</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="has-sub-menu">
-                                    <a role="button">Blogs</a>
-
-                                    <div class="ul-header-submenu">
-                                        <ul>
-                                            <li><a href="blogs.html">Blogs Grid</a></li>
-                                            <li><a href="blog-list.html">Blogs List</a></li>
-                                            <li><a href="blog-details.html">Blog Details</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="has-sub-menu">
-                                    <a role="button">Pages</a>
-
-                                    <div class="ul-header-submenu">
-                                        <ul>
-                                            <li><a href="testimonials.html">Testimonials</a></li>
-                                            <li><a href="team.html">Team Members</a></li>
-                                            <li><a href="team-details.html">Team Member Details</a></li>
-                                            <li><a href="404.html">404</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <a href="contact.html">Contact us</a>
-                            </nav>
-                        </div>
-                    </div>
-
-                    <button class="ul-header-search-opener"><i class="flaticon-search"></i></button>
-
-                    <div class="ul-2-header-bottom-btns">
-                        <a href="#" class="ul-btn d-xl-flex d-none login-opener">Login <i class="flaticon-arrow-up-right"></i></a>
-                        <a href="#" class="ul-btn d-xxs-none loan-apply-opener ">Apply For Loan <i class="flaticon-arrow-up-right"></i></a>
-                    </div>
-                    <button class="ul-header-sidebar-opener d-lg-none d-flex"><i class="flaticon-hamburger"></i></button>
-                </div>
-            </div>
-        </div>
-    </header>
-    <!-- HEADER END -->
 
     <main>
         <!-- BREADCRUMB SECTION START -->

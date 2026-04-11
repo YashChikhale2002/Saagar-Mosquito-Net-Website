@@ -1,296 +1,111 @@
 <?php
 /**
- * include/header.php — RK Hospital shared navbar
- * Pages can set $headerClass before including to switch style.
- *   Inner pages:  $headerClass = 'header-default inner-header';
- *   Homepage:     (leave unset — defaults to 'header-fixed')
+ * Dynamic Header (New UI Integrated)
  */
 
 $_base        = rtrim(SITE_URL, '/') . '/';
-$_headerClass = $headerClass ?? 'header-fixed';
+$_headerClass = $headerClass ?? 'ul-2-header';
 
-// Auto-detect active nav item from URI
+// Detect current URL
 $_uri = rtrim(strtok($_SERVER['REQUEST_URI'], '?'), '/');
 
+// Active menu helper
 function navActive(string $segment): string {
     global $_uri;
-    if ($segment === 'home') {
-        return preg_match('#/nirajindustries/?$#', $_uri) ? ' class="active"' : '';
-    }
-    return (strpos($_uri, '/' . $segment) !== false) ? ' class="active"' : '';
+    return (strpos($_uri, $segment) !== false) ? 'class="active"' : '';
 }
 
-// Fetch published doctors for submenu
+// Fetch Doctors
 $_navDoctors = [];
-$_navDoctorsRes = $conn->query("SELECT name, slug, designation, photo FROM doctors WHERE is_published = 1 ORDER BY name ASC LIMIT 8");
+$_navDoctorsRes = $conn->query("SELECT name, slug FROM doctors WHERE is_published = 1 ORDER BY name ASC LIMIT 8");
+
 if ($_navDoctorsRes) {
-    while ($_navDr = $_navDoctorsRes->fetch_assoc()) {
-        $_navDoctors[] = $_navDr;
+    while ($_dr = $_navDoctorsRes->fetch_assoc()) {
+        $_navDoctors[] = $_dr;
     }
 }
 ?>
-<!-- Doctors dropdown — refined UI -->
-<style>
-/* ── Parent menu item ── */
-.main-nav .has-submenu {
-    position: relative;
-}
 
-/* ── Dropdown container (CENTER aligned under Doctors) ── */
-.main-nav .has-submenu .submenu.sub-menu-default {
-    position: absolute !important;
-    top: 100% !important;
+<!-- HEADER START -->
+<header class="<?= $_headerClass ?>">
 
-    left: 50% !important;
-    /* center under title */
-    transform: translateX(-50%) translateY(6px);
+    <div class="ul-2-header-bottom">
+        <div class="ul-2-header-container">
 
-    margin-top: 0 !important;
-    /* remove gap */
 
-    min-width: 240px !important;
-    max-width: 270px !important;
-    padding: 6px 0 !important;
-
-    border-radius: 12px !important;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, .12) !important;
-    border: 1px solid #ebebeb !important;
-    background: #fff !important;
-
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.18s ease;
-    z-index: 999;
-}
-
-/* ── Show dropdown ── */
-.main-nav .has-submenu:hover .submenu.sub-menu-default {
-    opacity: 1;
-    visibility: visible;
-    transform: translateX(-50%) translateY(0);
-}
-
-/* 🔥 Invisible hover bridge (prevents vanish issue) */
-.main-nav .has-submenu::after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    height: 12px;
-}
-
-/* ── Divider between items ── */
-.main-nav .has-submenu .submenu.sub-menu-default>li {
-    padding: 0 !important;
-    margin: 0 !important;
-    border-bottom: 1px solid #f4f4f4 !important;
-}
-
-.main-nav .has-submenu .submenu.sub-menu-default>li:last-child {
-    border-bottom: none !important;
-}
-
-/* ── Each row link ── */
-.main-nav .has-submenu .submenu.sub-menu-default>li>a {
-    display: flex !important;
-    align-items: center !important;
-    gap: 10px !important;
-    padding: 8px 14px !important;
-    text-align: left !important;
-    text-decoration: none !important;
-    transition: background .15s ease !important;
-    background: transparent !important;
-    color: inherit !important;
-}
-
-.main-nav .has-submenu .submenu.sub-menu-default>li>a:hover {
-    background: #f0f4ff !important;
-}
-
-.main-nav .has-submenu .submenu.sub-menu-default>li>a:hover strong {
-    color: #2563eb !important;
-}
-
-/* ── Avatar ── */
-.main-nav .has-submenu .submenu.sub-menu-default>li>a .rk-nav-avatar {
-    width: 36px !important;
-    height: 36px !important;
-    border-radius: 50% !important;
-    object-fit: cover !important;
-    flex-shrink: 0 !important;
-    border: 2px solid #e8eaf6 !important;
-}
-
-/* ── Text block ── */
-.main-nav .has-submenu .submenu.sub-menu-default>li>a .rk-nav-info {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    text-align: left;
-}
-
-.main-nav .has-submenu .submenu.sub-menu-default>li>a .rk-nav-info strong {
-    display: block;
-    font-size: .83rem !important;
-    font-weight: 600 !important;
-    color: #1a1a2e !important;
-    line-height: 1.3 !important;
-    transition: color .15s;
-}
-
-.main-nav .has-submenu .submenu.sub-menu-default>li>a .rk-nav-info small {
-    display: block;
-    font-size: .72rem !important;
-    color: #8a8a9a !important;
-    line-height: 1.2 !important;
-    font-weight: 400 !important;
-}
-
-/* ── Logo Fix (Smaller + Proper Alignment) ── */
-.navbar-brand.logo {
-    display: flex;
-    align-items: center;
-    padding: 0 !important;
-}
-
-.navbar-brand.logo img {
-    height: 55px !important;   /* 🔥 reduced from 80px */
-    width: auto !important;
-    max-width: 100% !important;
-    object-fit: contain;
-}
-
-/* Optional: adjust navbar height balance */
-.header-nav {
-    min-height: 70px;
-    display: flex;
-    align-items: center;
-}
-
-/* Mobile Fix */
-@media (max-width: 575.98px) {
-    .navbar-brand.logo img {
-        height: 40px !important;
-    }
-}
-@media (max-width: 991.98px) {
-    .main-nav .has-submenu .submenu.sub-menu-default {
-        position: static !important;
-        transform: none !important;
-        left: auto !important;
-        top: auto !important;
-        min-width: 100% !important;
-        max-width: 100% !important;
-        width: 100% !important;
-        box-shadow: none !important;
-        border-radius: 8px !important;
-        border: 1px solid #ebebeb !important;
-        margin-top: 6px !important;
-        opacity: 1 !important;
-        visibility: visible !important;
-    }
-}
-.header {
-    position: sticky !important;
-    top: 0 !important;
-    z-index: 9999 !important;
-    background: #fff !important;
-    box-shadow: 0 2px 15px rgba(0,0,0,0.08) !important;
-    width: 100% !important;
-}
-</style>
-<!-- Header -->
-<header class="header <?= $_headerClass ?>">
-    <div class="container">
-        <nav class="navbar navbar-expand-lg header-nav">
-
-            <!-- Logo / Mobile Toggle -->
-            <div class="navbar-header">
-                <a id="mobile_btn" href="javascript:void(0);">
-                    <i class="fa-solid fa-bars"></i>
-                </a>
-                <a href="<?= $_base ?>" class="navbar-brand logo">
-                    <img src="<?= $_base ?>assets/img/rk-hospital-best-hospital-in-nagpur.png" class="img-fluid" alt="RK Hospital">
-                </a>
-            </div>
-
-            <!-- Main Nav -->
-            <div class="header-menu">
-                <div class="main-menu-wrapper">
-
-                    <!-- Mobile drawer header -->
-                    <div class="menu-header">
-                        <a href="<?= $_base ?>" class="menu-logo">
-                            <img src="<?= $_base ?>assets/img/rk-hospital-best-hospital-in-nagpur.png" class="img-fluid" alt="RK Hospital">
-                        </a>
-                        <a id="menu_close" class="menu-close" href="javascript:void(0);">
-                            <i class="fas fa-times"></i>
-                        </a>
-                    </div>
-
-                    <ul class="main-nav">
-
-                        <li<?= navActive('home') ?>>
-                            <a href="<?= $_base ?>">Home</a>
-                            </li>
-
-                            <li class="has-submenu<?= strpos($_uri, '#') !== false ? ' active' : '' ?>">
-                                <a href="<?= $_base ?>#">
-                                    Doctors <span><i class="fa-solid fa-chevron-down"></i></span>
-                                </a>
-                                <?php if (!empty($_navDoctors)): ?>
-                                <ul class="submenu sub-menu-one sub-menu-default">
-                                    <?php foreach ($_navDoctors as $_dr): ?>
-                                    <li>
-                                        <a href="<?= $_base ?>doctors/<?= htmlspecialchars($_dr['slug']) ?>">
-                                            <img src="<?= $_base . htmlspecialchars($_dr['photo']) ?>"
-                                                alt="<?= htmlspecialchars($_dr['name']) ?>" class="rk-nav-avatar"
-                                                onerror="this.src='<?= $_base ?>assets/img/doctors/default.jpg'">
-                                            <span class="rk-nav-info">
-                                                <strong><?= htmlspecialchars($_dr['name']) ?></strong>
-                                                <?php if (!empty($_dr['designation'])): ?>
-                                                <small><?= htmlspecialchars($_dr['designation']) ?></small>
-                                                <?php endif; ?>
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <?php endforeach; ?>
-                                </ul>
-                                <?php endif; ?>
-                            </li>
-
-                            <li<?= navActive('service') ?>>
-                                <a href="<?= $_base ?>services">Services</a>
-                                </li>
-
-                                <li<?= navActive('blog') ?>>
-                                    <a href="<?= $_base ?>blogs">Blogs</a>
-                                    </li>
-
-                                    <li<?= navActive('about') ?>>
-                                        <a href="<?= $_base ?>about-us">About Us</a>
-                                        </li>
-
-                                        <li<?= navActive('contact') ?>>
-                                            <a href="<?= $_base ?>contact-us">Contact</a>
-                                            </li>
-
-                    </ul>
+             <div class="ul-2-header-logo-container">
+                    <a href="index-2.html"><img src="assets/img/logo.svg" alt="logo"></a>
                 </div>
-            </div>
 
-            <!-- Right CTA -->
-            <ul class="nav header-navbar-rht">
-                <li>
-                    <a href="<?= $_base ?>contact-us" class="btn btn-md btn-primary-gradient d-none d-lg-inline-block">
-                        <i class="isax isax-calendar-edit me-2"></i><span>Book Appointment</span>
+            <!-- RIGHT SECTION -->
+            <div class="ul-2-header-bottom-right">
+
+                <!-- NAVIGATION -->
+                <div class="ul-header-nav-wrapper">
+                    <div class="to-go-to-sidebar-in-mobile">
+                        <nav class="ul-header-nav">
+
+                            <!-- HOME -->
+                            <a href="<?= $_base ?>" <?= navActive('home') ?>>Home</a>
+
+                            <!-- ABOUT -->
+                            <a href="<?= $_base ?>about-us" <?= navActive('about') ?>>About</a>
+
+                            <!-- SERVICES -->
+                            <a href="<?= $_base ?>services" <?= navActive('service') ?>>Services</a>
+
+                            <!-- DOCTORS (DYNAMIC) -->
+                            <div class="has-sub-menu <?= strpos($_uri, 'doctors') !== false ? 'active' : '' ?>">
+                                <a role="button">Doctors</a>
+
+                                <?php if (!empty($_navDoctors)): ?>
+                                <div class="ul-header-submenu">
+                                    <ul>
+                                        <?php foreach ($_navDoctors as $_dr): ?>
+                                            <li>
+                                                <a href="<?= $_base ?>doctors/<?= htmlspecialchars($_dr['slug']) ?>">
+                                                    <?= htmlspecialchars($_dr['name']) ?>
+                                                </a>
+                                            </li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                </div>
+                                <?php endif; ?>
+                            </div>
+
+                            <!-- BLOG -->
+                            <a href="<?= $_base ?>blogs" <?= navActive('blog') ?>>Blogs</a>
+
+                            <!-- CONTACT -->
+                            <a href="<?= $_base ?>contact-us" <?= navActive('contact') ?>>Contact us</a>
+
+                        </nav>
+                    </div>
+                </div>
+
+                <!-- SEARCH -->
+                <button class="ul-header-search-opener">
+                    <i class="flaticon-search"></i>
+                </button>
+
+                <!-- BUTTONS -->
+                <div class="ul-2-header-bottom-btns">
+                    <a href="<?= $_base ?>login" class="ul-btn d-xl-flex d-none">
+                        Login <i class="flaticon-arrow-up-right"></i>
                     </a>
-                </li>
-            </ul>
 
-        </nav>
+                    <a href="<?= $_base ?>contact-us" class="ul-btn d-xxs-none">
+                        Book Appointment <i class="flaticon-arrow-up-right"></i>
+                    </a>
+                </div>
+
+                <!-- MOBILE MENU -->
+                <button class="ul-header-sidebar-opener d-lg-none d-flex">
+                    <i class="flaticon-hamburger"></i>
+                </button>
+
+            </div>
+        </div>
     </div>
 </header>
-
-<!-- /Header -->
+<!-- HEADER END -->
