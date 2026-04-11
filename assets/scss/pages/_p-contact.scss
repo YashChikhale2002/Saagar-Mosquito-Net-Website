@@ -1,0 +1,104 @@
+.ul-contact {
+    &-infos {
+        border-radius: 8px 8px;
+        overflow: hidden;
+
+        &-top {
+            background: linear-gradient(90deg, #1a1a1aa3 0%, rgba(255, 0, 0, 0.64) 100%), #1A1A1A;
+            padding: clamp(20px, 2.10vw, 40px);
+        }
+
+        &-header {
+            border-bottom: 1px solid rgba(191, 191, 191, 0.24);
+            padding-bottom: clamp(14px, 1.26vw, 24px);
+            margin-bottom: clamp(14px, 1.26vw, 24px);
+        }
+
+        &-title {
+            font-weight: 600;
+            font-size: clamp(20px, 1.26vw, 24px);
+            line-height: 100%;
+            color: #FCFCFC;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        &-descr {
+            font-weight: 400;
+            font-size: clamp(13px, 0.84vw, 16px);
+            line-height: 150%;
+            color: #FCFCFC;
+            opacity: 0.7;
+            margin-bottom: 0;
+        }
+
+        &-img {
+            width: 100%;
+        }
+    }
+
+    &-info {
+        display: flex;
+        gap: clamp(7px, 0.63vw, 12px);
+        align-items: center;
+        margin-bottom: clamp(16px, 1.68vw, 32px);
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+
+        &-icon {
+            border: 1px solid rgba(255, 255, 255, 0.24);
+            border-radius: 8px;
+            width: clamp(38px, 2.52vw, 48px);
+            aspect-ratio: 1/1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--ul-2-primary);
+        }
+
+        &-title {
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 150%;
+            color: var(--white);
+            display: block;
+        }
+
+        &-descr {
+            font-weight: 400;
+            font-size: clamp(13px, 0.84vw, 16px);
+            line-height: 150%;
+            color: var(--white);
+            opacity: 0.7;
+
+            a {
+                color: inherit;
+            }
+        }
+    }
+
+    &-map {
+        iframe {
+            width: 100%;
+            aspect-ratio: 1410/478;
+
+            @include xs {
+                aspect-ratio: 1/1;
+            }
+        }
+    }
+}
+
+.ul-inner-contact {
+    .ul-contact-form {
+        textarea {
+            height: clamp(173px, 9.98vw, 190px);
+
+            @include lg {
+                height: clamp(154px, 9.98vw, 190px);
+            }
+        }
+    }
+}

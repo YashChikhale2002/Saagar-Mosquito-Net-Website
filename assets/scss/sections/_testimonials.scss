@@ -1,0 +1,89 @@
+.ul-2-testimonials {
+    max-width: 1920px;
+    margin: auto;
+
+    .ul-2-section-title {
+        color: #1a1a1a;
+    }
+
+    &-slider {
+        --shadow-space: 40px;
+        padding: var(--shadow-space) 0;
+        margin: calc(0% - var(--shadow-space)) 0;
+    }
+}
+
+.ul-2-testimony {
+    background: var(--white);
+    box-shadow: 0px 4px 50px rgba(255, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: clamp(15px, 1.58vw, 30px);
+
+    &-top {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        margin-bottom: clamp(15px, 1.31vw, 25px);
+    }
+
+    &-reviewer {
+        display: flex;
+        align-items: center;
+        gap: clamp(10px, 0.68vw, 13px);
+
+        img {
+            width: clamp(46px, 2.94vw, 56px);
+            aspect-ratio: 1/1;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        &-name {
+            font-weight: 600;
+            font-size: clamp(17px, 1.05vw, 20px);
+            line-height: 140%;
+            letter-spacing: 0.5px;
+            color: #1A1A1A;
+            display: block;
+        }
+
+        &-role {
+            display: block;
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 131%;
+            color: var(--ul-2-primary);
+            opacity: 0.8;
+        }
+    }
+
+    &-quote-icon {
+        font-size: clamp(34px, 2.31vw, 44px);
+        font-size: clamp(44px, 2.89vw, 55px);
+        color: var(--ul-2-primary);
+        line-height: 1;
+    }
+
+    &-txt {
+        font-style: italic;
+        font-weight: 500;
+        font-size: clamp(15px, 0.95vw, 18px);
+        line-height: 144%;
+        letter-spacing: 0.5px;
+        color: #696969;
+        margin-bottom: clamp(16px, 1.84vw, 35px);
+    }
+
+    &-stars {
+        background-color: rgba(246, 177, 15, 0.10);
+        display: inline-flex;
+        gap: clamp(4px, 0.37vw, 7px);
+        border-radius: 99px;
+        padding: clamp(4px, 0.32vw, 6px) clamp(10px, 0.68vw, 13px);
+        font-size: 14px;
+
+        i {
+            color: #F6AF0F;
+        }
+    }
+}

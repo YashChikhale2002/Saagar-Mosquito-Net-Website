@@ -1,0 +1,170 @@
+/*!
+*    ______ _       _   _
+*    |  ____| |     | | (_)
+*    | |__  | | __ _| |_ _  ___ ___  _ __
+*    |  __| | |/ _` | __| |/ __/ _ \| '_ \
+*    | |    | | (_| | |_| | (_| (_) | | | |
+*    |_|    |_|\__,_|\__|_|\___\___/|_| |_|
+*
+*         https://www.flaticon.com
+*/
+
+@font-face {
+    font-family: "flaticon_cashflow";
+    src: url("./flaticon_cashflow.woff2?ebaad32faa68c9f84338482830fbc45f") format("woff2"),
+url("./flaticon_cashflow.woff?ebaad32faa68c9f84338482830fbc45f") format("woff"),
+url("./flaticon_cashflow.eot?ebaad32faa68c9f84338482830fbc45f#iefix") format("embedded-opentype"),
+url("./flaticon_cashflow.ttf?ebaad32faa68c9f84338482830fbc45f") format("truetype"),
+url("./flaticon_cashflow.svg?ebaad32faa68c9f84338482830fbc45f#flaticon_cashflow") format("svg")
+}
+
+i[class^="flaticon-"]:before, i[class*=" flaticon-"]:before {
+    font-family: flaticon_cashflow !important;
+    font-style: normal;
+    font-weight: normal !important;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.flaticon-dots:before {
+    content: "\f101";
+}
+.flaticon-user:before {
+    content: "\f102";
+}
+.flaticon-arrow-up-right:before {
+    content: "\f103";
+}
+.flaticon-arrow-right-double:before {
+    content: "\f104";
+}
+.flaticon-plus:before {
+    content: "\f105";
+}
+.flaticon-mail:before {
+    content: "\f106";
+}
+.flaticon-highlight-3:before {
+    content: "\f107";
+}
+.flaticon-highlight-4:before {
+    content: "\f108";
+}
+.flaticon-highlight-2:before {
+    content: "\f109";
+}
+.flaticon-highlight-1:before {
+    content: "\f10a";
+}
+.flaticon-mail-open:before {
+    content: "\f10b";
+}
+.flaticon-location-pin:before {
+    content: "\f10c";
+}
+.flaticon-close:before {
+    content: "\f10d";
+}
+.flaticon-hamburger:before {
+    content: "\f10e";
+}
+.flaticon-check:before {
+    content: "\f10f";
+}
+.flaticon-facebook-app-symbol:before {
+    content: "\f110";
+}
+.flaticon-linkedin:before {
+    content: "\f111";
+}
+.flaticon-instagram:before {
+    content: "\f112";
+}
+.flaticon-add-user:before {
+    content: "\f113";
+}
+.flaticon-armchair:before {
+    content: "\f114";
+}
+.flaticon-insurance-agent:before {
+    content: "\f115";
+}
+.flaticon-accounting:before {
+    content: "\f116";
+}
+.flaticon-money:before {
+    content: "\f117";
+}
+.flaticon-pension:before {
+    content: "\f118";
+}
+.flaticon-mutual-fund:before {
+    content: "\f119";
+}
+.flaticon-tick-inside-circle:before {
+    content: "\f11a";
+}
+.flaticon-play-button-arrowhead:before {
+    content: "\f11b";
+}
+.flaticon-accountant:before {
+    content: "\f11c";
+}
+.flaticon-business-and-finance:before {
+    content: "\f11d";
+}
+.flaticon-dashboard:before {
+    content: "\f11e";
+}
+.flaticon-arrow-down-sign-to-navigate:before {
+    content: "\f11f";
+}
+.flaticon-right-up:before {
+    content: "\f120";
+}
+.flaticon-check-1:before {
+    content: "\f121";
+}
+.flaticon-share:before {
+    content: "\f122";
+}
+.flaticon-twitter:before {
+    content: "\f123";
+}
+.flaticon-instagram-1:before {
+    content: "\f124";
+}
+.flaticon-clock:before {
+    content: "\f125";
+}
+.flaticon-telephone:before {
+    content: "\f126";
+}
+.flaticon-double-quotes:before {
+    content: "\f127";
+}
+.flaticon-star:before {
+    content: "\f128";
+}
+.flaticon-arrow-up-right-curve:before {
+    content: "\f129";
+}
+.flaticon-next:before {
+    content: "\f12a";
+}
+.flaticon-sms:before {
+    content: "\f12b";
+}
+.flaticon-back:before {
+    content: "\f12c";
+}
+.flaticon-search:before {
+    content: "\f12d";
+}
+.flaticon-calendar:before {
+    content: "\f12e";
+}
+

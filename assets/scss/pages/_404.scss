@@ -1,0 +1,52 @@
+.ul-404 {
+    text-align: center;
+    border-top: 1px solid rgba(26, 26, 26, 0.2);
+
+    &-img {
+        margin-bottom: clamp(24px, 2.52vw, 48px);
+
+        svg {
+            max-width: 100%;
+            height: auto;
+        }
+    }
+
+    &-title {
+        font-weight: 600;
+        font-size: clamp(26px, 2.94vw, 56px);
+        line-height: 114%;
+        text-align: center;
+        letter-spacing: 0.005em;
+        color: #1A1A1A;
+        margin-bottom: clamp(10px, 0.84vw, 16px);
+    }
+
+    &-descr {
+        font-weight: 400;
+        font-size: clamp(13px, 0.84vw, 16px);
+        line-height: 150%;
+        text-align: center;
+        color: #979797;
+        letter-spacing: 0.005em;
+        max-width: clamp(897px, 47.29vw, 900px);
+        margin: auto;
+        margin-bottom: clamp(24px, 2.52vw, 48px);
+    }
+
+    .ul-btn {
+        display: inline-flex;
+        background-color: var(--ul-2-primary);
+        border-color: var(--ul-2-primary);
+        color: var(--white);
+
+        i {
+            font-size: 12px;
+        }
+
+        &:hover {
+            background-color: var(--black);
+            border-color: var(--black);
+            color: var(--white);
+        }
+    }
+}

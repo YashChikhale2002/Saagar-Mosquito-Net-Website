@@ -1,0 +1,100 @@
+.ul-calculator {
+    background-color: #1A1A1A;
+    padding-top: clamp(32px, 1.84vw, 35px);
+    position: relative;
+    z-index: 1;
+
+    &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url(../img/calculator-bg.jpg) no-repeat center center/cover;
+        z-index: -1;
+        opacity: 0.2;
+    }
+
+    &-txt {
+        padding-right: clamp(20px, 3.42vw, 65px);
+        margin: clamp(25px, 5.83vw, 111px) 0;
+
+        @include sm {
+            padding-right: 0;
+        }
+    }
+
+    &-img {
+        &-wrapper {
+            width: max-content;
+            position: relative;
+            z-index: 1;
+
+            &::before,
+            &::after {
+                content: "";
+                position: absolute;
+                z-index: -1;
+                bottom: 0;
+                width: clamp(342px, 39.15vw, 745px);
+                aspect-ratio: 745/443;
+                background-color: var(--ul-2-primary);
+                clip-path: polygon(4.089% 29.059%, 4.089% 29.059%, 4.225% 27.562%, 4.453% 26.116%, 4.769% 24.734%, 5.168% 23.424%, 5.646% 22.198%, 6.198% 21.067%, 6.82% 20.04%, 7.507% 19.128%, 8.254% 18.342%, 9.057% 17.693%, 33.385% 0.737%, 33.385% 0.737%, 33.976% 0.392%, 34.578% 0.168%, 35.186% 0.065%, 35.793% 0.079%, 36.393% 0.209%, 36.981% 0.453%, 37.551% 0.81%, 38.096% 1.277%, 38.612% 1.853%, 39.091% 2.536%, 100% 100%, 0% 100%, 4.089% 29.059%);
+                left: -10px;
+            }
+
+            &::after {
+                left: clamp(73px, 7.67vw, 146px);
+                background-color: var(--white);
+                z-index: -2;
+            }
+        }
+
+        width: clamp(533px, 43.77vw, 833px);
+        max-width: none;
+        aspect-ratio: 833/674;
+
+        @include sm {
+            width: 150%;
+        }
+    }
+
+    &-form-wrapper form {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: clamp(10px, 0.84vw, 16px) clamp(15px, 1.58vw, 30px);
+
+        @include xxs {
+            grid-template-columns: repeat(1, 1fr);
+        }
+
+        label {
+            font-weight: 700;
+            font-size: clamp(13px, 0.84vw, 16px);
+            line-height: 150%;
+            letter-spacing: -0.01em;
+            color: var(--white);
+            margin-bottom: clamp(10px, 0.79vw, 15px);
+        }
+
+        input {
+            width: 100%;
+            color: var(--white);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            height: clamp(45px, 2.63vw, 50px);
+            padding: 0 clamp(15px, 1.05vw, 20px);
+
+            &:focus {
+                // background-color: var(--white);
+                border-color: var(--ul-2-primary);
+            }
+        }
+
+        button {
+            border-color: var(--ul-2-primary);
+            background-color: var(--ul-2-primary);
+            color: var(--white);
+            margin-top: clamp(14px, 1.26vw, 24px);
+        }
+    }
+}

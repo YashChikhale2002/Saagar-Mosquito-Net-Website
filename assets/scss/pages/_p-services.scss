@@ -1,0 +1,32 @@
+.ul-inner-services {
+    .ul-2-investments-wrapper {
+        margin-bottom: clamp(16px, 1.68vw, 32px);
+        border-color: rgba(26, 26, 26, 0.20);
+    }
+
+    .ul-2-investment-item {
+        border-color: rgba(26, 26, 26, 0.20);
+
+        &-img {
+            opacity: 1;
+        }
+
+        &:hover {
+            .ul-2-investment-item-title {
+                color: var(--white);
+            }
+        }
+
+        &-title {
+            // color: var(--white);
+
+            a:hover {
+                color: var(--ul-2-primary);
+            }
+        }
+
+        &-index {
+            // -webkit-text-stroke-color: rgba(255, 255, 255, 0.32);
+        }
+    }
+}

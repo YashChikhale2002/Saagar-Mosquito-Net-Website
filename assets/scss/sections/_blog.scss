@@ -1,0 +1,117 @@
+.ul-2-blogs {
+    background-color: #F6F6F6;
+    border-radius: clamp(12px, 1.05vw, 20px);
+    padding: clamp(60px, 6.31vw, 120px) 0;
+    position: relative;
+    z-index: 1;
+
+    .ul-section-heading {
+        .ul-btn {
+            background-color: var(--ul-2-primary);
+            border-color: var(--ul-2-primary);
+            color: var(--white);
+
+            i {
+                font-size: 10px;
+            }
+
+            &:hover {
+                background-color: var(--black);
+                border-color: var(--black);
+            }
+        }
+    }
+}
+
+
+.ul-2-blog {
+    background-color: var(--white);
+    padding: clamp(13px, 0.84vw, 16px);
+    border-radius: clamp(10px, 0.84vw, 16px);
+    transition: 0.3s ease;
+    height: 100%;
+
+    &:hover {
+        background-color: var(--white);
+    }
+
+    &-img {
+        border-radius: 12px;
+        overflow: hidden;
+        position: relative;
+        z-index: 1;
+
+        img {
+            width: 100%;
+            aspect-ratio: 418/236;
+            object-fit: cover
+        }
+    }
+
+    &-category {
+        position: absolute;
+        top: clamp(15px, 1.26vw, 24px);
+        left: clamp(15px, 1.26vw, 24px);
+        background-color: var(--ul-c3);
+        color: var(--ul-2-primary);
+        border-radius: 999px;
+        font-size: clamp(13px, 0.94vw, 16px);
+        font-weight: 400;
+        padding: clamp(3.5px, 0.26vw, 5px) clamp(10px, 0.95vw, 18px);
+        z-index: 2;
+    }
+
+    &-txt {
+        padding: clamp(15px, 1.26vw, 24px) clamp(5px, 0.42vw, 8px);
+    }
+
+    &-infos {
+        display: inline-flex;
+        gap: clamp(15px, 2.10vw, 40px);
+        font-size: clamp(12px, 0.94vw, 16px);
+        color: var(--ul-gray2);
+        margin-bottom: clamp(8px, 0.63vw, 12px);
+
+        >* {
+            display: inline-flex;
+            align-items: center;
+            gap: clamp(5px, 0.42vw, 10px);
+
+            i {
+                font-size: clamp(15px, 1.05vw, 20px);
+                color: var(--ul-2-primary);
+            }
+        }
+    }
+
+    &-title {
+        font-size: clamp(18px, 1.16vw, 22px);
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        margin-bottom: clamp(8px, 0.84vw, 16px);
+        line-height: 145%;
+
+        a {
+            color: var(--black);
+
+            &:hover {
+                color: var(--ul-2-primary);
+            }
+        }
+    }
+
+    &-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: clamp(7px, 0.53vw, 10px);
+        color: var(--ul-2-primary);
+
+        i {
+            font-size: clamp(12px, 0.84vw, 16px);
+        }
+
+        &:hover {
+            color: var(--black);
+        }
+    }
+}

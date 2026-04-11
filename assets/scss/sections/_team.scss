@@ -1,0 +1,177 @@
+.ul-2-team {
+    .ul-2-section-title {
+        color: #1a1a1a;
+    }
+
+    .ul-2-section-descr {
+        color: #696969;
+        font-weight: 400;
+        font-size: clamp(13px, 0.84vw, 16px);
+        line-height: 1.6;
+    }
+
+    &-heading-bottom {
+        border-top: 1px solid rgba(26, 26, 26, 0.2);
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: clamp(15px, 1.58vw, 30px) 0 0;
+
+        .imgs {
+            display: flex;
+            align-items: center;
+
+            >* {
+                width: clamp(46px, 2.73vw, 52px);
+                aspect-ratio: 1/1;
+                margin-left: calc(0% - clamp(12px, 0.79vw, 15px));
+                border: 3px solid var(--white);
+                border-radius: 999px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: clamp(11px, 0.74vw, 14px);
+                font-weight: 400;
+                color: var(--white);
+
+                &:first-child {
+                    margin-left: 0;
+                }
+            }
+
+            span {
+                background-color: #1a1a1a;
+            }
+        }
+    }
+
+    &-slider-nav {
+        display: flex;
+        align-items: center;
+        gap: clamp(7px, 0.53vw, 10px);
+
+        button {
+            width: clamp(40px, 2.31vw, 44px);
+            aspect-ratio: 1/1;
+            border-radius: 50%;
+            background-color: var(--ul-2-secondary);
+            color: var(--ul-2-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            &:hover {
+                background-color: var(--ul-2-primary);
+                color: var(--ul-2-secondary);
+            }
+        }
+    }
+
+    &-slider {
+        margin-left: calc(0% - clamp(0px, 13.40vw, 255px));
+
+        @include sm {
+            width: 100%;
+            margin-left: 0;
+        }
+    }
+
+    &-member {
+        position: relative;
+        overflow: hidden;
+
+        &:hover {
+            .ul-2-team-member-socials {
+                .links {
+                    transform: translateY(0);
+                    opacity: 1;
+                    pointer-events: all;
+                }
+            }
+        }
+
+        &-img {
+            img {
+                width: 100%;
+                aspect-ratio: 330/370;
+                border-radius: 6px;
+                object-fit: cover;
+            }
+        }
+
+        &-info {
+            background-color: var(--white);
+            inset: auto clamp(20px, 2.10vw, 40px) clamp(15px, 1.58vw, 30px);
+            position: absolute;
+            border-radius: 10px;
+            text-align: center;
+            padding: clamp(12px, 0.89vw, 17px);
+        }
+
+        &-name {
+            font-weight: 600;
+            font-size: clamp(17px, 1.05vw, 20px);
+            line-height: 1;
+            letter-spacing: -0.04em;
+            display: block;
+            color: var(--ul-2-primary);
+            margin-bottom: 5px;
+
+            a {
+                color: inherit;
+            }
+        }
+
+        &-role {
+            display: block;
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 114%;
+            letter-spacing: -0.04em;
+            color: #696969;
+        }
+
+        &-socials {
+            position: absolute;
+            left: clamp(20px, 1.26vw, 24px);
+            top: clamp(20px, 1.26vw, 24px);
+            overflow: hidden;
+            border-radius: 999px;
+
+            .links a,
+            .icon {
+                background-color: var(--white);
+                width: clamp(26px, 1.68vw, 32px);
+                aspect-ratio: 1/1;
+                border-radius: 50%;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .icon {
+                color: var(--ul-2-primary);
+                margin-bottom: clamp(9px, 0.63vw, 12px);
+                position: relative;
+                z-index: 1;
+            }
+
+            .links {
+                transform: translateY(-100%);
+                opacity: 0;
+                pointer-events: none;
+                gap: clamp(9px, 0.63vw, 12px);
+                display: flex;
+                flex-direction: column;
+                font-size: 14px;
+                transition: 0.5s ease;
+
+                a:hover {
+                    background-color: var(--ul-2-primary);
+                    color: var(--white);
+                }
+            }
+        }
+    }
+}

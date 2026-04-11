@@ -1,0 +1,209 @@
+.ul-2-investments {
+    padding: clamp(60px, 6.31vw, 120px) 0;
+    border-radius: 20px;
+    background: url(../img/investment-bg.jpg) no-repeat center center/cover;
+    position: relative;
+    z-index: 1;
+
+    &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: #1a1a1a;
+        border-radius: 20px;
+        opacity: 90%;
+        z-index: -1;
+    }
+
+    .ul-section {
+        &-heading {
+            @include sm {
+                flex-direction: column;
+            }
+
+            .left {
+                width: 50%;
+                flex-shrink: 0;
+
+                @include sm {
+                    width: 100%;
+                }
+            }
+
+            .right {
+                flex-shrink: unset;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                width: 48%;
+
+                @include sm {
+                    width: 100%;
+                }
+
+                @include xs {
+                    text-align: left;
+                }
+
+                @include xxs {
+                    flex-direction: column;
+                }
+            }
+
+            .ul-btn {
+                background-color: var(--white);
+                color: var(--ul-2-primary);
+                flex-shrink: 0;
+                border: none;
+
+                &:hover {
+                    background-color: var(--ul-2-primary);
+                    color: var(--white);
+                }
+            }
+        }
+
+    }
+
+    .ul-2-section-descr {
+        font-weight: 400;
+        max-width: clamp(270px, 17.34vw, 330px);
+    }
+
+    &-wrapper {
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+        overflow: hidden;
+        display: flex;
+        flex-wrap: wrap;
+
+        >* {
+            flex: calc(100% / 4);
+
+            @include md {
+                flex: calc(100% / 2);
+            }
+
+            @include xxs {
+                flex: calc(100% / 1);
+            }
+        }
+    }
+}
+
+.ul-2-investment-item {
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+    z-index: 1;
+
+    @include md {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+
+        &:nth-child(3),
+        &:nth-child(4) {
+            border-bottom: none;
+        }
+
+        &:nth-child(2) {
+            border-right: none;
+        }
+    }
+
+    @include xxs {
+        &:nth-child(3) {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        &:nth-child(1),
+        &:nth-child(3) {
+            border-right: none;
+        }
+    }
+
+    &:last-child {
+        border-right: none;
+    }
+
+    &:hover {
+        .ul-2-investment-item {
+            &-img {
+                opacity: 1;
+
+                img {
+                    transform: scale(1.1);
+                }
+            }
+
+            &-index {
+                color: var(--ul-2-primary);
+                -webkit-text-stroke-color: transparent;
+            }
+        }
+    }
+
+    &-img {
+        position: relative;
+        z-index: 1;
+        opacity: 0;
+        transition: 0.3s ease;
+        overflow: hidden;
+        height: 100%;
+
+        img {
+            width: 100%;
+            aspect-ratio: 352/399;
+            transition: 2s ease;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        &::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-color: #1a1a1a;
+            opacity: 60%;
+            z-index: 1;
+        }
+    }
+
+    &-txt {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        padding: clamp(15px, 1.58vw, 30px);
+        bottom: clamp(16px, 1.73vw, 33px);
+        bottom: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: space-between;
+    }
+
+    &-index {
+        font-weight: 600;
+        font-size: clamp(45px, 2.89vw, 55px);
+        line-height: 73%;
+        letter-spacing: -0.04em;
+        -webkit-text-stroke: 1px rgba(255, 255, 255, 0.3);
+        color: transparent;
+    }
+
+    &-title {
+        font-weight: 400;
+        font-size: clamp(20px, 1.37vw, 26px);
+        line-height: 154%;
+        letter-spacing: -0.04em;
+        color: var(--white);
+        margin-bottom: 0;
+        min-height: clamp(62px, 4.20vw, 80px);
+
+        &:hover {
+            color: var(--ul-2-primary);
+        }
+
+        a {
+            color: inherit;
+        }
+    }
+}

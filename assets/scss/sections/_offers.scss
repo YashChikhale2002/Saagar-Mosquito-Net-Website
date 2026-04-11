@@ -1,0 +1,118 @@
+.ul-offers {
+    position: relative;
+
+    .ul-section-heading {
+        position: sticky;
+        top: 120px;
+    }
+
+    &-wrapper {
+        position: relative;
+        // display: grid;
+        // margin-top: 3.5rem;
+
+        // >* {
+        //     grid-area: 1 / 1 / 2 / 2;
+        // }
+    }
+
+    &-gsap {
+        // position: relative !important;
+        // top: auto !important;
+        // left: auto !important;
+        z-index: 1;
+    }
+}
+
+.ul-offer {
+    background: var(--white);
+    box-shadow: 0px 4px 60px rgba(177, 5, 5, 0.1);
+    border-radius: 10px;
+    padding: clamp(20px, 1.58vw, 30px) clamp(15px, 1.58vw, 30px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: clamp(15px, 1.05vw, 20px);
+    // transition: 0.3s ease-in-out;
+    // margin-bottom: clamp(15px, 1.58vw, 30px);
+    // position: sticky;
+    position: sticky;
+
+    @include sm {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+
+    &.active {
+        background-color: var(--ul-2-primary);
+
+        .ul-offer-title,
+        .ul-offer-descr {
+            color: var(--white);
+        }
+    }
+
+    &-title {
+        font-weight: 700;
+        font-size: clamp(25px, 2.89vw, 55px);
+        line-height: 1.38;
+        color: var(--ul-black);
+        margin-bottom: 0;
+    }
+
+    &-descr {
+        max-width: clamp(350px, 23.65vw, 450px);
+        font-weight: 500;
+        font-size: clamp(13px, 0.84vw, 16px);
+        line-height: 1.5;
+        color: var(--ul-gray);
+        margin-bottom: 0;
+    }
+
+    &-img {
+        position: relative;
+        flex-shrink: 0;
+        overflow: hidden;
+
+        img {
+            max-width: clamp(309px, 27.27vw, 519px);
+            width: 100%;
+            aspect-ratio: 519/167;
+            border-radius: 10px;
+
+            @include sm {
+                max-width: 100%;
+            }
+        }
+
+        a {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            min-width: max-content;
+            background-color: var(--ul-secondary);
+            border-color: var(--ul-secondary);
+            color: var(--black);
+
+            &::before {
+                content: "";
+                position: absolute;
+                width: 305px;
+                height: 80px;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: var(--ul-secondary);
+                filter: blur(40px);
+                z-index: -1;
+                border-radius: 50%;
+            }
+        }
+    }
+}

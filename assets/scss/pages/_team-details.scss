@@ -1,0 +1,263 @@
+// inner team member card styles
+.ul-inner-team-member {
+    border: 1px solid var(--ul-gray);
+    transition: 0.3s ease;
+
+    &:hover {
+        border-color: var(--ul-secondary);
+
+        &::before {
+            background-color: var(--ul-gray);
+        }
+
+        .ul-team-member {
+            &-img {
+                border-color: var(--ul-secondary);
+            }
+
+            &-name a {
+                color: var(--ul-2-primary);
+            }
+
+            &-role {
+                color: var(--ul-gray2);
+            }
+        }
+    }
+
+    &::before {
+        top: 0;
+    }
+}
+
+.ul-team-details {
+    .row {
+        --bs-gutter-x: clamp(32px, 3.36vw, 64px);
+    }
+
+    &-top {
+        padding: 0 clamp(15px, 5.94vw, 113px) clamp(24px, 2.52vw, 48px);
+        border-bottom: 1px solid rgba(206, 207, 208, 0.48);
+
+        @include xxs {
+            padding: 0 0 clamp(24px, 2.52vw, 48px);
+        }
+    }
+
+    &-img {
+        border-radius: 6px;
+        overflow: hidden;
+
+        img {
+            width: 100%;
+            aspect-ratio: 565/599;
+            object-fit: cover;
+        }
+    }
+
+    &-name {
+        font-weight: 600;
+        font-size: clamp(24px, 2.52vw, 48px);
+        line-height: 117%;
+        color: #1a1a1a;
+        margin-bottom: clamp(4px, 0.32vw, 6px);
+    }
+
+    &-role {
+        font-weight: 500;
+        font-size: clamp(20px, 1.26vw, 24px);
+        line-height: 140%;
+        color: var(--ul-2-primary);
+        display: block;
+        margin-bottom: clamp(12px, 1.05vw, 20px);
+    }
+
+    &-descr {
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 150%;
+        color: var(--ul-gray2);
+        margin-bottom: clamp(16px, 1.68vw, 32px);
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    &-infos {
+        margin-bottom: clamp(12px, 1.26vw, 24px);
+        border: 1px solid rgba(206, 207, 208, 0.48);
+        border-radius: 16px;
+        background-color: rgba(206, 207, 208, 0.48);
+        overflow: hidden;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1px;
+
+        @include xxs {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    &-info {
+        background-color: var(--white);
+        padding: clamp(10px, 0.84vw, 16px) clamp(16px, 1.68vw, 32px);
+
+        &-title {
+            font-weight: 500;
+            font-size: clamp(15px, 0.95vw, 18px);
+            line-height: 144%;
+            color: #1A1A1A;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        a {
+            display: inline-flex;
+            font-weight: 400;
+            font-size: clamp(13px, 0.84vw, 16px);
+            line-height: 150%;
+            color: #696969;
+
+            &:hover {
+                color: var(--ul-2-primary);
+            }
+        }
+    }
+
+    &-socials {
+        display: flex;
+        gap: clamp(9px, 0.63vw, 12px);
+        padding-bottom: clamp(16px, 1.68vw, 32px);
+        border-bottom: 1px solid rgba(26, 26, 26, 0.16);
+        margin-bottom: clamp(20px, 2.10vw, 40px);
+
+        a {
+            width: clamp(28px, 1.68vw, 32px);
+            aspect-ratio: 1/1;
+            font-size: clamp(13px, 0.84vw, 16px);
+            border-radius: 50%;
+            color: #1a1a1a;
+            border: 1px solid rgba(26, 26, 26, 0.16);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+
+            &:hover {
+                color: var(--white);
+                border-color: var(--ul-2-primary);
+                background-color: var(--ul-2-primary);
+            }
+        }
+    }
+
+    &-inner-title {
+        font-weight: 500;
+        font-size: clamp(15px, 0.95vw, 18px);
+        line-height: 144%;
+        color: var(--black);
+    }
+
+    &-txt .ul-btn {
+        background-color: var(--ul-secondary);
+        display: inline-flex;
+        color: var(--white);
+
+        &:hover {
+            background-color: var(--ul-2-primary);
+        }
+    }
+
+    &-bottom {
+        margin-top: clamp(50px, 5.25vw, 100px);
+        border-top: 1px solid rgba(26, 26, 26, 0.2);
+        padding-top: clamp(28px, 2.94vw, 56px);
+
+        &-title {
+            font-weight: 700;
+            font-size: clamp(28px, 2.10vw, 40px);
+            line-height: 120%;
+            letter-spacing: 0.5px;
+            color: #1A1A1A;
+            margin-bottom: clamp(10px, 0.84vw, 16px);
+        }
+    }
+
+
+    &-skills {
+        .skills-title {
+            font-weight: 500;
+            font-size: clamp(15px, 0.95vw, 18px);
+            line-height: 144%;
+            letter-spacing: 0.5px;
+            color: #11112C;
+        }
+
+        .ul-progress-label {
+            font-weight: 500;
+            font-size: clamp(15px, 0.95vw, 18px);
+            color: #1A1A1A;
+            transform: translate(16px, -35px);
+        }
+
+        .ul-progressbar {
+            background-color: var(--ul-2-primary);
+            height: clamp(7px, 0.53vw, 10px);
+            border-radius: 16px;
+
+            &::before {
+                content: none;
+            }
+        }
+
+        .ul-progress-container {
+            border: none;
+            background-color: var(--ul-2-secondary);
+        }
+    }
+
+    &-skill {
+        margin-bottom: clamp(16px, 1.26vw, 24px);
+    }
+}
+
+.ul-contact-form {
+    padding: clamp(20px, 2.10vw, 40px);
+    border-radius: 16px;
+    background-color: #f6f6f6;
+
+    .row {
+        --bs-gutter-x: clamp(16px, 1.26vw, 24px);
+    }
+
+    input,
+    textarea {
+        width: 100%;
+        border: none;
+        outline: none;
+        border-bottom: 1px solid rgba(202, 210, 210, 0.7);
+        padding: clamp(9px, 0.63vw, 12px);
+        padding-top: 0;
+        background-color: transparent;
+
+        &:focus {
+            border-color: var(--ul-2-primary);
+        }
+    }
+
+    .ul-btn {
+        background-color: var(--ul-2-primary);
+        border-color: var(--ul-2-primary);
+        color: var(--white);
+
+        &:hover {
+            background-color: var(--black);
+            border-color: var(--black);
+        }
+
+        i {
+            font-size: 12px;
+        }
+    }
+}

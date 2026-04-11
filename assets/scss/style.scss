@@ -1,0 +1,88 @@
+/*!--------------------
+Template Name: Finantics - Finance Company & Forex Broker HTML Template
+Author: tempticspro
+Version: 1.0
+
+CSS INDEX
+=================== 
+01. CUSTOM PROPERTIES
+02. GLOBAL
+03. Components
+04. Sidebar
+05. Header
+06. Banner
+07. Ticker
+08. Features
+09. Market
+10. CTA
+11. Highlight
+12. Offers
+13. Platform
+14. Account Types
+15. FAQ
+16. Footer
+
+// index 2
+17. Calculator
+18. Blog
+19. About
+20. Solutions
+21. Stats
+22. Team
+23. Testimonials
+24. Investments
+25. Credit Card
+
+--- INNER PAGES
+26. Service Details Page
+27. Team Details Page
+28. Blog Details Page
+29. Blog List Page
+30. 404 Page
+31. Contact Page
+32. Services Page
+33. About Page
+
+*/
+
+@import "main/breakpoints";
+@import "main/variables";
+@import "main/global";
+@import "main/components";
+
+// sections
+@import "sections/sidebar";
+@import "sections/header";
+@import "sections/banner";
+@import "sections/ticker";
+@import "sections/features";
+@import "sections/market";
+@import "sections/cta";
+@import "sections/highlight";
+@import "sections/offers";
+@import "sections/platform";
+@import "sections/account-types";
+@import "sections/faq";
+@import "sections/footer";
+
+// index 2
+@import "sections/calculator";
+@import "sections/blog";
+@import "sections/about";
+@import "sections/solutions";
+@import "sections/stats";
+@import "sections/team";
+@import "sections/testimonials";
+@import "sections/investments";
+@import "sections/credit-card";
+
+
+// inner pages
+@import "pages/service-details";
+@import "pages/team-details";
+@import "pages/blog-details";
+@import "pages/p-blog";
+@import "pages/404";
+@import "pages/p-contact";
+@import "pages/p-services";
+@import "pages/p-about";

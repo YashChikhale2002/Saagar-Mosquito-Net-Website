@@ -1,0 +1,122 @@
+.ul-cta {
+    background: #1a1a1a;
+    position: relative;
+    z-index: 1;
+    padding: clamp(45px, 3.15vw, 60px) 0 clamp(60px, 6.31vw, 120px);
+
+    &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url(../img/cta-bg.jpg) no-repeat center top/cover;
+        z-index: -1;
+        // height: clamp(537px, 33.47vw, 637px);
+        top: -100px;
+        opacity: 20%;
+    }
+
+    &-content {
+        background-color: var(--ul-2-primary);
+        padding: clamp(20px, 2.10vw, 40px);
+        border-radius: 20px;
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+
+        @include sm {
+            flex-direction: column;
+            gap: 20px;
+            align-items: flex-start;
+        }
+    }
+
+    &-left {
+        display: flex;
+        flex-wrap: wrap;
+        gap: clamp(15px, 1.58vw, 30px);
+    }
+
+    &-card {
+        color: var(--white);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+        padding: clamp(14px, 1.05vw, 20px);
+
+        @include sm {
+            max-width: 50%;
+            flex-grow: 1;
+        }
+
+        @include xxs {
+            max-width: 100%;
+        }
+
+        &-title {
+            display: block;
+            font-weight: 700;
+            font-size: clamp(20px, 1.26vw, 24px);
+            line-height: 100%;
+            margin-bottom: clamp(10px, 0.79vw, 15px);
+
+            .colored {
+                color: var(--ul-secondary);
+            }
+        }
+
+        &-descr {
+            display: block;
+            line-break: anywhere;
+        }
+
+        &-2 {
+            background-color: var(--white);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: clamp(12px, 1.05vw, 20px);
+            font-weight: 600;
+            font-size: clamp(13px, 0.84vw, 16px);
+            line-height: 150%;
+            color: var(--ul-black);
+            padding: clamp(12px, 1.05vw, 20px);
+
+            @include sm {
+                flex-grow: 1;
+                max-width: 49%;
+            }
+
+            @include xs {
+                max-width: 100%;
+            }
+        }
+    }
+
+    &-right {
+        flex-grow: 1;
+        flex-shrink: 0;
+        display: flex;
+        justify-content: flex-end;
+
+        .ul-btn {
+            background-color: var(--white);
+            border-color: var(--white);
+            color: var(--ul-black);
+
+            &:hover {
+                background-color: var(--black);
+                border-color: var(--black);
+                color: var(--white);
+            }
+        }
+    }
+
+    &-img {
+        position: absolute;
+        bottom: 0;
+        z-index: -1;
+        right: 12.4%;
+        max-height: calc(100% - 30px);
+        max-width: clamp(269px, 19.39vw, 369px);
+    }
+}

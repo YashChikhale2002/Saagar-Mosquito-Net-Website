@@ -1,0 +1,105 @@
+$flaticon_acemax-font: "flaticon_acemax";
+
+@font-face {
+    font-family: $flaticon_acemax-font;
+    src: url("./flaticon_acemax.woff2?8fd8b04eb534ea0644917170bc81b5a2") format("woff2"),
+url("./flaticon_acemax.woff?8fd8b04eb534ea0644917170bc81b5a2") format("woff"),
+url("./flaticon_acemax.eot?8fd8b04eb534ea0644917170bc81b5a2#iefix") format("embedded-opentype"),
+url("./flaticon_acemax.ttf?8fd8b04eb534ea0644917170bc81b5a2") format("truetype"),
+url("./flaticon_acemax.svg?8fd8b04eb534ea0644917170bc81b5a2#flaticon_acemax") format("svg");
+}
+
+i[class^="flaticon-"]:before, i[class*=" flaticon-"]:before {
+    font-family: flaticon_acemax !important;
+    font-style: normal;
+    font-weight: normal !important;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+$flaticon_acemax-map: (
+    "dots": "\f101",
+    "user": "\f102",
+    "arrow-up-right": "\f103",
+    "arrow-right-double": "\f104",
+    "plus": "\f105",
+    "mail": "\f106",
+    "highlight-3": "\f107",
+    "highlight-4": "\f108",
+    "highlight-2": "\f109",
+    "highlight-1": "\f10a",
+    "mail-open": "\f10b",
+    "location-pin": "\f10c",
+    "close": "\f10d",
+    "hamburger": "\f10e",
+    "check": "\f10f",
+    "facebook-app-symbol": "\f110",
+    "twitter": "\f111",
+    "linkedin": "\f112",
+    "instagram": "\f113",
+    "add-user": "\f114",
+);
+
+.flaticon-dots:before {
+    content: map-get($flaticon_acemax-map, "dots");
+}
+.flaticon-user:before {
+    content: map-get($flaticon_acemax-map, "user");
+}
+.flaticon-arrow-up-right:before {
+    content: map-get($flaticon_acemax-map, "arrow-up-right");
+}
+.flaticon-arrow-right-double:before {
+    content: map-get($flaticon_acemax-map, "arrow-right-double");
+}
+.flaticon-plus:before {
+    content: map-get($flaticon_acemax-map, "plus");
+}
+.flaticon-mail:before {
+    content: map-get($flaticon_acemax-map, "mail");
+}
+.flaticon-highlight-3:before {
+    content: map-get($flaticon_acemax-map, "highlight-3");
+}
+.flaticon-highlight-4:before {
+    content: map-get($flaticon_acemax-map, "highlight-4");
+}
+.flaticon-highlight-2:before {
+    content: map-get($flaticon_acemax-map, "highlight-2");
+}
+.flaticon-highlight-1:before {
+    content: map-get($flaticon_acemax-map, "highlight-1");
+}
+.flaticon-mail-open:before {
+    content: map-get($flaticon_acemax-map, "mail-open");
+}
+.flaticon-location-pin:before {
+    content: map-get($flaticon_acemax-map, "location-pin");
+}
+.flaticon-close:before {
+    content: map-get($flaticon_acemax-map, "close");
+}
+.flaticon-hamburger:before {
+    content: map-get($flaticon_acemax-map, "hamburger");
+}
+.flaticon-check:before {
+    content: map-get($flaticon_acemax-map, "check");
+}
+.flaticon-facebook-app-symbol:before {
+    content: map-get($flaticon_acemax-map, "facebook-app-symbol");
+}
+.flaticon-twitter:before {
+    content: map-get($flaticon_acemax-map, "twitter");
+}
+.flaticon-linkedin:before {
+    content: map-get($flaticon_acemax-map, "linkedin");
+}
+.flaticon-instagram:before {
+    content: map-get($flaticon_acemax-map, "instagram");
+}
+.flaticon-add-user:before {
+    content: map-get($flaticon_acemax-map, "add-user");
+}
