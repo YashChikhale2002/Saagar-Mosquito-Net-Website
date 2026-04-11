@@ -55,23 +55,7 @@ if ($_navDoctorsRes) {
                             <a href="<?= $_base ?>services" <?= navActive('service') ?>>Services</a>
 
                             <!-- DOCTORS (DYNAMIC) -->
-                            <div class="has-sub-menu <?= strpos($_uri, 'doctors') !== false ? 'active' : '' ?>">
-                                <a role="button">Doctors</a>
-
-                                <?php if (!empty($_navDoctors)): ?>
-                                <div class="ul-header-submenu">
-                                    <ul>
-                                        <?php foreach ($_navDoctors as $_dr): ?>
-                                            <li>
-                                                <a href="<?= $_base ?>doctors/<?= htmlspecialchars($_dr['slug']) ?>">
-                                                    <?= htmlspecialchars($_dr['name']) ?>
-                                                </a>
-                                            </li>
-                                        <?php endforeach; ?>
-                                    </ul>
-                                </div>
-                                <?php endif; ?>
-                            </div>
+                           
 
                             <!-- BLOG -->
                             <a href="<?= $_base ?>blogs" <?= navActive('blog') ?>>Blogs</a>

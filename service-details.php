@@ -1,391 +1,252 @@
 <?php
-// Start session (for login systems later)
 session_start();
+include __DIR__ . '/include/config.php';
 
-include 'include/config.php';
+$slug = trim($_GET['slug'] ?? '');
 
+if (empty($slug)) {
+    header("Location: services.php");
+    exit;
+}
 
+$slugEsc = $conn->real_escape_string($slug);
+$result  = $conn->query("SELECT * FROM mosquito_services WHERE slug = '$slugEsc' AND is_active = 1 LIMIT 1");
+
+if (!$result || $result->num_rows === 0) {
+    header("HTTP/1.0 404 Not Found");
+    include __DIR__ . '/404.php';
+    exit;
+}
+
+$service = $result->fetch_assoc();
+
+$services_list  = json_decode($service['services_list'],  true) ?? [];
+$features_list  = json_decode($service['features_list'],  true) ?? [];
+$why_choose     = json_decode($service['why_choose_list'], true) ?? [];
+$faqs           = json_decode($service['faqs'],            true) ?? [];
+
+$meta_title          = $service['meta_title']          ?: $service['title'];
+$meta_description    = $service['meta_description']    ?: $service['short_desc'];
+$og_title            = $service['og_title']            ?: $meta_title;
+$og_description      = $service['og_description']      ?: $meta_description;
+$twitter_title       = $service['twitter_title']       ?: $meta_title;
+$twitter_description = $service['twitter_description'] ?: $meta_description;
+$robots_meta         = $service['robots_meta']         ?: 'index,follow';
+$canonical_url       = $service['canonical_url']       ?: ((!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title><?= htmlspecialchars($meta_title) ?></title>
+    <meta name="description" content="<?= htmlspecialchars($meta_description) ?>">
+    <?php if ($service['focus_keyword']): ?>
+    <meta name="keywords" content="<?= htmlspecialchars($service['focus_keyword']) ?>">
+    <?php endif; ?>
+    <meta name="robots" content="<?= htmlspecialchars($robots_meta) ?>">
+    <link rel="canonical" href="<?= htmlspecialchars($canonical_url) ?>">
+
+    <!-- Open Graph -->
+    <meta property="og:type"        content="<?= htmlspecialchars($service['og_type']) ?>">
+    <meta property="og:title"       content="<?= htmlspecialchars($og_title) ?>">
+    <meta property="og:description" content="<?= htmlspecialchars($og_description) ?>">
+    <?php if ($service['og_image']): ?>
+    <meta property="og:image"       content="<?= htmlspecialchars($service['og_image']) ?>">
+    <?php elseif ($service['image']): ?>
+    <meta property="og:image"       content="<?= htmlspecialchars($service['image']) ?>">
+    <?php endif; ?>
+    <meta property="og:url"         content="<?= htmlspecialchars($canonical_url) ?>">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card"        content="<?= htmlspecialchars($service['twitter_card']) ?>">
+    <meta name="twitter:title"       content="<?= htmlspecialchars($twitter_title) ?>">
+    <meta name="twitter:description" content="<?= htmlspecialchars($twitter_description) ?>">
+
+    <!-- Schema JSON-LD -->
+    <?php if (!empty($service['schema_json'])): ?>
+    <script type="application/ld+json"><?= $service['schema_json'] ?></script>
+    <?php endif; ?>
 
     <!-- Vendor CSS -->
     <link rel="stylesheet" href="assets/vendor/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="assets/vendor/swiper/swiper-bundle.min.css">
     <link rel="stylesheet" href="assets/vendor/animate-wow/animate.min.css">
     <link rel="stylesheet" href="assets/icon/flaticon_cashflow.css">
-
-    <!-- Custom CSS -->
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
 <body class="home-2">
-    <!-- LOGIN FORM START -->
-    <div class="ul-form-modal-bg" id="login-form-modal">
-        <div class="ul-form-modal-content">
-            <!-- close button -->
-            <button class="ul-form-modal-closer"><i class="flaticon-close"></i></button>
 
-            <div class="row row-cols-md-2 row-cols-1 g-0">
-                <div class="col">
-                    <div class="ul-form-modal-img">
-                        <img src="assets/img/login-amico.svg" alt="Illustration">
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="ul-form-modal-form-wrapper">
-                        <form action="#" class="ul-form-modal-form">
-                            <h2 class="ul-form-modal-title">Welcome Back!</h2>
-                            <p class="ul-form-modal-sub-title">Log in to your account</p>
-                            <div class="form-group">
-                                <!-- <label for="name"></label> -->
-                                <input type="text" name="name" id="name" placeholder="Username or Email">
-                            </div>
-
-                            <div class="form-group">
-                                <!-- <label for="password"></label> -->
-                                <input type="password" name="password" id="password" placeholder="Password">
-                            </div>
-
-                            <div class="form-group d-flex justify-content-between">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="remember">
-                                    <label class="form-check-label" for="remember">Remember Me</label>
-                                </div>
-                                <a href="#">Forgot Password?</a>
-                            </div>
-
-                            <div class="form-group mt-4">
-                                <button class="ul-btn w-100 justify-content-center">Login <i class="flaticon-arrow-up-right"></i></button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- LOGIN FORM END -->
-
-
-    <!-- LOAN APPLY FORM START -->
-    <div class="ul-form-modal-bg" id="loan-apply-form-modal">
-        <div class="ul-form-modal-content">
-            <!-- close button -->
-            <button class="ul-form-modal-closer"><i class="flaticon-close"></i></button>
-
-            <div class="row row-cols-md-2 row-cols-1 g-0">
-                <div class="col">
-                    <div class="ul-form-modal-img">
-                        <img src="assets/img/Manage money-pana.svg" alt="Illustration">
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="ul-form-modal-form-wrapper">
-                        <form action="#" class="ul-form-modal-form">
-                            <h2 class="ul-form-modal-title">Apply for Loan</h2>
-                            <p class="ul-form-modal-sub-title">Fill the form to apply for a loan</p>
-                            <!-- name -->
-                            <div class="form-group">
-                                <!-- <label for="name"></label> -->
-                                <input type="text" name="name" id="name" placeholder="Username or Email">
-                            </div>
-
-                            <!-- email -->
-                            <div class="form-group">
-                                <!-- <label for="email"></label> -->
-                                <input type="email" name="email" id="email" placeholder="Email Address">
-                            </div>
-
-                            <!-- address -->
-                            <div class="form-group">
-                                <!-- <label for="address"></label> -->
-                                <textarea type="text" name="address" id="address" placeholder="Full Address"></textarea>
-                            </div>
-
-                            <!-- amount -->
-                            <div class="form-group">
-                                <!-- <label for="amount"></label> -->
-                                <input type="text" name="amount" id="amount" placeholder="Loan Amount">
-                            </div>
-
-                            <!-- phone -->
-                            <div class="form-group">
-                                <!-- <label for="phone"></label> -->
-                                <input type="text" name="phone" id="phone" placeholder="Phone Number">
-                            </div>
-
-                            <!-- date -->
-                            <div class="form-group">
-                                <!-- <label for="date"></label> -->
-                                <input type="date" name="date" id="date" placeholder="Select Date">
-                            </div>
-
-                            <!-- password -->
-                            <div class="form-group">
-                                <!-- <label for="password"></label> -->
-                                <input type="password" name="password" id="password" placeholder="Password">
-                            </div>
-
-                            <!-- checkbox -->
-                            <div class="form-group">
-                                <div>
-                                    <input class="form-check-input" type="checkbox" id="terms">
-                                    <label class="form-check-label" for="terms">I agree to the terms and conditions</label>
-                                </div>
-                            </div>
-
-                            <!-- radio -->
-                            <div class="form-group d-flex gap-3">
-                                <div class="d-flex align-items-center gap-2">
-                                    <input type="radio" name="gender" id="male">
-                                    <label class="form-check-label" for="male">Male</label>
-                                </div>
-                                <div class="d-flex align-items-center gap-2">
-                                    <input type="radio" name="gender" id="female">
-                                    <label class="form-check-label" for="female">Female</label>
-                                </div>
-                            </div>
-
-                            <!-- select -->
-                            <div class="form-group">
-                                <select name="loan-type" id="loan-type">
-                                    <option value="" disabled selected>Select Loan Type</option>
-                                    <option value="personal-loan">Personal Loan</option>
-                                    <option value="home-loan">Home Loan</option>
-                                    <option value="auto-loan">Auto Loan</option>
-                                    <option value="student-loan">Student Loan</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group mt-4">
-                                <button class="ul-btn w-100 justify-content-center">Apply <i class="flaticon-arrow-up-right"></i></button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- LOAN APPLY FORM END -->
-
-
-    <div class="ul-sidebar">
-        <!-- header -->
-        <div class="ul-sidebar-header">
-            <div class="ul-sidebar-header-logo">
-                <a href="index.html">
-                    <img src="assets/img/logo.svg" alt="logo" class="logo">
-                </a>
-            </div>
-            <!-- sidebar closer -->
-            <button class="ul-sidebar-closer"><i class="flaticon-close"></i></button>
-        </div>
-
-        <div class="ul-sidebar-header-nav-wrapper d-block d-lg-none"></div>
-
-
-        <!-- sidebar footer -->
-        <div class="ul-sidebar-footer">
-            <span class="ul-sidebar-footer-title">Follow us</span>
-
-            <div class="ul-sidebar-footer-social">
-                <a href="#"><i class="flaticon-facebook-app-symbol"></i></a>
-                <a href="#"><i class="flaticon-twitter"></i></a>
-                <a href="#"><i class="flaticon-linkedin"></i></a>
-                <a href="#"><i class="flaticon-instagram"></i></a>
-            </div>
-        </div>
-    </div>
-
-    <!-- search -->
-    <div class="ul-search-form-wrapper flex-grow-1 flex-shrink-0">
-        <button class="ul-search-closer"><i class="flaticon-close"></i></button>
-
-        <form action="#" class="ul-search-form">
-            <div class="ul-search-form-right">
-                <input type="search" name="search" id="ul-search" placeholder="Search Here">
-                <button type="submit"><span class="icon"><i class="flaticon-search"></i></span></button>
-            </div>
-        </form>
-    </div>
-
-   <?php include 'include/header.php'; ?>
+    <!-- HEADER -->
+    <?php include __DIR__ . '/include/header.php'; ?>
 
     <main>
-        <!-- BREADCRUMB SECTION START -->
+
+        <!-- BREADCRUMB -->
         <section class="ul-breadcrumb ul-2-banner">
             <div class="ul-container">
-                <h1 class="ul-breadcrumb-title">Services Details</h1>
+                <h1 class="ul-breadcrumb-title"><?= htmlspecialchars($service['title']) ?></h1>
                 <div class="ul-breadcrumb-nav">
-                    <a href="index.html">Home</a>
+                    <a href="index.php">Home</a>
                     <span class="separator"><i class="flaticon-next"></i></span>
-                    <span class="current">Service Details</span>
+                    <a href="services.php">Services</a>
+                    <span class="separator"><i class="flaticon-next"></i></span>
+                    <span class="current"><?= htmlspecialchars($service['title']) ?></span>
                 </div>
             </div>
         </section>
-        <!-- BREADCRUMB SECTION END -->
 
-
-        <!-- SERVICE DETAILS SECTION START -->
+        <!-- SERVICE DETAILS -->
         <section class="ul-service-details ul-section-spacing pb-4">
             <div class="ul-container">
                 <div class="ul-service-details-txt">
-                    <h2 class="ul-service-details-title">Comprehensive Corporate Real Estate Solutions</h2>
-                    <p class="ul-service-details-descr">-We offer strategic, end-to-end real estate solutions tailored for corporate clients. From acquisition and financing to portfolio management and asset optimization, our dedicated team ensures your business spaces align with your financial goals. Whether expanding, relocating, or consolidating operations, we provide expert guidance every step of the way — backed by deep industry insights and secure financial structuring.</p>
+
+                    <h2 class="ul-service-details-title">
+                        <?= htmlspecialchars($service['title']) ?>
+                    </h2>
+
+                    <p class="ul-service-details-descr">
+                        <?= htmlspecialchars($service['short_desc']) ?>
+                    </p>
+
+                    <?php if ($service['image']): ?>
                     <div class="ul-service-details-img">
-                        <img src="assets/img/service-details-img.jpg" alt="Service Details">
+                        <img src="<?= htmlspecialchars($service['image']) ?>" alt="<?= htmlspecialchars($service['title']) ?>">
                     </div>
+                    <?php endif; ?>
+
+                    <p class="ul-service-details-descr mt-4">
+                        <?= nl2br(htmlspecialchars($service['description'])) ?>
+                    </p>
+
+                    <?php if (!empty($services_list) || !empty($features_list)): ?>
                     <div class="ul-service-details-blocks">
+                        <?php if (!empty($services_list)): ?>
                         <div class="ul-service-details-block">
                             <h3 class="ul-service-details-block-title">Our Services</h3>
                             <ul>
-                                <li>Real estate acquisition & disposition</li>
-                                <li>Lease advisory & negotiation</li>
-                                <li>Property financing & refinancing</li>
-                                <li>Portfolio & asset management</li>
-                                <li>Construction project financing</li>
-                                <li>Market analysis & investment strategy</li>
+                                <?php foreach ($services_list as $item): ?>
+                                <li><?= htmlspecialchars($item) ?></li>
+                                <?php endforeach; ?>
                             </ul>
                         </div>
+                        <?php endif; ?>
+
+                        <?php if (!empty($features_list)): ?>
                         <div class="ul-service-details-block">
-                            <h3 class="ul-service-details-block-title">Industries We Serve</h3>
+                            <h3 class="ul-service-details-block-title">Key Features</h3>
                             <ul>
-                                <li>Office & Corporate Headquarters</li>
-                                <li>Logistics & Industrial Warehousing</li>
-                                <li>Retail & Commercial Spaces</li>
-                                <li>Hospitality & Mixed-Use Developments</li>
-                                <li>Healthcare & Education Facilities</li>
-                                <li>Technology Parks & Data Centers</li>
+                                <?php foreach ($features_list as $item): ?>
+                                <li><?= htmlspecialchars($item) ?></li>
+                                <?php endforeach; ?>
                             </ul>
                         </div>
+                        <?php endif; ?>
                     </div>
+                    <?php endif; ?>
+
+                    <?php if ($service['extra_block_title']): ?>
                     <div class="ul-service-details-block">
-                        <h3 class="ul-service-details-block-title">Real Estate Financing Solutions</h3>
-                        <p class="ul-service-details-block-descr">Access competitive loan options for commercial property acquisition, refinancing, or development. We structure custom financing packages to suit your timeline, budget, and cash flow needs.</p>
+                        <h3 class="ul-service-details-block-title">
+                            <?= htmlspecialchars($service['extra_block_title']) ?>
+                        </h3>
+                        <p class="ul-service-details-block-descr">
+                            <?= htmlspecialchars($service['extra_block_desc']) ?>
+                        </p>
                     </div>
+                    <?php endif; ?>
+
                     <div class="d-flex align-items-end gap-4 flex-lg-nowrap flex-wrap">
                         <div class="ul-service-details-block">
+                            <?php if (!empty($why_choose)): ?>
                             <h3 class="ul-service-details-block-title mt-0">Why Choose Us?</h3>
                             <ul class="d-flex flex-column">
-                                <li>Dedicated Corporate Real Estate Banking Team</li>
-                                <li>Customized Financing Structures</li>
-                                <li>Market & Regulatory Expertise</li>
-                                <li>End-to-End Project Support</li>
-                                <li>Local & Global Market Reach</li>
+                                <?php foreach ($why_choose as $item): ?>
+                                <li><?= htmlspecialchars($item) ?></li>
+                                <?php endforeach; ?>
                             </ul>
+                            <?php endif; ?>
 
+                            <?php if ($service['testimonial_text']): ?>
                             <blockquote>
-                                <p class="descr">Professional, fast, and SEO-friendly content. Our website now ranks higher and converts better. Great experience from start to finish!</p>
-
+                                <p class="descr"><?= htmlspecialchars($service['testimonial_text']) ?></p>
                                 <div class="author">
+                                    <?php if ($service['testimonial_image']): ?>
                                     <div class="author-img">
-                                        <img src="assets/img/user-3.png" alt="User">
+                                        <img src="<?= htmlspecialchars($service['testimonial_image']) ?>"
+                                             alt="<?= htmlspecialchars($service['testimonial_name']) ?>">
                                     </div>
+                                    <?php endif; ?>
                                     <div class="author-info">
-                                        <h4 class="author-name">John Doe</h4>
-                                        <span class="author-title">Marketing Director, EcoBrand Solutions</span>
+                                        <h4 class="author-name"><?= htmlspecialchars($service['testimonial_name']) ?></h4>
+                                        <span class="author-title"><?= htmlspecialchars($service['testimonial_role']) ?></span>
                                     </div>
                                 </div>
-
                                 <div class="quote-icon"><i class="flaticon-double-quotes"></i></div>
                                 <img src="assets/img/service-details-quote-vector.svg" alt="vector" class="vector">
                             </blockquote>
+                            <?php endif; ?>
                         </div>
-                        <div class="ul-service-details-block-img"><img src="assets/img/service-inner-img.jpg" alt="Inner Image"></div>
+
+                        <?php if ($service['inner_image']): ?>
+                        <div class="ul-service-details-block-img">
+                            <img src="<?= htmlspecialchars($service['inner_image']) ?>"
+                                 alt="<?= htmlspecialchars($service['title']) ?>">
+                        </div>
+                        <?php endif; ?>
                     </div>
 
-                    <div class="ul-service-details-block">
-                        <h3 class="ul-service-details-block-title">Real Estate Financing</h3>
-                        <p class="ul-service-details-block-descr">We provide tailored financing for commercial real estate acquisition, construction, and refinancing. Choose from a range of loan products including term loans, revolving credit, and structured finance options.</p>
-                    </div>
                 </div>
             </div>
         </section>
-        <!-- SERVICE DETAILS SECTION END -->
 
-
-        <!-- FAQ SECTION START -->
+        <!-- FAQ SECTION -->
+        <?php if (!empty($faqs)): ?>
         <section class="ul-inner-faq ul-section-spacing pt-0">
             <div class="ul-container">
                 <div class="row">
                     <div class="col-5">
                         <div class="ul-inner-faq-img d-lg-block d-none">
-                            <img src="assets/img/question.svg" alt="Icon">
+                            <img src="assets/img/question.svg" alt="FAQ">
                         </div>
                     </div>
-                    <!-- txt -->
                     <div class="col-lg-7 col-12">
                         <div class="ul-2-faq-txt ms-lg-4 ms-0">
                             <div class="ul-2-faq-accordion ul-accordion">
-                                <div class="ul-single-accordion-item open">
+                                <?php foreach ($faqs as $i => $faq): ?>
+                                <div class="ul-single-accordion-item <?= $i === 0 ? 'open' : '' ?>">
                                     <div class="ul-single-accordion-item__header">
                                         <div class="left">
-                                            <span class="ul-single-accordion-item__index">01</span>
-                                            <span class="ul-single-accordion-item__title">How do I open a new account?</span>
+                                            <span class="ul-single-accordion-item__index">
+                                                <?= str_pad($i + 1, 2, '0', STR_PAD_LEFT) ?>
+                                            </span>
+                                            <span class="ul-single-accordion-item__title">
+                                                <?= htmlspecialchars($faq['question']) ?>
+                                            </span>
                                         </div>
-                                        <span class="ul-single-accordion-item__icon"><i class="flaticon-arrow-down-sign-to-navigate"></i></span>
+                                        <span class="ul-single-accordion-item__icon">
+                                            <i class="flaticon-arrow-down-sign-to-navigate"></i>
+                                        </span>
                                     </div>
                                     <div class="ul-single-accordion-item__body">
-                                        <p class="ul-single-accordion-item__content">Automation & workflow features include a drag & drop builder, automated task assignments, conditional with good triggers, & api integrations. Automation & workflow features include a drag & drop builder, automated.</p>
+                                        <p class="ul-single-accordion-item__content">
+                                            <?= htmlspecialchars($faq['answer']) ?>
+                                        </p>
                                     </div>
                                 </div>
-
-                                <div class="ul-single-accordion-item">
-                                    <div class="ul-single-accordion-item__header">
-                                        <div class="left">
-                                            <span class="ul-single-accordion-item__index">02</span>
-                                            <span class="ul-single-accordion-item__title">How can I check my account balance?</span>
-                                        </div>
-                                        <span class="ul-single-accordion-item__icon"><i class="flaticon-arrow-down-sign-to-navigate"></i></span>
-                                    </div>
-                                    <div class="ul-single-accordion-item__body">
-                                        <p class="ul-single-accordion-item__content">Automation & workflow features include a drag & drop builder, automated task assignments, conditional with good triggers, & api integrations. Automation & workflow features include a drag & drop builder, automated.</p>
-                                    </div>
-                                </div>
-
-                                <div class="ul-single-accordion-item">
-                                    <div class="ul-single-accordion-item__header">
-                                        <div class="left">
-                                            <span class="ul-single-accordion-item__index">03</span>
-                                            <span class="ul-single-accordion-item__title">How do I open a new account?</span>
-                                        </div>
-                                        <span class="ul-single-accordion-item__icon"><i class="flaticon-arrow-down-sign-to-navigate"></i></span>
-                                    </div>
-                                    <div class="ul-single-accordion-item__body">
-                                        <p class="ul-single-accordion-item__content">Automation & workflow features include a drag & drop builder, automated task assignments, conditional with good triggers, & api integrations. Automation & workflow features include a drag & drop builder, automated.</p>
-                                    </div>
-                                </div>
-
-                                <div class="ul-single-accordion-item">
-                                    <div class="ul-single-accordion-item__header">
-                                        <div class="left">
-                                            <span class="ul-single-accordion-item__index">04</span>
-                                            <span class="ul-single-accordion-item__title">How do I open a new account?</span>
-                                        </div>
-                                        <span class="ul-single-accordion-item__icon"><i class="flaticon-arrow-down-sign-to-navigate"></i></span>
-                                    </div>
-                                    <div class="ul-single-accordion-item__body">
-                                        <p class="ul-single-accordion-item__content">Automation & workflow features include a drag & drop builder, automated task assignments, conditional with good triggers, & api integrations. Automation & workflow features include a drag & drop builder, automated.</p>
-                                    </div>
-                                </div>
+                                <?php endforeach; ?>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-        <!-- FAQ SECTION END -->
+        <?php endif; ?>
+
     </main>
 
-    <?php include 'include/footer.php'; ?>
-
+    <?php include __DIR__ . '/include/footer.php'; ?>
 
     <!-- Vendor JS -->
     <script src="assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
@@ -396,10 +257,8 @@ include 'include/config.php';
     <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    <!-- Custom JS -->
     <script src="assets/js/main.js"></script>
     <script src="assets/js/tab.js"></script>
     <script src="assets/js/accordion.js"></script>
 </body>
-
 </html>

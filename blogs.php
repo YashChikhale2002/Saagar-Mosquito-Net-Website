@@ -4,7 +4,43 @@ session_start();
 
 include 'include/config.php';
 
+// ── Filters ──
+$active_cat   = isset($_GET['category']) ? intval($_GET['category'])  : 0;
+$search_query = isset($_GET['search'])   ? trim($_GET['search'])      : '';
 
+// ── Pagination ──
+$per_page     = 6;
+$current_page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
+$offset       = ($current_page - 1) * $per_page;
+
+// ── WHERE clause ──
+$where = "b.is_published = 1";
+if ($active_cat > 0) {
+    $where .= " AND b.categories = " . intval($active_cat);
+}
+if ($search_query !== '') {
+    $safe_search = $conn->real_escape_string($search_query);
+    $where .= " AND (b.title LIKE '%$safe_search%' OR b.excerpt LIKE '%$safe_search%')";
+}
+
+// ── Total count ──
+$count_result = $conn->query("SELECT COUNT(*) as total FROM blogs b WHERE $where");
+$total_blogs  = $count_result->fetch_assoc()['total'];
+$total_pages  = max(1, ceil($total_blogs / $per_page));
+
+// ── Fetch blogs ──
+$blogs_result = $conn->query("
+    SELECT b.*, bc.name as cat_name
+    FROM blogs b
+    LEFT JOIN blog_categories bc ON bc.id = b.categories
+    WHERE $where
+    ORDER BY b.published_at DESC
+    LIMIT $per_page OFFSET $offset
+");
+$all_blogs = [];
+while ($row = $blogs_result->fetch_assoc()) {
+    $all_blogs[] = $row;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -44,12 +80,10 @@ include 'include/config.php';
                             <h2 class="ul-form-modal-title">Welcome Back!</h2>
                             <p class="ul-form-modal-sub-title">Log in to your account</p>
                             <div class="form-group">
-                                <!-- <label for="name"></label> -->
                                 <input type="text" name="name" id="name" placeholder="Username or Email">
                             </div>
 
                             <div class="form-group">
-                                <!-- <label for="password"></label> -->
                                 <input type="password" name="password" id="password" placeholder="Password">
                             </div>
 
@@ -91,57 +125,33 @@ include 'include/config.php';
                         <form action="#" class="ul-form-modal-form">
                             <h2 class="ul-form-modal-title">Apply for Loan</h2>
                             <p class="ul-form-modal-sub-title">Fill the form to apply for a loan</p>
-                            <!-- name -->
                             <div class="form-group">
-                                <!-- <label for="name"></label> -->
-                                <input type="text" name="name" id="name" placeholder="Username or Email">
+                                <input type="text" name="name" id="loan_name" placeholder="Username or Email">
                             </div>
-
-                            <!-- email -->
                             <div class="form-group">
-                                <!-- <label for="email"></label> -->
                                 <input type="email" name="email" id="email" placeholder="Email Address">
                             </div>
-
-                            <!-- address -->
                             <div class="form-group">
-                                <!-- <label for="address"></label> -->
-                                <textarea type="text" name="address" id="address" placeholder="Full Address"></textarea>
+                                <textarea name="address" id="address" placeholder="Full Address"></textarea>
                             </div>
-
-                            <!-- amount -->
                             <div class="form-group">
-                                <!-- <label for="amount"></label> -->
                                 <input type="text" name="amount" id="amount" placeholder="Loan Amount">
                             </div>
-
-                            <!-- phone -->
                             <div class="form-group">
-                                <!-- <label for="phone"></label> -->
                                 <input type="text" name="phone" id="phone" placeholder="Phone Number">
                             </div>
-
-                            <!-- date -->
                             <div class="form-group">
-                                <!-- <label for="date"></label> -->
                                 <input type="date" name="date" id="date" placeholder="Select Date">
                             </div>
-
-                            <!-- password -->
                             <div class="form-group">
-                                <!-- <label for="password"></label> -->
-                                <input type="password" name="password" id="password" placeholder="Password">
+                                <input type="password" name="password" id="loan_password" placeholder="Password">
                             </div>
-
-                            <!-- checkbox -->
                             <div class="form-group">
                                 <div>
                                     <input class="form-check-input" type="checkbox" id="terms">
                                     <label class="form-check-label" for="terms">I agree to the terms and conditions</label>
                                 </div>
                             </div>
-
-                            <!-- radio -->
                             <div class="form-group d-flex gap-3">
                                 <div class="d-flex align-items-center gap-2">
                                     <input type="radio" name="gender" id="male">
@@ -152,8 +162,6 @@ include 'include/config.php';
                                     <label class="form-check-label" for="female">Female</label>
                                 </div>
                             </div>
-
-                            <!-- select -->
                             <div class="form-group">
                                 <select name="loan-type" id="loan-type">
                                     <option value="" disabled selected>Select Loan Type</option>
@@ -163,7 +171,6 @@ include 'include/config.php';
                                     <option value="student-loan">Student Loan</option>
                                 </select>
                             </div>
-
                             <div class="form-group mt-4">
                                 <button class="ul-btn w-100 justify-content-center">Apply <i class="flaticon-arrow-up-right"></i></button>
                             </div>
@@ -190,11 +197,9 @@ include 'include/config.php';
 
         <div class="ul-sidebar-header-nav-wrapper d-block d-lg-none"></div>
 
-
         <!-- sidebar footer -->
         <div class="ul-sidebar-footer">
             <span class="ul-sidebar-footer-title">Follow us</span>
-
             <div class="ul-sidebar-footer-social">
                 <a href="#"><i class="flaticon-facebook-app-symbol"></i></a>
                 <a href="#"><i class="flaticon-twitter"></i></a>
@@ -207,7 +212,6 @@ include 'include/config.php';
     <!-- search -->
     <div class="ul-search-form-wrapper flex-grow-1 flex-shrink-0">
         <button class="ul-search-closer"><i class="flaticon-close"></i></button>
-
         <form action="#" class="ul-search-form">
             <div class="ul-search-form-right">
                 <input type="search" name="search" id="ul-search" placeholder="Search Here">
@@ -216,7 +220,7 @@ include 'include/config.php';
         </form>
     </div>
 
-   <?php include 'include/header.php'; ?>
+    <?php include 'include/header.php'; ?>
 
     <main>
         <!-- BREADCRUMB SECTION START -->
@@ -224,7 +228,7 @@ include 'include/config.php';
             <div class="ul-container">
                 <h1 class="ul-breadcrumb-title">Our Blogs</h1>
                 <div class="ul-breadcrumb-nav">
-                    <a href="index.html">Home</a>
+                    <a href="index.php">Home</a>
                     <span class="separator"><i class="flaticon-next"></i></span>
                     <span class="current">Our Blogs</span>
                 </div>
@@ -236,116 +240,71 @@ include 'include/config.php';
         <!-- BLOG SECTION START -->
         <section class="ul-2-blogs ul-2-banner ul-section-spacing">
             <div class="ul-container">
-                <!-- blogs  -->
+
+                <!-- blogs -->
                 <div class="row row-cols-lg-3 row-cols-sm-2 row-cols-1 ul-bs-row">
-                    <!-- single blog -->
-                    <div class="col">
-                        <div class="ul-2-blog">
-                            <div class="ul-2-blog-img">
-                                <img src="assets/img/blog-1.jpg" alt="Blog Image">
-                            </div>
 
-                            <div class="ul-2-blog-txt">
-                                <div class="ul-2-blog-infos">
-                                    <span><i class="flaticon-calendar"></i> 11 March 2025</span>
-                                    <span><i class="flaticon-sms"></i> 05 Comments</span>
+                    <?php if (!empty($all_blogs)): ?>
+                        <?php foreach ($all_blogs as $blog): ?>
+                        <!-- single blog -->
+                        <div class="col">
+                            <div class="ul-2-blog">
+                                <div class="ul-2-blog-img">
+                                    <img src="<?php echo htmlspecialchars($blog['image']); ?>" alt="<?php echo htmlspecialchars($blog['title']); ?>">
                                 </div>
-                                <h3 class="ul-2-blog-title"><a href="blog-details.html">Meeting of business in modern office.</a></h3>
-                                <a href="blog-details.html" class="ul-2-blog-btn">Read More <i class="flaticon-arrow-up-right"></i></a>
+
+                                <div class="ul-2-blog-txt">
+                                    <div class="ul-2-blog-infos">
+                                        <span><i class="flaticon-calendar"></i> <?php echo date('d F Y', strtotime($blog['published_at'])); ?></span>
+                                        <span><i class="flaticon-clock"></i> <?php echo !empty($blog['reading_time']) ? $blog['reading_time'] . ' Min Read' : '1 Min Read'; ?></span>
+                                    </div>
+                                    <h3 class="ul-2-blog-title">
+                                        <a href="blog-details.php?slug=<?php echo urlencode($blog['slug']); ?>">
+                                            <?php echo htmlspecialchars($blog['title']); ?>
+                                        </a>
+                                    </h3>
+                                    <a href="blog-details.php?slug=<?php echo urlencode($blog['slug']); ?>" class="ul-2-blog-btn">
+                                        Read More <i class="flaticon-arrow-up-right"></i>
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                        <?php endforeach; ?>
 
-                    <!-- single blog -->
-                    <div class="col">
-                        <div class="ul-2-blog">
-                            <div class="ul-2-blog-img">
-                                <img src="assets/img/blog-2.jpg" alt="Blog Image">
-                            </div>
-
-                            <div class="ul-2-blog-txt">
-                                <div class="ul-2-blog-infos">
-                                    <span><i class="flaticon-calendar"></i> 11 March 2025</span>
-                                    <span><i class="flaticon-sms"></i> 05 Comments</span>
-                                </div>
-                                <h3 class="ul-2-blog-title"><a href="blog-details.html">Person looking over our finance graphs.</a></h3>
-                                <a href="blog-details.html" class="ul-2-blog-btn">Read More <i class="flaticon-arrow-up-right"></i></a>
-                            </div>
+                    <?php else: ?>
+                        <div class="col-12">
+                            <p class="text-center py-5">No blogs found.</p>
                         </div>
-                    </div>
+                    <?php endif; ?>
 
-                    <!-- single blog -->
-                    <div class="col">
-                        <div class="ul-2-blog">
-                            <div class="ul-2-blog-img">
-                                <img src="assets/img/blog-3.jpg" alt="Blog Image">
-                            </div>
-
-                            <div class="ul-2-blog-txt">
-                                <div class="ul-2-blog-infos">
-                                    <span><i class="flaticon-calendar"></i> 11 March 2025</span>
-                                    <span><i class="flaticon-sms"></i> 05 Comments</span>
-                                </div>
-                                <h3 class="ul-2-blog-title"><a href="blog-details.html">Co-workers with pens pointing a bar chart.</a></h3>
-                                <a href="blog-details.html" class="ul-2-blog-btn">Read More <i class="flaticon-arrow-up-right"></i></a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- single blog -->
-                    <div class="col">
-                        <div class="ul-2-blog">
-                            <div class="ul-2-blog-img">
-                                <img src="assets/img/blog-1.jpg" alt="Blog Image">
-                            </div>
-
-                            <div class="ul-2-blog-txt">
-                                <div class="ul-2-blog-infos">
-                                    <span><i class="flaticon-calendar"></i> 11 March 2025</span>
-                                    <span><i class="flaticon-sms"></i> 05 Comments</span>
-                                </div>
-                                <h3 class="ul-2-blog-title"><a href="blog-details.html">Meeting of business in modern office.</a></h3>
-                                <a href="blog-details.html" class="ul-2-blog-btn">Read More <i class="flaticon-arrow-up-right"></i></a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- single blog -->
-                    <div class="col">
-                        <div class="ul-2-blog">
-                            <div class="ul-2-blog-img">
-                                <img src="assets/img/blog-2.jpg" alt="Blog Image">
-                            </div>
-
-                            <div class="ul-2-blog-txt">
-                                <div class="ul-2-blog-infos">
-                                    <span><i class="flaticon-calendar"></i> 11 March 2025</span>
-                                    <span><i class="flaticon-sms"></i> 05 Comments</span>
-                                </div>
-                                <h3 class="ul-2-blog-title"><a href="blog-details.html">Person looking over our finance graphs.</a></h3>
-                                <a href="blog-details.html" class="ul-2-blog-btn">Read More <i class="flaticon-arrow-up-right"></i></a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- single blog -->
-                    <div class="col">
-                        <div class="ul-2-blog">
-                            <div class="ul-2-blog-img">
-                                <img src="assets/img/blog-3.jpg" alt="Blog Image">
-                            </div>
-
-                            <div class="ul-2-blog-txt">
-                                <div class="ul-2-blog-infos">
-                                    <span><i class="flaticon-calendar"></i> 11 March 2025</span>
-                                    <span><i class="flaticon-sms"></i> 05 Comments</span>
-                                </div>
-                                <h3 class="ul-2-blog-title"><a href="blog-details.html">Co-workers with pens pointing a bar chart.</a></h3>
-                                <a href="blog-details.html" class="ul-2-blog-btn">Read More <i class="flaticon-arrow-up-right"></i></a>
-                            </div>
-                        </div>
-                    </div>
                 </div>
+                <!-- blogs end -->
+
+                <!-- PAGINATION START -->
+                <?php if ($total_pages > 1): ?>
+                <div class="d-flex justify-content-center gap-2 mt-5">
+                    <?php if ($current_page > 1): ?>
+                    <a href="?<?php echo http_build_query(array_merge($_GET, ['page' => $current_page - 1])); ?>" class="ul-btn">
+                        <i class="flaticon-back"></i>
+                    </a>
+                    <?php endif; ?>
+
+                    <?php for ($pg = 1; $pg <= $total_pages; $pg++): ?>
+                    <a href="?<?php echo http_build_query(array_merge($_GET, ['page' => $pg])); ?>"
+                       class="ul-btn <?php echo $pg == $current_page ? 'active' : ''; ?>">
+                        <?php echo $pg; ?>
+                    </a>
+                    <?php endfor; ?>
+
+                    <?php if ($current_page < $total_pages): ?>
+                    <a href="?<?php echo http_build_query(array_merge($_GET, ['page' => $current_page + 1])); ?>" class="ul-btn">
+                        <i class="flaticon-next"></i>
+                    </a>
+                    <?php endif; ?>
+                </div>
+                <?php endif; ?>
+                <!-- PAGINATION END -->
+
             </div>
         </section>
         <!-- BLOG SECTION END -->
