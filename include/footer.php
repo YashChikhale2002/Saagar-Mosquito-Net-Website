@@ -1,129 +1,113 @@
-<?php $_base = rtrim(SITE_URL, '/') . '/'; ?>
-<style>
-.footer.inner-footer { margin-top: 0 !important; padding-top: 0 !important; }
-.footer-top { padding-bottom: 10px !important; }
-@media (max-width: 768px) {
-    .footer-bottom {
-        padding-top: 12px !important;
-        padding-bottom: 12px !important;
-    }
-}
-</style>
-<!-- Footer Section -->
-<footer class="footer inner-footer footer-info">
-    <div class="footer-top py-5">
-        <div class="container">
-            <div class="row">
+<?php
+/**
+ * Footer File - Niraj Industries
+ * Fully Dynamic + New UI Integrated
+ */
 
-                <!-- Logo + About -->
-                <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
-                    <div class="footer-widget">
-                        <a href="<?= $_base ?>" class="d-inline-block mb-3">
-                            <img src="<?= $_base ?>assets/img/team/rk-hospital-best-hospital-in-nagpur.png"
-                                alt="RK Hospital" style="height:80px; width:auto; max-width:200px; object-fit:contain;">
-                        </a>
 
-                        <p class="text-dark mb-4">
-                            R.K. Hospital, Nagpur — providing compassionate, quality healthcare for over 5+ years.
-                            Your health is our priority.
-                        </p>
+// Optional dynamic settings (you can later fetch from DB)
+$company_name = "Niraj Industries";
+$year = date("Y");
+?>
+<!-- FOOTER SECTION START -->
+<footer class="ul-2-footer">
+    <div class="ul-container">
 
-                        <ul class="d-flex gap-3 list-unstyled">
-                            <li><a href="https://www.facebook.com/share/1Aze23diqp/" class="social-icon" target="_blank"><i class="fa-brands fa-facebook"></i></a></li>
-                           
-                            <li><a href="https://www.instagram.com/dr.agrawalsnirajindustries?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="><i class="fa-brands fa-instagram"></i></a></li>
-                   
-                        </ul>
+        <!-- FOOTER TOP -->
+        <div class="ul-2-footer-top">
+            <div class="ul-2-footer-top-wrapper">
+
+                <!-- ABOUT -->
+                <div class="ul-2-footer-about">
+                    <a href="<?= $base_url ?>" class="logo-wrapper">
+                        <img src="<?= $base_url ?>assets/img/logo-white.svg" alt="<?= $company_name ?>">
+                    </a>
+
+                    <p class="ul-2-footer-about-txt">
+                        At <?= $company_name ?>, we deliver high-quality industrial solutions with innovation,
+                        reliability, and a strong commitment to customer satisfaction.
+                    </p>
+
+                    <!-- SOCIAL -->
+                    <div class="ul-2-footer-socials">
+                        <a href="#" aria-label="Facebook"><i class="flaticon-facebook-app-symbol"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="flaticon-twitter"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="flaticon-linkedin"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="flaticon-instagram"></i></a>
                     </div>
                 </div>
 
-                <!-- Quick Links -->
-                <div class="col-xl-2 col-lg-2 col-md-3 col-sm-6 mb-4">
-                    <div class="footer-widget footer-menu">
-                        <h6 class="footer-title">Quick Links</h6>
-                        <ul class="list-unstyled">
-                            <li><a href="<?= $_base ?>">Home</a></li>
-                            <li><a href="<?= $_base ?>about-us">About Us</a></li>
-                            <li><a href="<?= $_base ?>doctors/Abhishek">Our Doctors</a></li>
-                            <li><a href="<?= $_base ?>services">Services</a></li>
+                <!-- USEFUL LINKS -->
+                <div class="ul-2-footer-widget">
+                    <h3 class="ul-2-footer-widget-title">Useful Links</h3>
 
-                        </ul>
+                    <div class="ul-2-footer-widget-links">
+                        <a href="<?= $base_url ?>">Home</a>
+                        <a href="<?= $base_url ?>about-us">About Us</a>
+                        <a href="<?= $base_url ?>products">Products</a>
+                        <a href="<?= $base_url ?>blogs">Blogs</a>
+                        <a href="<?= $base_url ?>contact-us">Contact Us</a>
                     </div>
                 </div>
 
-                <!-- Resources -->
-                <div class="col-xl-2 col-lg-2 col-md-3 col-sm-6 mb-4">
-                    <div class="footer-widget footer-menu">
-                        <h6 class="footer-title">Resources</h6>
-                        <ul class="list-unstyled">
-                            <li><a href="<?= $_base ?>blogs">Blog</a></li>
-                            <li><a href="<?= $_base ?>services">Our Specialties</a></li>
-                            <li><a href="<?= $_base ?>contact-us">Book Appointment</a></li>
-                        </ul>
+                <!-- CONTACT -->
+                <div class="ul-2-footer-widget ul-2-footer-contact-widget">
+                    <h3 class="ul-2-footer-widget-title">Contact us</h3>
+
+                    <div class="ul-2-footer-contact-infos">
+
+                        <div class="ul-2-footer-contact-info">
+                            <span class="ul-2-footer-contact-info-icon">
+                                <i class="flaticon-location-pin"></i>
+                            </span>
+                            <span class="ul-2-footer-contact-info-txt">
+                                Nagpur, Maharashtra, India
+                            </span>
+                        </div>
+
+                        <div class="ul-2-footer-contact-info">
+                            <span class="ul-2-footer-contact-info-icon">
+                                <i class="flaticon-clock"></i>
+                            </span>
+                            <span class="ul-2-footer-contact-info-address">
+                                Monday - Saturday : 9:00 AM - 7:00 PM
+                            </span>
+                        </div>
+
                     </div>
                 </div>
 
-                <!-- Help Center -->
-                <div class="col-xl-2 col-lg-2 col-md-3 col-sm-6 mb-4">
-                    <div class="footer-widget footer-menu">
-                        <h6 class="footer-title">Help Center</h6>
-                        <ul class="list-unstyled">
-                            <li><a href="<?= $_base ?>privacy-policy">Privacy Policy</a></li>
-                            <li><a href="<?= $_base ?>cancellation-policy">Cancellation Policy</a></li>
-                            <li><a href="<?= $_base ?>terms-conditions">Terms & Conditions</a></li>
-                            <li><a href="<?= $_base ?>contact-us">Contact Us</a></li>
-                        </ul>
-                    </div>
-                </div>
+                <!-- NEWSLETTER -->
+                <div class="ul-2-footer-widget ul-2-footer-nwsltr-widget">
+                    <h3 class="ul-2-footer-widget-title">Get Newsletter</h3>
 
-                <!-- Contact + Newsletter -->
-                <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
-                    <div class="footer-widget">
-                        <h6 class="footer-title">Contact Us</h6>
-
-                        <ul class="list-unstyled mb-3">
-                            <li class="mb-2">
-                                <i class="fa fa-map-marker-alt me-2 text-primary"></i>
-                               <a style="color:#0F172A;">27 Chandrashekhar, Azad Square, Central Ave, Ladpura, Itwari, Nagpur, Maharashtra 440002</a>
-                            </li>
-                            <li class="mb-2">
-                                <i class="fa fa-phone me-2 text-primary"></i>
-                                <a href="tel:+919766057372">+91 97660 57372</a>
-                            </li>
-                            <li class="mb-3">
-                                <i class="fa fa-envelope me-2 text-primary"></i>
-                                <a href="mailto: info@dragrawalsnirajindustries.in"> info@dragrawalsnirajindustries.in</a>
-                            </li>
-                        </ul>
-
-                    </div>
+                    <form action="<?= $base_url ?>subscribe" method="post" class="ul-2-footer-nwsltr-form">
+                        <input type="email" name="email" placeholder="Your Email Address" required>
+                        <button type="submit">
+                            <i class="flaticon-arrow-up-right"></i> SUBSCRIBE NOW
+                        </button>
+                    </form>
                 </div>
 
             </div>
         </div>
-    </div>
-<!-- Footer Bottom -->
-<div class="footer-bottom py-3 border-top">
-    <div class="container">
-        <div class="d-flex flex-wrap justify-content-between align-items-center">
 
-            <ul class="list-unstyled d-flex gap-3 mb-0 invisible">
-                <li><a href="#">About</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
-
-            <p style="text-align: center; margin-bottom: 0;">
-                Copyright &copy; <?= date('Y') ?> R.K. Hospital Nagpur. All Rights Reserved | Designed And Developed By 
-                <a href="https://techinbox.in/" target="_blank" style="color:#0F172A;">Techinbox.in</a>
+        <!-- FOOTER BOTTOM -->
+        <div class="ul-2-footer-bottom justify-content-center">
+            <p class="copyright">
+                &copy; <?= $year ?> <?= $company_name ?>. All rights reserved.
             </p>
+        </div>
 
-            <ul class="list-unstyled d-flex gap-3 mb-0 d-none d-md-flex">
-                <li><a href="<?= $_base ?>about-us">About</a></li>
-                <li><a href="<?= $_base ?>contact-us">Contact</a></li>
-            </ul>
+    </div>
 
+    <!-- BACKGROUND VECTORS -->
+    <div class="ul-2-footer-vectors">
+        <img src="<?= $base_url ?>assets/img/footer-2-vector-1.svg" alt="vector" class="ul-2-footer-vector vector-1">
+        <div class="ul-2-footer-vector vector-2">
+            <img src="<?= $base_url ?>assets/img/footer-2-vector-2.svg" alt="vector">
         </div>
     </div>
-</div>
+
 </footer>
-<!-- /Footer Section -->
+<!-- FOOTER SECTION END -->

@@ -351,71 +351,8 @@ include 'include/config.php';
         <!-- BLOG SECTION END -->
     </main>
 
-    <!-- FOOTER SECTION START -->
-    <footer class="ul-2-footer">
-        <div class="ul-container">
-            <!-- footer top -->
-            <div class="ul-2-footer-top">
-                <div class="ul-2-footer-top-wrapper">
-                    <div class="ul-2-footer-about">
-                        <a href="#" class="logo-wrapper"><img src="assets/img/logo-white.svg" alt="Logo"></a>
-                        <p class="ul-2-footer-about-txt">Your trusted partner in global financial markets. Trade with confidence using our advanced platforms. Trade with power, trade with AceMax.</p>
-                        <div class="ul-2-footer-socials">
-                            <a href="#"><i class="flaticon-facebook-app-symbol"></i></a>
-                            <a href="#"><i class="flaticon-twitter"></i></a>
-                            <a href="#"><i class="flaticon-linkedin"></i></a>
-                            <a href="#"><i class="flaticon-instagram"></i></a>
-                        </div>
-                    </div>
+    <?php include 'include/footer.php'; ?>
 
-                    <div class="ul-2-footer-widget">
-                        <h3 class="ul-2-footer-widget-title">Useful Links</h3>
-
-                        <div class="ul-2-footer-widget-links">
-                            <a href="#">Financial Planning</a>
-                            <a href="#">Economy</a>
-                            <a href="#">Tax return</a>
-                            <a href="#">Management</a>
-                        </div>
-                    </div>
-
-                    <div class="ul-2-footer-widget ul-2-footer-contact-widget">
-                        <h3 class="ul-2-footer-widget-title">Contact us</h3>
-
-                        <div class="ul-2-footer-contact-infos">
-                            <div class="ul-2-footer-contact-info">
-                                <span class="ul-2-footer-contact-info-icon"><i class="flaticon-location-pin"></i></span>
-                                <span class="ul-2-footer-contact-info-txt">3891 Ranchview Dr. Richardson, California 62639</span>
-                            </div>
-                            <div class="ul-2-footer-contact-info">
-                                <span class="ul-2-footer-contact-info-icon"><i class="flaticon-clock"></i></span>
-                                <span class="ul-2-footer-contact-info-address">Saturday - Thursday : 8:30 am - 10:30 pm</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="ul-2-footer-widget ul-2-footer-nwsltr-widget">
-                        <h3 class="ul-2-footer-widget-title">Get Newsletter</h3>
-
-                        <form action="#" class="ul-2-footer-nwsltr-form">
-                            <input type="email" id="email" name="email" placeholder="Your Email Address">
-                            <button type="submit"><i class="flaticon-arrow-up-right"></i> SUBSCRIBE NOW</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-            <!-- footer bottom -->
-            <div class="ul-2-footer-bottom justify-content-center">
-                <p class="copyright">&copy; 2025 Finantics All rights reserved.</p>
-            </div>
-        </div>
-        <div class="ul-2-footer-vectors">
-            <img src="assets/img/footer-2-vector-1.svg" alt="vector" class="ul-2-footer-vector vector-1">
-            <div class="ul-2-footer-vector vector-2"><img src="assets/img/footer-2-vector-2.svg" alt="vector"></div>
-        </div>
-    </footer>
-    <!-- FOOTER SECTION END -->
 
     <!-- Vendor JS -->
     <script src="assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
