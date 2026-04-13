@@ -167,7 +167,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'name'        => $name,
             'description' => $meta_description ?: $description,
             'image'       => $og_image ? (SITE_URL . '/' . $og_image) : '',
-            'brand'       => ['@type' => 'Brand', 'name' => $brand ?: 'Niraj Industries'],
+            'brand'       => ['@type' => 'Brand', 'name' => $brand ?: 'Sagar Enterprises'],
             'sku'         => $sku,
             'url'         => $canonical_url ?: '',
             'category'    => $category,

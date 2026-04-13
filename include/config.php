@@ -8,7 +8,8 @@ define('DB_PASS', '');
 define('DB_NAME', 'saagar-mosquito');
 
 // ─── Site Configuration ───────────────────────────────────────────────────────
-define('SITE_URL',        'http://localhost/Saagar-Mosquito-Net-Website/');
+define('SITE_URL', 'http://localhost/Saagar-Mosquito-Net-Website');
+
 define('BLOG_IMG_PATH',   'assets/img/blog/');
 define('BLOGS_PER_PAGE',  6);
 define('SERVICES_PER_PAGE', 6);
@@ -23,25 +24,33 @@ if ($conn->connect_error) {
 $conn->set_charset("utf8mb4");
 
 // ─── Helper: Sanitize input ───────────────────────────────────────────────────
-function clean($data) {
-    global $conn;
-    return htmlspecialchars(strip_tags(trim($conn->real_escape_string($data))));
+if (!function_exists('clean')) {
+    function clean($data) {
+        global $conn;
+        return htmlspecialchars(strip_tags(trim($conn->real_escape_string($data))), ENT_QUOTES, 'UTF-8');
+    }
 }
 
 // ─── Helper: Format date ──────────────────────────────────────────────────────
-function formatDate($dateStr) {
-    return date('d M Y', strtotime($dateStr));
+if (!function_exists('formatDate')) {
+    function formatDate($dateStr) {
+        return date('d M Y', strtotime($dateStr));
+    }
 }
 
 // ─── Helper: Truncate text ────────────────────────────────────────────────────
-function truncate($text, $limit = 120) {
-    $text = strip_tags($text);
-    if (strlen($text) <= $limit) return $text;
-    return substr($text, 0, strrpos(substr($text, 0, $limit), ' ')) . '...';
+if (!function_exists('truncate')) {
+    function truncate($text, $limit = 120) {
+        $text = strip_tags($text);
+        if (strlen($text) <= $limit) return $text;
+        return substr($text, 0, strrpos(substr($text, 0, $limit), ' ')) . '...';
+    }
 }
 
 // ─── Helper: Asset URL ───────────────────────────────────────────────────────
-function asset($path) {
-    return SITE_URL . '/' . ltrim($path, '/');
+if (!function_exists('asset')) {
+    function asset($path) {
+        return SITE_URL . '/' . ltrim($path, '/');
+    }
 }
-?> 
+// NO closing PHP tag — prevents accidental whitespace/newline output

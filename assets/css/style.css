@@ -1084,10 +1084,10 @@ button {
 }
 
 .ul-sidebar {
-  justify-content: flex-start;
-  gap: 20px;
-  border-left: 2px solid var(--ul-2-primary);
+    z-index: 99999 !important; /* Header ke upar */
+    top: 0 !important;         /* Ekdum top se shuru */
 }
+
 .ul-sidebar-header {
   display: flex;
   align-items: flex-end;
@@ -1468,7 +1468,7 @@ button {
 @media screen and (max-width: 1199px) {
   .ul-header-megamenu::before {
     right: 21.5vw;
-  }
+  }]
 }
 .ul-header-megamenu .single-col {
   border-right: 1px solid rgba(0, 0, 0, 0.15);
@@ -4344,7 +4344,7 @@ button {
 .ul-2-investments {
   padding: clamp(60px, 6.31vw, 120px) 0;
   border-radius: 20px;
-  background: url(../img/investment-bg.jpg) no-repeat center center/cover;
+  background: url(../img/home/1820x839.webp) no-repeat center center/cover;
   position: relative;
   z-index: 1;
 }
@@ -6165,4 +6165,14 @@ p{
 }
 .ul-service-blog-card__link:hover svg {
     transform: translate(2px, -2px);
+}
+
+.ul-sticky-header {
+    position: sticky;
+    top: 0;
+    z-index: 9999; /* Sidebar se kam */
+    background-color: #fff;
+    width: 100%;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    transition: box-shadow 0.3s ease;
 }

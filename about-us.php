@@ -1,10 +1,10 @@
 <?php
-// Start session (for login systems later)
 session_start();
-
 include 'include/config.php';
 
-
+$page_title       = "About Us | Saagar Enterprises – Mosquito Net Manufacturer & Dealer in Nagpur Since 2013";
+$meta_description = "Learn about Saagar Enterprises – Nagpur's most trusted mosquito net manufacturer & dealer since 2013. 500+ happy customers, 5-star rated, expert installation across all areas of Nagpur. Custom-fitted pleated, roll-up, velcro & bed mosquito nets.";
+$meta_keywords    = "about Saagar Enterprises, mosquito net manufacturer Nagpur, mosquito net dealer Nagpur since 2013, best mosquito net company Nagpur, Saagar Enterprises history, mosquito net installation Nagpur, saagarmosquitonet.com";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,7 +12,21 @@ include 'include/config.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title><?php echo $page_title; ?></title>
+    <meta name="description" content="<?php echo $meta_description; ?>">
+    <meta name="keywords" content="<?php echo $meta_keywords; ?>">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://saagarmosquitonet.com/about-us">
+
+    <!-- Open Graph SEO -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="About Saagar Enterprises | Mosquito Net Dealer Nagpur Since 2013">
+    <meta property="og:description" content="Nagpur's #1 mosquito net manufacturer & dealer since 2013. 500+ happy customers, custom-fitted nets, expert installation. Call +91 7719806088.">
+    <meta property="og:url" content="https://saagarmosquitonet.com/about-us">
+    <meta property="og:image" content="https://saagarmosquitonet.com/assets/img/mosquito-net-nagpur.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="About Saagar Enterprises | Mosquito Net Nagpur">
+    <meta name="twitter:description" content="Nagpur's trusted mosquito net manufacturer since 2013. Expert installation, 500+ customers, 5-star rated.">
 
     <!-- Vendor CSS -->
     <link rel="stylesheet" href="assets/vendor/bootstrap/bootstrap.min.css">
@@ -25,44 +39,29 @@ include 'include/config.php';
 </head>
 
 <body class="home-2">
-    <!-- LOGIN FORM START -->
+    <!-- ENQUIRY FORM START -->
     <div class="ul-form-modal-bg" id="login-form-modal">
         <div class="ul-form-modal-content">
-            <!-- close button -->
             <button class="ul-form-modal-closer"><i class="flaticon-close"></i></button>
-
             <div class="row row-cols-md-2 row-cols-1 g-0">
                 <div class="col">
                     <div class="ul-form-modal-img">
-                        <img src="assets/img/login-amico.svg" alt="Illustration">
+                        <img src="assets/img/login-amico.svg" alt="Get Free Mosquito Net Quote Nagpur">
                     </div>
                 </div>
-
                 <div class="col">
                     <div class="ul-form-modal-form-wrapper">
                         <form action="#" class="ul-form-modal-form">
-                            <h2 class="ul-form-modal-title">Welcome Back!</h2>
-                            <p class="ul-form-modal-sub-title">Log in to your account</p>
+                            <h2 class="ul-form-modal-title">Get Free Quote!</h2>
+                            <p class="ul-form-modal-sub-title">Contact Saagar Enterprises Nagpur</p>
                             <div class="form-group">
-                                <!-- <label for="name"></label> -->
-                                <input type="text" name="name" id="name" placeholder="Username or Email">
+                                <input type="text" name="name" id="name" placeholder="Your Full Name">
                             </div>
-
                             <div class="form-group">
-                                <!-- <label for="password"></label> -->
-                                <input type="password" name="password" id="password" placeholder="Password">
+                                <input type="tel" name="phone" id="phone" placeholder="Mobile Number">
                             </div>
-
-                            <div class="form-group d-flex justify-content-between">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="remember">
-                                    <label class="form-check-label" for="remember">Remember Me</label>
-                                </div>
-                                <a href="#">Forgot Password?</a>
-                            </div>
-
                             <div class="form-group mt-4">
-                                <button class="ul-btn w-100 justify-content-center">Login <i class="flaticon-arrow-up-right"></i></button>
+                                <button class="ul-btn w-100 justify-content-center">Get Free Quote <i class="flaticon-arrow-up-right"></i></button>
                             </div>
                         </form>
                     </div>
@@ -70,102 +69,56 @@ include 'include/config.php';
             </div>
         </div>
     </div>
-    <!-- LOGIN FORM END -->
+    <!-- ENQUIRY FORM END -->
 
 
-    <!-- LOAN APPLY FORM START -->
+    <!-- MEASUREMENT BOOKING FORM START -->
     <div class="ul-form-modal-bg" id="loan-apply-form-modal">
         <div class="ul-form-modal-content">
-            <!-- close button -->
             <button class="ul-form-modal-closer"><i class="flaticon-close"></i></button>
-
             <div class="row row-cols-md-2 row-cols-1 g-0">
                 <div class="col">
                     <div class="ul-form-modal-img">
-                        <img src="assets/img/Manage money-pana.svg" alt="Illustration">
+                        <img src="assets/img/Manage money-pana.svg" alt="Book Free Mosquito Net Measurement Nagpur">
                     </div>
                 </div>
-
                 <div class="col">
                     <div class="ul-form-modal-form-wrapper">
                         <form action="#" class="ul-form-modal-form">
-                            <h2 class="ul-form-modal-title">Apply for Loan</h2>
-                            <p class="ul-form-modal-sub-title">Fill the form to apply for a loan</p>
-                            <!-- name -->
+                            <h2 class="ul-form-modal-title">Book Free Measurement</h2>
+                            <p class="ul-form-modal-sub-title">We visit your home & measure for FREE!</p>
                             <div class="form-group">
-                                <!-- <label for="name"></label> -->
-                                <input type="text" name="name" id="name" placeholder="Username or Email">
+                                <input type="text" name="name" id="mname" placeholder="Your Full Name">
                             </div>
-
-                            <!-- email -->
                             <div class="form-group">
-                                <!-- <label for="email"></label> -->
                                 <input type="email" name="email" id="email" placeholder="Email Address">
                             </div>
-
-                            <!-- address -->
                             <div class="form-group">
-                                <!-- <label for="address"></label> -->
-                                <textarea type="text" name="address" id="address" placeholder="Full Address"></textarea>
+                                <textarea name="address" id="address" placeholder="Your Full Address in Nagpur"></textarea>
                             </div>
-
-                            <!-- amount -->
                             <div class="form-group">
-                                <!-- <label for="amount"></label> -->
-                                <input type="text" name="amount" id="amount" placeholder="Loan Amount">
+                                <input type="text" name="net_type" id="net_type" placeholder="Net Type (Window / Door / Bed)">
                             </div>
-
-                            <!-- phone -->
                             <div class="form-group">
-                                <!-- <label for="phone"></label> -->
-                                <input type="text" name="phone" id="phone" placeholder="Phone Number">
+                                <input type="tel" name="phone" id="mphone" placeholder="Mobile Number">
                             </div>
-
-                            <!-- date -->
                             <div class="form-group">
-                                <!-- <label for="date"></label> -->
-                                <input type="date" name="date" id="date" placeholder="Select Date">
+                                <input type="date" name="date" id="date" placeholder="Preferred Visit Date">
                             </div>
-
-                            <!-- password -->
                             <div class="form-group">
-                                <!-- <label for="password"></label> -->
-                                <input type="password" name="password" id="password" placeholder="Password">
-                            </div>
-
-                            <!-- checkbox -->
-                            <div class="form-group">
-                                <div>
-                                    <input class="form-check-input" type="checkbox" id="terms">
-                                    <label class="form-check-label" for="terms">I agree to the terms and conditions</label>
-                                </div>
-                            </div>
-
-                            <!-- radio -->
-                            <div class="form-group d-flex gap-3">
-                                <div class="d-flex align-items-center gap-2">
-                                    <input type="radio" name="gender" id="male">
-                                    <label class="form-check-label" for="male">Male</label>
-                                </div>
-                                <div class="d-flex align-items-center gap-2">
-                                    <input type="radio" name="gender" id="female">
-                                    <label class="form-check-label" for="female">Female</label>
-                                </div>
-                            </div>
-
-                            <!-- select -->
-                            <div class="form-group">
-                                <select name="loan-type" id="loan-type">
-                                    <option value="" disabled selected>Select Loan Type</option>
-                                    <option value="personal-loan">Personal Loan</option>
-                                    <option value="home-loan">Home Loan</option>
-                                    <option value="auto-loan">Auto Loan</option>
-                                    <option value="student-loan">Student Loan</option>
+                                <select name="net-system" id="net-system">
+                                    <option value="" disabled selected>Select Mosquito Net Type</option>
+                                    <option value="pleated-net">Pleated Mosquito Net</option>
+                                    <option value="roll-up-net">Roll-Up Mosquito Net</option>
+                                    <option value="roll-a-side-net">Roll-A-Side Mosquito Net</option>
+                                    <option value="velcro-net">Velcro Mosquito Net</option>
+                                    <option value="fixed-frame-net">Fixed Frame Mosquito Net</option>
+                                    <option value="openable-frame-net">Openable Frame Mosquito Net</option>
+                                    <option value="bed-net">Bed Mosquito Net</option>
                                 </select>
                             </div>
-
                             <div class="form-group mt-4">
-                                <button class="ul-btn w-100 justify-content-center">Apply <i class="flaticon-arrow-up-right"></i></button>
+                                <button class="ul-btn w-100 justify-content-center">Book Free Visit <i class="flaticon-arrow-up-right"></i></button>
                             </div>
                         </form>
                     </div>
@@ -173,28 +126,21 @@ include 'include/config.php';
             </div>
         </div>
     </div>
-    <!-- LOAN APPLY FORM END -->
+    <!-- MEASUREMENT BOOKING FORM END -->
 
 
     <div class="ul-sidebar">
-        <!-- header -->
         <div class="ul-sidebar-header">
             <div class="ul-sidebar-header-logo">
-                <a href="index.html">
-                    <img src="assets/img/logo.svg" alt="logo" class="logo">
+                <a href="index">
+                    <img src="assets/img/logo.svg" alt="Saagar Enterprises Mosquito Net Nagpur" class="logo">
                 </a>
             </div>
-            <!-- sidebar closer -->
             <button class="ul-sidebar-closer"><i class="flaticon-close"></i></button>
         </div>
-
         <div class="ul-sidebar-header-nav-wrapper d-block d-lg-none"></div>
-
-
-        <!-- sidebar footer -->
         <div class="ul-sidebar-footer">
             <span class="ul-sidebar-footer-title">Follow us</span>
-
             <div class="ul-sidebar-footer-social">
                 <a href="#"><i class="flaticon-facebook-app-symbol"></i></a>
                 <a href="#"><i class="flaticon-twitter"></i></a>
@@ -207,18 +153,15 @@ include 'include/config.php';
     <!-- search -->
     <div class="ul-search-form-wrapper flex-grow-1 flex-shrink-0">
         <button class="ul-search-closer"><i class="flaticon-close"></i></button>
-
         <form action="#" class="ul-search-form">
             <div class="ul-search-form-right">
-                <input type="search" name="search" id="ul-search" placeholder="Search Here">
+                <input type="search" name="search" id="ul-search" placeholder="Search Mosquito Net Products...">
                 <button type="submit"><span class="icon"><i class="flaticon-search"></i></span></button>
             </div>
         </form>
     </div>
 
-
-   <?php include 'include/header.php'; ?>
-
+    <?php include 'include/header.php'; ?>
 
     <main>
         <!-- BREADCRUMB SECTION START -->
@@ -226,7 +169,7 @@ include 'include/config.php';
             <div class="ul-container">
                 <h1 class="ul-breadcrumb-title">About Us</h1>
                 <div class="ul-breadcrumb-nav">
-                    <a href="index.html">Home</a>
+                    <a href="index">Home</a>
                     <span class="separator"><i class="flaticon-next"></i></span>
                     <span class="current">About Us</span>
                 </div>
@@ -242,39 +185,36 @@ include 'include/config.php';
                     <!-- img -->
                     <div class="col">
                         <div class="ul-2-about-img">
-                            <img src="assets/img/about-2-img.png" alt="Image" class="main-img">
-
+                            <img src="assets/img/about-2-img.png" alt="Saagar Enterprises Mosquito Net Dealer Nagpur" class="main-img">
                             <div class="ul-2-about-img-bgs">
                                 <div class="ul-2-about-img-bg-1">
-                                    <img src="assets/img/about-2-img-bg-1.jpg" alt="Image background">
+                                    <img src="assets/img/about-2-img-bg-1.jpg" alt="Mosquito Net Installation Nagpur">
                                 </div>
-                                <img src="assets/img/about-2-img-bg-2.jpg" alt="Image background">
+                                <img src="assets/img/about-2-img-bg-2.jpg" alt="Window Mosquito Net Nagpur">
                             </div>
-
                             <a href="https://youtu.be/EEX0EHTTePE?si=TxbhzBCGoTx64WEe" data-fslightbox="video" class="ul-2-about-play-btn"><i class="flaticon-play-button-arrowhead"></i></a>
-
-                            <div class="ul-2-about-img-txt"><img src="assets/img/about-2-img-logo.svg" alt="logo"><span class="txt">SINCE 1948</span></div>
+                            <div class="ul-2-about-img-txt"><img src="assets/img/about-2-img-logo.svg" alt="Saagar Enterprises Logo"><span class="txt">SINCE 2013</span></div>
                         </div>
                     </div>
 
                     <!-- txt -->
                     <div class="col">
                         <div class="ul-2-about-txt">
-                            <span class="ul-2-section-sub-title">More About us</span>
-                            <h2 class="ul-2-section-title">Committed to Your Safety And Better Security</h2>
-                            <p class="ul-2-section-descr">Automation & workflow features include a drag & drop builder, automated task assignments, conditional with good triggers, & api integrations.</p>
+                            <span class="ul-2-section-sub-title">About Saagar Enterprises</span>
+                            <h2 class="ul-2-section-title">Nagpur's Most Trusted Mosquito Net Manufacturer & Dealer Since 2013</h2>
+                            <p class="ul-2-section-descr">Saagar Enterprises has been Nagpur's most trusted mosquito net manufacturer and dealer since 2013. We specialize in custom-fitted mosquito net systems for windows, doors, balconies, and beds — protecting your family from mosquitoes, dengue, and malaria all year round with premium quality and expert installation.</p>
                             <div class="ul-2-about-points">
                                 <div class="ul-2-about-point">
                                     <img src="assets/img/tick-inside-circle.svg" alt="icon" class="icon">
-                                    <span class="title">Great Explorer of The Master Builder Financial</span>
+                                    <span class="title">Custom Measurement & Zero-Gap Professional Installation Across All Areas of Nagpur</span>
                                 </div>
                                 <div class="ul-2-about-point">
                                     <img src="assets/img/tick-inside-circle.svg" alt="icon" class="icon">
-                                    <span class="title">Your Gateway to Financial Freedom in life</span>
+                                    <span class="title">Premium Quality Nylon, HDPE & Aluminium Frame Mosquito Nets at Reasonable Prices</span>
                                 </div>
                             </div>
-                            <p class="ul-2-about-descr">With years of experience and a client-first approach, we provide honest, insightful financial guidance tailored to your goals—ensuring every decision supports your long-term success and peace of mind. Lorem ipsum dolor sit amet.</p>
-                            <a href="about.html" class="ul-btn">Know More <i class="flaticon-arrow-up-right"></i></a>
+                            <p class="ul-2-about-descr">With over 10 years of experience and 500+ happy customers across Nagpur, Saagar Enterprises is rated 5 stars for prompt service, honest pricing, and durable mosquito net installations. We serve Mahal, Raghuji Nagar, Dharampeth, Wardha Road, and all areas of Nagpur with on-site repair and after-sales support.</p>
+                            <a href="contact" class="ul-btn">Book Free Home Visit <i class="flaticon-arrow-up-right"></i></a>
                         </div>
                     </div>
                 </div>
@@ -286,13 +226,11 @@ include 'include/config.php';
         <!-- HISTORY SECTION START -->
         <section class="ul-history ul-section-spacing">
             <div class="ul-container">
-                <!-- section heading -->
                 <div class="ul-section-heading">
                     <div class="left">
-                        <span class="ul-2-section-sub-title">Company Histroy</span>
-                        <h2 class="ul-2-section-title">Years of Dedication A Legacy in the Making</h2>
+                        <span class="ul-2-section-sub-title">Our Journey</span>
+                        <h2 class="ul-2-section-title">10+ Years of Protecting Nagpur Homes from Mosquitoes</h2>
                     </div>
-
                     <div class="right">
                         <div class="ul-history-slider-nav ul-2-team-slider-nav">
                             <button class="prev"><i class="flaticon-back"></i></button>
@@ -304,142 +242,107 @@ include 'include/config.php';
                 <!-- history slider -->
                 <div class="ul-history-slider swiper">
                     <div class="swiper-wrapper">
-                        <!-- single slide -->
+
                         <div class="swiper-slide">
                             <div class="ul-history-slide">
                                 <div class="ul-history-slide-txt">
                                     <div class="ul-history-slide-index">01</div>
-
                                     <div class="ul-history-slide-txt-bottom">
-                                        <h3 class="ul-history-slide-title">2005 - Internet Banking Launch</h3>
-                                        <p class="ul-history-slide-descr">Rolled out secure online banking, allowing customers to access accounts and manage finances remotely.</p>
+                                        <h3 class="ul-history-slide-title">2013 – Saagar Enterprises Founded in Nagpur</h3>
+                                        <p class="ul-history-slide-descr">Saagar Enterprises was established in Mahal, Nagpur with a mission to provide high-quality, custom-fitted mosquito nets for homes and offices at affordable prices.</p>
                                     </div>
                                 </div>
-
                                 <div class="ul-history-slide-img">
-                                    <img src="assets/img/history-slide-1.jpg" alt="Image">
+                                    <img src="assets/img/history-slide-1.jpg" alt="Saagar Enterprises Founded 2013 Nagpur">
                                 </div>
                             </div>
                         </div>
 
-                        <!-- single slide -->
                         <div class="swiper-slide">
                             <div class="ul-history-slide">
                                 <div class="ul-history-slide-txt">
                                     <div class="ul-history-slide-index">02</div>
-
                                     <div class="ul-history-slide-txt-bottom">
-                                        <h3 class="ul-history-slide-title">2010 - Internet Banking Launch</h3>
-                                        <p class="ul-history-slide-descr">Rolled out secure online banking, allowing customers to access accounts and manage finances remotely.</p>
+                                        <h3 class="ul-history-slide-title">2015 – Expanded to Pleated & Roll-Up Net Systems</h3>
+                                        <p class="ul-history-slide-descr">We introduced advanced pleated mosquito net and roll-up screen systems for wider windows and balcony openings, serving growing demand across Nagpur.</p>
                                     </div>
                                 </div>
-
                                 <div class="ul-history-slide-img">
-                                    <img src="assets/img/banner-2-slide-1.jpg" alt="Image">
+                                    <img src="assets/img/banner-2-slide-1.jpg" alt="Pleated Mosquito Net Nagpur 2015">
                                 </div>
                             </div>
                         </div>
 
-                        <!-- single slide -->
                         <div class="swiper-slide">
                             <div class="ul-history-slide">
                                 <div class="ul-history-slide-txt">
                                     <div class="ul-history-slide-index">03</div>
-
                                     <div class="ul-history-slide-txt-bottom">
-                                        <h3 class="ul-history-slide-title">2015 - Internet Banking Launch</h3>
-                                        <p class="ul-history-slide-descr">Rolled out secure online banking, allowing customers to access accounts and manage finances remotely.</p>
+                                        <h3 class="ul-history-slide-title">2018 – Opened Second Branch at Raghuji Nagar</h3>
+                                        <p class="ul-history-slide-descr">Due to growing demand, Saagar Enterprises opened its second showroom at Raghuji Nagar, Nagpur — making mosquito net solutions even more accessible across the city.</p>
                                     </div>
                                 </div>
-
                                 <div class="ul-history-slide-img">
-                                    <img src="assets/img/investment-bg.jpg" alt="Image">
+                                    <img src="assets/img/investment-bg.jpg" alt="Saagar Enterprises Raghuji Nagar Branch Nagpur">
                                 </div>
                             </div>
                         </div>
 
-                        <!-- single slide -->
                         <div class="swiper-slide">
                             <div class="ul-history-slide">
                                 <div class="ul-history-slide-txt">
                                     <div class="ul-history-slide-index">04</div>
-
                                     <div class="ul-history-slide-txt-bottom">
-                                        <h3 class="ul-history-slide-title">2020 - Internet Banking Launch</h3>
-                                        <p class="ul-history-slide-descr">Rolled out secure online banking, allowing customers to access accounts and manage finances remotely.</p>
+                                        <h3 class="ul-history-slide-title">2020 – 200+ Families Protected Across Nagpur</h3>
+                                        <p class="ul-history-slide-descr">Crossed a major milestone of 200+ successful mosquito net installations across Nagpur — earning 5-star reviews for quality, punctuality, and professional service.</p>
                                     </div>
                                 </div>
-
                                 <div class="ul-history-slide-img">
-                                    <img src="assets/img/history-slide-1.jpg" alt="Image">
+                                    <img src="assets/img/history-slide-1.jpg" alt="Mosquito Net Installation Milestone Nagpur 2020">
                                 </div>
                             </div>
                         </div>
 
-                        <!-- single slide -->
                         <div class="swiper-slide">
                             <div class="ul-history-slide">
                                 <div class="ul-history-slide-txt">
                                     <div class="ul-history-slide-index">05</div>
-
                                     <div class="ul-history-slide-txt-bottom">
-                                        <h3 class="ul-history-slide-title">2023 - Internet Banking Launch</h3>
-                                        <p class="ul-history-slide-descr">Rolled out secure online banking, allowing customers to access accounts and manage finances remotely.</p>
+                                        <h3 class="ul-history-slide-title">2023 – 500+ Happy Customers & 5-Star Rating</h3>
+                                        <p class="ul-history-slide-descr">Saagar Enterprises reached 500+ happy customers with a consistent 5-star Google rating — recognized as Nagpur's most trusted mosquito net dealer for window, door, and bed net solutions.</p>
                                     </div>
                                 </div>
-
                                 <div class="ul-history-slide-img">
-                                    <img src="assets/img/banner-2-slide-1.jpg" alt="Image">
+                                    <img src="assets/img/banner-2-slide-1.jpg" alt="Saagar Enterprises 500 Customers Nagpur 2023">
                                 </div>
                             </div>
                         </div>
 
-                        <!-- single slide -->
                         <div class="swiper-slide">
                             <div class="ul-history-slide">
                                 <div class="ul-history-slide-txt">
                                     <div class="ul-history-slide-index">06</div>
-
                                     <div class="ul-history-slide-txt-bottom">
-                                        <h3 class="ul-history-slide-title">2024 - Internet Banking Launch</h3>
-                                        <p class="ul-history-slide-descr">Rolled out secure online banking, allowing customers to access accounts and manage finances remotely.</p>
+                                        <h3 class="ul-history-slide-title">2025 – Still Nagpur's #1 Mosquito Net Solution</h3>
+                                        <p class="ul-history-slide-descr">Continuing to serve Nagpur with 7+ types of mosquito net systems — pleated, roll-up, roll-a-side, velcro, fixed frame, openable frame & bed nets — with free home measurement visits and on-site repair support.</p>
                                     </div>
                                 </div>
-
                                 <div class="ul-history-slide-img">
-                                    <img src="assets/img/investment-bg.jpg" alt="Image">
+                                    <img src="assets/img/investment-bg.jpg" alt="Saagar Enterprises Mosquito Net Nagpur 2025">
                                 </div>
                             </div>
                         </div>
 
-                        <!-- single slide -->
-                        <div class="swiper-slide">
-                            <div class="ul-history-slide">
-                                <div class="ul-history-slide-txt">
-                                    <div class="ul-history-slide-index">07</div>
-
-                                    <div class="ul-history-slide-txt-bottom">
-                                        <h3 class="ul-history-slide-title">2025 - Internet Banking Launch</h3>
-                                        <p class="ul-history-slide-descr">Rolled out secure online banking, allowing customers to access accounts and manage finances remotely.</p>
-                                    </div>
-                                </div>
-
-                                <div class="ul-history-slide-img">
-                                    <img src="assets/img/history-slide-1.jpg" alt="Image">
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
 
                 <div class="ul-history-years-slider swiper">
                     <div class="swiper-wrapper">
-                        <div class="swiper-slide">2005</div>
-                        <div class="swiper-slide">2010</div>
+                        <div class="swiper-slide">2013</div>
                         <div class="swiper-slide">2015</div>
+                        <div class="swiper-slide">2018</div>
                         <div class="swiper-slide">2020</div>
                         <div class="swiper-slide">2023</div>
-                        <div class="swiper-slide">2024</div>
                         <div class="swiper-slide">2025</div>
                     </div>
                 </div>
@@ -448,7 +351,7 @@ include 'include/config.php';
         <!-- HISTORY SECTION END -->
 
 
-        <!-- MISSION SECTION START  -->
+        <!-- MISSION SECTION START -->
         <section class="ul-mission ul-section-spacing">
             <div class="ul-container">
                 <div class="row gx-0 gy-4 align-items-center">
@@ -458,26 +361,25 @@ include 'include/config.php';
                                 <div class="ul-mission-tab-navs">
                                     <button class="tab-nav active" data-tab="tab-1">Our Mission</button>
                                     <button class="tab-nav" data-tab="tab-2">Our Vision</button>
-                                    <button class="tab-nav" data-tab="tab-3">Why Choose us</button>
+                                    <button class="tab-nav" data-tab="tab-3">Why Choose Us</button>
                                 </div>
-
                                 <div class="tabs-wrapper">
                                     <div class="ul-tab active" id="tab-1">
                                         <div class="ul-mission-tab-content">
-                                            <p class="ul-mission-tab-descr">Our mission is to empower businesses through best innovative IT solutions that drive growth, efficiency digital transformation. We committed to delivering digital transformation. We committed to delivering digital transformation. We committed to delivering digital transformation. We committed to delivering digital transformation. </p>
-                                            <a href="contact.html" class="ul-btn"> Contact Us <i class="flaticon-arrow-up-right"></i></a>
+                                            <p class="ul-mission-tab-descr">Our mission is to protect every home in Nagpur from mosquitoes, dengue, and malaria through high-quality, custom-fitted mosquito net solutions. We are committed to delivering precise installation, honest pricing, and exceptional after-sales service — ensuring every family in Nagpur lives comfortably and mosquito-free.</p>
+                                            <a href="contact" class="ul-btn">Contact Us <i class="flaticon-arrow-up-right"></i></a>
                                         </div>
                                     </div>
                                     <div class="ul-tab" id="tab-2">
                                         <div class="ul-mission-tab-content">
-                                            <p class="ul-mission-tab-descr">Our vision is to empower businesses through best innovative IT solutions that drive growth, efficiency digital transformation. We committed to delivering digital transformation. We committed to delivering digital transformation. We committed to delivering digital transformation. We committed to delivering digital transformation. </p>
-                                            <a href="contact.html" class="ul-btn"> Contact Us <i class="flaticon-arrow-up-right"></i></a>
+                                            <p class="ul-mission-tab-descr">Our vision is to be Nagpur's most trusted and preferred mosquito net company — known for premium quality products, professional installation, and lasting customer relationships. We aim to expand our reach to every corner of Nagpur and Maharashtra, making mosquito-free living accessible to all.</p>
+                                            <a href="contact" class="ul-btn">Contact Us <i class="flaticon-arrow-up-right"></i></a>
                                         </div>
                                     </div>
                                     <div class="ul-tab" id="tab-3">
                                         <div class="ul-mission-tab-content">
-                                            <p class="ul-mission-tab-descr">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt facilis placeat voluptates omnis maxime, debitis commodi, praesentium aut, facere eos nobis. Porro non voluptatum ab dolores iusto enim, vitae aperiam ipsam est facilis! Consectetur rerum eaque ipsam atque voluptatum nobis.</p>
-                                            <a href="contact.html" class="ul-btn"> Contact Us <i class="flaticon-arrow-up-right"></i></a>
+                                            <p class="ul-mission-tab-descr">Saagar Enterprises stands apart with 10+ years of experience, free home measurement visits, zero-gap professional installation, and on-site repair support across all areas of Nagpur. With 500+ happy customers and a consistent 5-star rating, we are Nagpur's most reliable mosquito net dealer.</p>
+                                            <a href="contact" class="ul-btn">Contact Us <i class="flaticon-arrow-up-right"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -487,7 +389,7 @@ include 'include/config.php';
 
                     <div class="col-xl-7 col-lg-6">
                         <div class="ul-mission-img">
-                            <img src="assets/img/mission-img.jpg" alt="Image">
+                            <img src="assets/img/mission-img.jpg" alt="Saagar Enterprises Mission – Mosquito Net Nagpur">
                             <a href="https://youtu.be/EEX0EHTTePE?si=TxbhzBCGoTx64WEe" data-fslightbox="mission-video" class="ul-2-about-play-btn"><i class="flaticon-play-button-arrowhead"></i></a>
                         </div>
                     </div>
@@ -504,29 +406,26 @@ include 'include/config.php';
                     <div class="row row-cols-md-4 row-cols-sm-3 row-cols-2 ul-bs-row justify-content-center">
                         <div class="col">
                             <div class="ul-2-stats-item">
-                                <span class="number">9.6K</span>
-                                <span class="txt">Happy Customers World Wide.</span>
+                                <span class="number">500+</span>
+                                <span class="txt">Happy Customers Across Nagpur</span>
                             </div>
                         </div>
-
                         <div class="col">
                             <div class="ul-2-stats-item">
-                                <span class="number">1.9M</span>
-                                <span class="txt">Transactions Processed Daily basis.</span>
+                                <span class="number">5★</span>
+                                <span class="txt">Star Rating from 40+ Reviews</span>
                             </div>
                         </div>
-
                         <div class="col">
                             <div class="ul-2-stats-item">
-                                <span class="number">9600+</span>
-                                <span class="txt">ATMs and Branches Across Globally.</span>
+                                <span class="number">7+</span>
+                                <span class="txt">Types of Mosquito Net Systems</span>
                             </div>
                         </div>
-
                         <div class="col">
                             <div class="ul-2-stats-item">
-                                <span class="number">25+</span>
-                                <span class="txt">Years of Trusted Banking Service.</span>
+                                <span class="number">10+</span>
+                                <span class="txt">Years of Trusted Service in Nagpur</span>
                             </div>
                         </div>
                     </div>
@@ -539,152 +438,107 @@ include 'include/config.php';
         <!-- TESTIMONIALS SECTION START -->
         <section class="ul-2-testimonials ul-section-spacing pt-0">
             <div class="ul-container">
-                <!-- section heading -->
                 <div class="ul-section-heading justify-content-center text-center">
                     <div>
-                        <span class="ul-2-section-sub-title">Testimonials</span>
-                        <h2 class="ul-2-section-title mb-0">What People Say About Us</h2>
+                        <span class="ul-2-section-sub-title">Customer Reviews</span>
+                        <h2 class="ul-2-section-title mb-0">What Nagpur Customers Say About Saagar Enterprises</h2>
                     </div>
                 </div>
             </div>
 
-            <!-- testimonials -->
             <div class="ul-2-testimonials-slider swiper">
                 <div class="swiper-wrapper">
-                    <!-- single slide -->
+
                     <div class="swiper-slide">
                         <div class="ul-2-testimony">
                             <div class="ul-2-testimony-top">
                                 <div class="ul-2-testimony-reviewer">
-                                    <img src="assets/img//user-1.png" alt="Reviewer Image">
                                     <div class="ul-2-testimony-reviewer-info">
-                                        <span class="ul-2-testimony-reviewer-name">Marvin McKinney</span>
-                                        <span class="ul-2-testimony-reviewer-role">Lead Designer</span>
+                                        <span class="ul-2-testimony-reviewer-name">Paresh Thakur</span>
+                                        <span class="ul-2-testimony-reviewer-role">Nagpur</span>
                                     </div>
                                 </div>
-
                                 <span class="ul-2-testimony-quote-icon"><i class="flaticon-double-quotes"></i></span>
                             </div>
-
-                            <p class="ul-2-testimony-txt">Aonsectetur adipiscing elit Aenean scelerisque augue consequat Quisque eget congue velit in cursus leo sodales the turpis euismod quis sapien euismod now</p>
-
+                            <p class="ul-2-testimony-txt">Quality work at a very reasonable price. The exceptional quality and timely completion of work are their key strengths. The service is excellent and truly lives up to the name. Highly recommended Saagar Enterprises.</p>
                             <div class="ul-2-testimony-stars">
-                                <i class="flaticon-star"></i>
-                                <i class="flaticon-star"></i>
-                                <i class="flaticon-star"></i>
-                                <i class="flaticon-star"></i>
-                                <i class="flaticon-star"></i>
+                                <i class="flaticon-star"></i><i class="flaticon-star"></i><i class="flaticon-star"></i><i class="flaticon-star"></i><i class="flaticon-star"></i>
                             </div>
                         </div>
                     </div>
 
-                    <!-- single slide -->
                     <div class="swiper-slide">
                         <div class="ul-2-testimony">
                             <div class="ul-2-testimony-top">
                                 <div class="ul-2-testimony-reviewer">
-                                    <img src="assets/img//user-2.png" alt="Reviewer Image">
                                     <div class="ul-2-testimony-reviewer-info">
-                                        <span class="ul-2-testimony-reviewer-name">Marvin McKinney</span>
-                                        <span class="ul-2-testimony-reviewer-role">Lead Designer</span>
+                                        <span class="ul-2-testimony-reviewer-name">Vishal Vinchurkar</span>
+                                        <span class="ul-2-testimony-reviewer-role">Nagpur</span>
                                     </div>
                                 </div>
-
                                 <span class="ul-2-testimony-quote-icon"><i class="flaticon-double-quotes"></i></span>
                             </div>
-
-                            <p class="ul-2-testimony-txt">Aonsectetur adipiscing elit Aenean scelerisque augue consequat Quisque eget congue velit in cursus leo sodales the turpis euismod quis sapien euismod now</p>
-
+                            <p class="ul-2-testimony-txt">Excellent work done by Saagar Enterprises team. Harish Ture was highly responsive and responsible throughout the installation process. Highly recommended for mosquito net services.</p>
                             <div class="ul-2-testimony-stars">
-                                <i class="flaticon-star"></i>
-                                <i class="flaticon-star"></i>
-                                <i class="flaticon-star"></i>
-                                <i class="flaticon-star"></i>
-                                <i class="flaticon-star"></i>
+                                <i class="flaticon-star"></i><i class="flaticon-star"></i><i class="flaticon-star"></i><i class="flaticon-star"></i><i class="flaticon-star"></i>
                             </div>
                         </div>
                     </div>
 
-                    <!-- single slide -->
                     <div class="swiper-slide">
                         <div class="ul-2-testimony">
                             <div class="ul-2-testimony-top">
                                 <div class="ul-2-testimony-reviewer">
-                                    <img src="assets/img//user-3.png" alt="Reviewer Image">
                                     <div class="ul-2-testimony-reviewer-info">
-                                        <span class="ul-2-testimony-reviewer-name">Marvin McKinney</span>
-                                        <span class="ul-2-testimony-reviewer-role">Lead Designer</span>
+                                        <span class="ul-2-testimony-reviewer-name">Pravin Bire</span>
+                                        <span class="ul-2-testimony-reviewer-role">Nagpur</span>
                                     </div>
                                 </div>
-
                                 <span class="ul-2-testimony-quote-icon"><i class="flaticon-double-quotes"></i></span>
                             </div>
-
-                            <p class="ul-2-testimony-txt">Aonsectetur adipiscing elit Aenean scelerisque augue consequat Quisque eget congue velit in cursus leo sodales the turpis euismod quis sapien euismod now</p>
-
+                            <p class="ul-2-testimony-txt">Saagar Enterprises is a trusted name for mosquito nets and wall hanging cloth dryers. Service is quick with well-trained and polite staff. Great experience overall.</p>
                             <div class="ul-2-testimony-stars">
-                                <i class="flaticon-star"></i>
-                                <i class="flaticon-star"></i>
-                                <i class="flaticon-star"></i>
-                                <i class="flaticon-star"></i>
-                                <i class="flaticon-star"></i>
+                                <i class="flaticon-star"></i><i class="flaticon-star"></i><i class="flaticon-star"></i><i class="flaticon-star"></i><i class="flaticon-star"></i>
                             </div>
                         </div>
                     </div>
 
-                    <!-- single slide -->
                     <div class="swiper-slide">
                         <div class="ul-2-testimony">
                             <div class="ul-2-testimony-top">
                                 <div class="ul-2-testimony-reviewer">
-                                    <img src="assets/img//user-1.png" alt="Reviewer Image">
                                     <div class="ul-2-testimony-reviewer-info">
-                                        <span class="ul-2-testimony-reviewer-name">Marvin McKinney</span>
-                                        <span class="ul-2-testimony-reviewer-role">Lead Designer</span>
+                                        <span class="ul-2-testimony-reviewer-name">Tishya Kewadkar</span>
+                                        <span class="ul-2-testimony-reviewer-role">Nagpur</span>
                                     </div>
                                 </div>
-
                                 <span class="ul-2-testimony-quote-icon"><i class="flaticon-double-quotes"></i></span>
                             </div>
-
-                            <p class="ul-2-testimony-txt">Aonsectetur adipiscing elit Aenean scelerisque augue consequat Quisque eget congue velit in cursus leo sodales the turpis euismod quis sapien euismod now</p>
-
+                            <p class="ul-2-testimony-txt">Wonderful experience with this company. Service was prompt and hassle-free. The team completed installation quickly with a neat and professional finish.</p>
                             <div class="ul-2-testimony-stars">
-                                <i class="flaticon-star"></i>
-                                <i class="flaticon-star"></i>
-                                <i class="flaticon-star"></i>
-                                <i class="flaticon-star"></i>
-                                <i class="flaticon-star"></i>
+                                <i class="flaticon-star"></i><i class="flaticon-star"></i><i class="flaticon-star"></i><i class="flaticon-star"></i><i class="flaticon-star"></i>
                             </div>
                         </div>
                     </div>
 
-                    <!-- single slide -->
                     <div class="swiper-slide">
                         <div class="ul-2-testimony">
                             <div class="ul-2-testimony-top">
                                 <div class="ul-2-testimony-reviewer">
-                                    <img src="assets/img//user-2.png" alt="Reviewer Image">
                                     <div class="ul-2-testimony-reviewer-info">
-                                        <span class="ul-2-testimony-reviewer-name">Marvin McKinney</span>
-                                        <span class="ul-2-testimony-reviewer-role">Lead Designer</span>
+                                        <span class="ul-2-testimony-reviewer-name">Arun Karole</span>
+                                        <span class="ul-2-testimony-reviewer-role">Nagpur</span>
                                     </div>
                                 </div>
-
                                 <span class="ul-2-testimony-quote-icon"><i class="flaticon-double-quotes"></i></span>
                             </div>
-
-                            <p class="ul-2-testimony-txt">Aonsectetur adipiscing elit Aenean scelerisque augue consequat Quisque eget congue velit in cursus leo sodales the turpis euismod quis sapien euismod now</p>
-
+                            <p class="ul-2-testimony-txt">Perfect job done for mosquito net installation in my 3BHK flat. Skilled professionals and clean work. Highly recommended service.</p>
                             <div class="ul-2-testimony-stars">
-                                <i class="flaticon-star"></i>
-                                <i class="flaticon-star"></i>
-                                <i class="flaticon-star"></i>
-                                <i class="flaticon-star"></i>
-                                <i class="flaticon-star"></i>
+                                <i class="flaticon-star"></i><i class="flaticon-star"></i><i class="flaticon-star"></i><i class="flaticon-star"></i><i class="flaticon-star"></i>
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
         </section>
@@ -692,101 +546,15 @@ include 'include/config.php';
 
 
         <!-- BLOG SECTION START -->
-        <section class="ul-2-blogs ul-2-banner ul-section-spacing">
-            <div class="ul-container">
-                <!-- section heading -->
-                <div class="ul-section-heading">
-                    <div>
-                        <span class="ul-2-section-sub-title">Latest Blog</span>
-                        <h2 class="ul-2-section-title mb-0 text-black">Our Latest Blog & News</h2>
-                    </div>
-                    <a href="#" class="ul-btn">View All Blogs <i class="flaticon-arrow-up-right"></i></a>
-                </div>
-
-                <!-- blogs  -->
-                <div class="row row-cols-lg-3 row-cols-sm-2 row-cols-1 g-3 g-lg-4 justify-content-center">
-                    <!-- single blog -->
-                    <div class="col">
-                        <div class="ul-2-blog">
-                            <div class="ul-2-blog-img">
-                                <img src="assets/img/blog-1.jpg" alt="Blog Image">
-                            </div>
-
-                            <div class="ul-2-blog-txt">
-                                <div class="ul-2-blog-infos">
-                                    <span><i class="flaticon-calendar"></i> 11 March 2025</span>
-                                    <span><i class="flaticon-sms"></i> 05 Comments</span>
-                                </div>
-                                <h3 class="ul-2-blog-title"><a href="blog-details.html">Meeting of business in modern office.</a></h3>
-                                <a href="blog-details.html" class="ul-2-blog-btn">Read More <i class="flaticon-arrow-up-right-curve"></i></a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- single blog -->
-                    <div class="col">
-                        <div class="ul-2-blog">
-                            <div class="ul-2-blog-img">
-                                <img src="assets/img/blog-2.jpg" alt="Blog Image">
-                            </div>
-
-                            <div class="ul-2-blog-txt">
-                                <div class="ul-2-blog-infos">
-                                    <span><i class="flaticon-calendar"></i> 11 March 2025</span>
-                                    <span><i class="flaticon-sms"></i> 05 Comments</span>
-                                </div>
-                                <h3 class="ul-2-blog-title"><a href="blog-details.html">Person looking over our finance graphs.</a></h3>
-                                <a href="blog-details.html" class="ul-2-blog-btn">Read More <i class="flaticon-arrow-up-right-curve"></i></a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- single blog -->
-                    <div class="col">
-                        <div class="ul-2-blog">
-                            <div class="ul-2-blog-img">
-                                <img src="assets/img/blog-3.jpg" alt="Blog Image">
-                            </div>
-
-                            <div class="ul-2-blog-txt">
-                                <div class="ul-2-blog-infos">
-                                    <span><i class="flaticon-calendar"></i> 11 March 2025</span>
-                                    <span><i class="flaticon-sms"></i> 05 Comments</span>
-                                </div>
-                                <h3 class="ul-2-blog-title"><a href="blog-details.html">Co-workers with pens pointing a bar chart.</a></h3>
-                                <a href="blog-details.html" class="ul-2-blog-btn">Read More <i class="flaticon-arrow-up-right-curve"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
         <!-- BLOG SECTION END -->
-
+        <?php include 'include/latest-blog.php'; ?>
 
         <!-- CLIENTS SECTION START -->
-        <section class="ul-2-clients ul-section-spacing">
-            <div class="ul-container">
-                <div class="ul-2-clients-slider swiper">
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide"><img src="assets/img/client-1.svg" alt="Clients Image"></div>
-                        <div class="swiper-slide"><img src="assets/img/client-2.svg" alt="Clients Image"></div>
-                        <div class="swiper-slide"><img src="assets/img/client-3.svg" alt="Clients Image"></div>
-                        <div class="swiper-slide"><img src="assets/img/client-4.svg" alt="Clients Image"></div>
-                        <div class="swiper-slide"><img src="assets/img/client-5.svg" alt="Clients Image"></div>
-                        <div class="swiper-slide"><img src="assets/img/client-6.svg" alt="Clients Image"></div>
-                        <div class="swiper-slide"><img src="assets/img/client-7.svg" alt="Clients Image"></div>
-                        <div class="swiper-slide"><img src="assets/img/client-8.svg" alt="Clients Image"></div>
-                        <div class="swiper-slide"><img src="assets/img/client-1.svg" alt="Clients Image"></div>
-                    </div>
-                </div>
-            </div>
-        </section>
         <!-- CLIENTS SECTION END -->
+
     </main>
 
     <?php include 'include/footer.php'; ?>
-
 
     <!-- Vendor JS -->
     <script src="assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>

@@ -586,7 +586,7 @@ require_once '../include/head.php';
                                     <!-- Actions -->
                                     <td class="py-3 text-end pe-4">
                                         <div class="btn-group shadow-sm border rounded-pill overflow-hidden bg-white">
-                                            <a href="<?= SITE_URL ?>/service-details.php?slug=<?= htmlspecialchars($service['slug'] ?? '') ?>"
+                                            <a href="/Saagar-Mosquito-Net-Website/service/<?= htmlspecialchars($service['slug'] ?? '') ?>"
                                                 target="_blank"
                                                 class="btn btn-sm btn-light border-0 py-2 px-3 text-secondary"
                                                 data-bs-toggle="tooltip" title="View Service">
@@ -677,7 +677,8 @@ foreach ($services as $service) {
         'created_at'     => $service['created_at'] ? date('d M Y', strtotime($service['created_at'])) : '—',
         'faqs_count'     => count(json_decode($service['faqs'] ?? '[]', true) ?: []),
         'editUrl'        => 'edit.php?id=' . $service['id'],
-        'viewUrl'        => '/Saagar-Mosquito-Net-Website/service-details.php?slug=' . ($service['slug'] ?? ''),
+      'viewUrl' => '/Saagar-Mosquito-Net-Website/service/' . ($service['slug'] ?? ''),
+
     ];
 }
 

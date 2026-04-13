@@ -27,15 +27,21 @@ if ($_navDoctorsRes) {
 ?>
 
 <!-- HEADER START -->
-<header class="<?= $_headerClass ?>">
+<header class="<?= $_headerClass ?> ul-sticky-header">
 
     <div class="ul-2-header-bottom">
         <div class="ul-2-header-container">
 
 
-             <div class="ul-2-header-logo-container">
-                    <a href="index-2.html"><img src="assets/img/logo.svg" alt="logo"></a>
-             </div>
+           <div class="ul-2-header-logo-container">
+    <a href="<?= $_base ?>">
+        <img 
+            src="assets/img/home/logo.png" 
+            alt="logo"
+            style="max-width: 140px; height:55px ;"
+        >
+    </a>
+</div>
 
             <!-- RIGHT SECTION -->
             <div class="ul-2-header-bottom-right">
@@ -61,24 +67,20 @@ if ($_navDoctorsRes) {
                             <a href="<?= $_base ?>blogs" <?= navActive('blog') ?>>Blogs</a>
 
                             <!-- CONTACT -->
-                            <a href="<?= $_base ?>contact-us" <?= navActive('contact') ?>>Contact us</a>
+                            <a href="<?= $_base ?>contact" <?= navActive('contact') ?>>Contact us</a>
 
                         </nav>
                     </div>
                 </div>
 
                 <!-- SEARCH -->
-                <button class="ul-header-search-opener">
-                    <i class="flaticon-search"></i>
-                </button>
+              
 
                 <!-- BUTTONS -->
                 <div class="ul-2-header-bottom-btns">
-                    <a href="<?= $_base ?>login" class="ul-btn d-xl-flex d-none">
-                        Login <i class="flaticon-arrow-up-right"></i>
-                    </a>
+                    
 
-                    <a href="<?= $_base ?>contact-us" class="ul-btn d-xxs-none">
+                    <a href="<?= $_base ?>contact" class="ul-btn d-xxs-none">
                         Book Appointment <i class="flaticon-arrow-up-right"></i>
                     </a>
                 </div>

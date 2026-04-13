@@ -2,11 +2,14 @@
 session_start();
 include 'include/config.php';
 
+// ── Base path ──
+$_base = '/Saagar-Mosquito-Net-Website/';
+
 // ── Fetch blog by slug ──
 $slug = isset($_GET['slug']) ? trim($conn->real_escape_string($_GET['slug'])) : '';
 
 if (!$slug) {
-    header('Location: blog.php');
+    header('Location: ' . $_base . 'blogs');
     exit;
 }
 
@@ -20,7 +23,7 @@ $result = $conn->query("
 $blog = $result->fetch_assoc();
 
 if (!$blog) {
-    header('Location: blog.php');
+    header('Location: ' . $_base . 'blogs');
     exit;
 }
 
@@ -201,7 +204,7 @@ if (!empty($blog['tags'])) {
     <div class="ul-sidebar">
         <div class="ul-sidebar-header">
             <div class="ul-sidebar-header-logo">
-                <a href="index.html">
+                <a href="<?php echo $_base; ?>">
                     <img src="assets/img/logo.svg" alt="logo" class="logo">
                 </a>
             </div>
@@ -238,16 +241,15 @@ if (!empty($blog['tags'])) {
             <div class="ul-container">
                 <h1 class="ul-breadcrumb-title">Blog Details</h1>
                 <div class="ul-breadcrumb-nav">
-                    <a href="index.php">Home</a>
+                    <a href="<?php echo $_base; ?>">Home</a>
                     <span class="separator"><i class="flaticon-next"></i></span>
-                    <a href="blog.php">Our Blogs</a>
+                    <a href="<?php echo $_base; ?>blogs">Our Blogs</a>
                     <span class="separator"><i class="flaticon-next"></i></span>
                     <span class="current"><?php echo htmlspecialchars(mb_strimwidth($blog['title'], 0, 40, '...')); ?></span>
                 </div>
             </div>
         </section>
         <!-- BREADCRUMB SECTION END -->
-
 
         <!-- BLOG DETAILS SECTION START -->
         <section class="ul-blog-details ul-section-spacing">
@@ -266,7 +268,6 @@ if (!empty($blog['tags'])) {
                                 </div>
 
                                 <div class="ul-blog-details-txt">
-                                    <!-- Meta info -->
                                     <div class="ul-2-blog-infos mb-3">
                                         <span><i class="flaticon-calendar"></i> <?php echo date('d F Y', strtotime($blog['published_at'])); ?></span>
                                         <span><i class="flaticon-clock"></i> <?php echo !empty($blog['reading_time']) ? $blog['reading_time'] . ' Min Read' : '1 Min Read'; ?></span>
@@ -276,7 +277,6 @@ if (!empty($blog['tags'])) {
                                     <h2 class="ul-blog-details-title"><?php echo htmlspecialchars($blog['title']); ?></h2>
                                     <p class="ul-blog-details-descr"><?php echo htmlspecialchars($blog['excerpt']); ?></p>
 
-                                    <!-- Blog content from DB -->
                                     <div class="ul-blog-details-content">
                                         <?php echo $blog['content']; ?>
                                     </div>
@@ -285,13 +285,12 @@ if (!empty($blog['tags'])) {
 
                             <!-- ACTIONS: Tags & Share -->
                             <div class="ul-blog-details-actions">
-                                <!-- Tags -->
                                 <?php if (!empty($tags_arr)): ?>
                                 <div class="tags-wrapper">
                                     <h4 class="actions-title">Tags: </h4>
                                     <div class="ul-blog-sidebar-tags tags">
                                         <?php foreach ($tags_arr as $tag): ?>
-                                        <a href="blog.php?search=<?php echo urlencode($tag); ?>"><?php echo htmlspecialchars($tag); ?></a>
+                                        <a href="<?php echo $_base; ?>blogs?search=<?php echo urlencode($tag); ?>"><?php echo htmlspecialchars($tag); ?></a>
                                         <?php endforeach; ?>
                                     </div>
                                 </div>
@@ -300,7 +299,7 @@ if (!empty($blog['tags'])) {
                                 <!-- Share -->
                                 <div class="shares-wrapper">
                                     <div class="share-options">
-                                        <?php $share_url = urlencode('http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']); ?>
+                                        <?php $share_url = urlencode('http://' . $_SERVER['HTTP_HOST'] . $_base . $blog['slug']); ?>
                                         <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo $share_url; ?>" target="_blank"><i class="flaticon-facebook-app-symbol"></i></a>
                                         <a href="https://twitter.com/intent/tweet?url=<?php echo $share_url; ?>&text=<?php echo urlencode($blog['title']); ?>" target="_blank"><i class="flaticon-twitter"></i></a>
                                         <a href="https://www.linkedin.com/sharing/share-offsite/?url=<?php echo $share_url; ?>" target="_blank"><i class="flaticon-linkedin"></i></a>
@@ -314,12 +313,12 @@ if (!empty($blog['tags'])) {
                             <div class="ul-blog-details-bottom">
                                 <div class="d-flex justify-content-between gap-3 flex-wrap">
                                     <?php if ($prev_post): ?>
-                                    <a href="blog-details.php?slug=<?php echo urlencode($prev_post['slug']); ?>" class="ul-btn">
+                                    <a href="<?php echo $_base . htmlspecialchars($prev_post['slug']); ?>" class="ul-btn">
                                         <i class="flaticon-back"></i> Previous Post
                                     </a>
                                     <?php endif; ?>
                                     <?php if ($next_post): ?>
-                                    <a href="blog-details.php?slug=<?php echo urlencode($next_post['slug']); ?>" class="ul-btn ul-btn--2">
+                                    <a href="<?php echo $_base . htmlspecialchars($next_post['slug']); ?>" class="ul-btn ul-btn--2">
                                         Next Post <i class="flaticon-arrow-up-right"></i>
                                     </a>
                                     <?php endif; ?>
@@ -337,7 +336,7 @@ if (!empty($blog['tags'])) {
                             <!-- Search Widget -->
                             <div class="ul-service-details-sidebar-widget ul-inner-sidebar-search">
                                 <div class="ul-inner-sidebar-widget-content">
-                                    <form action="blog.php" method="GET" class="ul-blog-search-form">
+                                    <form action="<?php echo $_base; ?>blogs" method="GET" class="ul-blog-search-form">
                                         <input type="search" name="search" id="ul-blog-search" placeholder="Search Here">
                                         <button type="submit"><i class="flaticon-search"></i></button>
                                     </form>
@@ -351,7 +350,7 @@ if (!empty($blog['tags'])) {
                                 <ul class="ul-service-details-sidebar-links">
                                     <?php foreach ($all_categories as $cat): ?>
                                     <li>
-                                        <a href="blog.php?category=<?php echo $cat['id']; ?>">
+                                        <a href="<?php echo $_base; ?>blogs?category=<?php echo $cat['id']; ?>">
                                             <?php echo htmlspecialchars($cat['name']); ?>
                                             <span>(<?php echo str_pad($cat['post_count'], 2, '0', STR_PAD_LEFT); ?>)</span>
                                         </a>
@@ -375,7 +374,8 @@ if (!empty($blog['tags'])) {
                                             <div class="txt">
                                                 <span class="date"><span><?php echo date('M d, Y', strtotime($lp['published_at'])); ?></span></span>
                                                 <h4 class="title">
-                                                    <a href="blog-details.php?slug=<?php echo urlencode($lp['slug']); ?>">
+                                                    <!-- ✅ CLEAN URL -->
+                                                    <a href="<?php echo $_base . htmlspecialchars($lp['slug']); ?>">
                                                         <?php echo htmlspecialchars($lp['title']); ?>
                                                     </a>
                                                 </h4>
@@ -393,7 +393,7 @@ if (!empty($blog['tags'])) {
                                 <h3 class="ul-service-details-sidebar-widget-title">Tags</h3>
                                 <div class="tags-wrapper">
                                     <?php foreach ($tags_arr as $tag): ?>
-                                    <a href="blog.php?search=<?php echo urlencode($tag); ?>"><?php echo htmlspecialchars($tag); ?></a>
+                                    <a href="<?php echo $_base; ?>blogs?search=<?php echo urlencode($tag); ?>"><?php echo htmlspecialchars($tag); ?></a>
                                     <?php endforeach; ?>
                                 </div>
                             </div>
@@ -420,7 +420,6 @@ if (!empty($blog['tags'])) {
     <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    <!-- Custom JS -->
     <script src="assets/js/main.js"></script>
     <script src="assets/js/tab.js"></script>
     <script src="assets/js/progressbar.js"></script>

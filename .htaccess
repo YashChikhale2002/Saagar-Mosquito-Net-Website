@@ -18,7 +18,7 @@ RewriteRule ^([a-zA-Z0-9_-]+)/?$ blog-details.php?slug=$1 [L,QSA]
 RewriteRule ^blogs/([^/]+)/?$ blogs.php?category=$1 [B,L,QSA]
 
 # 5. SERVICE CLEAN URL (/service/slug)
-RewriteRule ^service/([a-zA-Z0-9_-]+)$ single-service.php?slug=$1 [L,QSA]
+RewriteRule ^service/([a-zA-Z0-9_-]+)$ service-details.php?slug=$1 [L,QSA]
 
 RewriteRule ^products/([a-zA-Z0-9_-]+)$ single-product.php?slug=$1 [L,QSA]
 

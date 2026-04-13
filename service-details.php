@@ -2,10 +2,13 @@
 session_start();
 include __DIR__ . '/include/config.php';
 
+$_base    = '/Saagar-Mosquito-Net-Website/';
+$_svcBase = '/Saagar-Mosquito-Net-Website/service/';
+
 $slug = trim($_GET['slug'] ?? '');
 
 if (empty($slug)) {
-    header("Location: services.php");
+    header("Location: " . $_base . "services");
     exit;
 }
 
@@ -32,7 +35,7 @@ $og_description      = $service['og_description']      ?: $meta_description;
 $twitter_title       = $service['twitter_title']       ?: $meta_title;
 $twitter_description = $service['twitter_description'] ?: $meta_description;
 $robots_meta         = $service['robots_meta']         ?: 'index,follow';
-$canonical_url       = $service['canonical_url']       ?: ((!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+$canonical_url       = $service['canonical_url']       ?: ((!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . $_svcBase . $service['slug']);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -46,7 +49,7 @@ $canonical_url       = $service['canonical_url']       ?: ((!empty($_SERVER['HTT
     <?php endif; ?>
     <meta name="robots" content="<?= htmlspecialchars($robots_meta) ?>">
     <link rel="canonical" href="<?= htmlspecialchars($canonical_url) ?>">
-
+<base href="/Saagar-Mosquito-Net-Website/">
     <!-- Open Graph -->
     <meta property="og:type"        content="<?= htmlspecialchars($service['og_type']) ?>">
     <meta property="og:title"       content="<?= htmlspecialchars($og_title) ?>">
@@ -69,16 +72,16 @@ $canonical_url       = $service['canonical_url']       ?: ((!empty($_SERVER['HTT
     <?php endif; ?>
 
     <!-- Vendor CSS -->
-    <link rel="stylesheet" href="assets/vendor/bootstrap/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/vendor/swiper/swiper-bundle.min.css">
-    <link rel="stylesheet" href="assets/vendor/animate-wow/animate.min.css">
-    <link rel="stylesheet" href="assets/icon/flaticon_cashflow.css">
-    <link rel="stylesheet" href="assets/css/style.css">
+   <!-- Vendor CSS -->
+<link rel="stylesheet" href="/Saagar-Mosquito-Net-Website/assets/vendor/bootstrap/bootstrap.min.css">
+<link rel="stylesheet" href="/Saagar-Mosquito-Net-Website/assets/vendor/swiper/swiper-bundle.min.css">
+<link rel="stylesheet" href="/Saagar-Mosquito-Net-Website/assets/vendor/animate-wow/animate.min.css">
+<link rel="stylesheet" href="/Saagar-Mosquito-Net-Website/assets/icon/flaticon_cashflow.css">
+<link rel="stylesheet" href="/Saagar-Mosquito-Net-Website/assets/css/style.css">
 </head>
 
 <body class="home-2">
 
-    <!-- HEADER -->
     <?php include __DIR__ . '/include/header.php'; ?>
 
     <main>
@@ -88,9 +91,9 @@ $canonical_url       = $service['canonical_url']       ?: ((!empty($_SERVER['HTT
             <div class="ul-container">
                 <h1 class="ul-breadcrumb-title"><?= htmlspecialchars($service['title']) ?></h1>
                 <div class="ul-breadcrumb-nav">
-                    <a href="index.php">Home</a>
+                    <a href="<?= $_base ?>">Home</a>
                     <span class="separator"><i class="flaticon-next"></i></span>
-                    <a href="services.php">Services</a>
+                    <a href="<?= $_base ?>services">Services</a>
                     <span class="separator"><i class="flaticon-next"></i></span>
                     <span class="current"><?= htmlspecialchars($service['title']) ?></span>
                 </div>
@@ -243,93 +246,85 @@ $canonical_url       = $service['canonical_url']       ?: ((!empty($_SERVER['HTT
             </div>
         </section>
         <?php endif; ?>
-<?php
-// ── Related Services (current service ko exclude karke baaki active services) ──
-$currentId = (int)$service['id'];
-$relResult = $conn->query("
-    SELECT id, title, slug, short_desc, image
-    FROM mosquito_services
-    WHERE is_active = 1
-      AND id != $currentId
-    ORDER BY created_at DESC
-    LIMIT 3
-");
-$relatedServices = [];
-if ($relResult) while ($row = $relResult->fetch_assoc()) $relatedServices[] = $row;
-?>
 
-<?php if (!empty($relatedServices)): ?>
-<!-- RELATED SERVICES SECTION -->
-<section class="ul-related-services ul-section-spacing pt-0 pb-5">
-    <div class="ul-container">
+        <?php
+        // ── Related Services ──
+        $currentId = (int)$service['id'];
+        $relResult = $conn->query("
+            SELECT id, title, slug, short_desc, image
+            FROM mosquito_services
+            WHERE is_active = 1
+              AND id != $currentId
+            ORDER BY created_at DESC
+            LIMIT 3
+        ");
+        $relatedServices = [];
+        if ($relResult) while ($row = $relResult->fetch_assoc()) $relatedServices[] = $row;
+        ?>
 
-        <!-- Section Header -->
-        <div class="ul-section-title text-center mb-5">
-            <h2 class="ul-section-title__title">Related Services</h2>
-           
-        </div>
+        <?php if (!empty($relatedServices)): ?>
+        <section class="ul-related-services ul-section-spacing pt-0 pb-5">
+            <div class="ul-container">
 
-        <!-- Cards Row -->
-        <div class="row g-4">
-            <?php foreach ($relatedServices as $rel): ?>
-            <?php
-                $relImg   = !empty($rel['image'])
-                    ? htmlspecialchars($rel['image'])
-                    : 'assets/img/service-placeholder.webp';
-                $relTitle = htmlspecialchars($rel['title']);
-                $relDesc  = htmlspecialchars(mb_strimwidth($rel['short_desc'] ?? '', 0, 100, '…'));
-                $relUrl   = 'service-details.php?slug=' . urlencode($rel['slug']);
-            ?>
-            <div class="col-lg-4 col-md-6 col-12">
-                <div class="ul-related-service-card h-100">
+                <div class="ul-section-title text-center mb-5">
+                    <h2 class="ul-section-title__title">Related Services</h2>
+                </div>
 
-                    <!-- Image -->
-                    <div class="ul-related-service-card__img">
-                        <img src="<?= $relImg ?>" alt="<?= $relTitle ?>" loading="lazy">
-                        <div class="ul-related-service-card__overlay">
-                            <a href="<?= $relUrl ?>" class="ul-related-service-card__view-btn">
-                                View Service
-                            </a>
+                <div class="row g-4">
+                    <?php foreach ($relatedServices as $rel): ?>
+                    <?php
+                        $relImg   = !empty($rel['image'])
+                            ? htmlspecialchars($rel['image'])
+                            : 'assets/img/service-placeholder.webp';
+                        $relTitle = htmlspecialchars($rel['title']);
+                        $relDesc  = htmlspecialchars(mb_strimwidth($rel['short_desc'] ?? '', 0, 100, '…'));
+                        $relUrl   = $_svcBase . htmlspecialchars($rel['slug']); // ✅ /service/slug
+                    ?>
+                    <div class="col-lg-4 col-md-6 col-12">
+                        <div class="ul-related-service-card h-100">
+
+                            <div class="ul-related-service-card__img">
+                                <img src="<?= $relImg ?>" alt="<?= $relTitle ?>" loading="lazy">
+                                <div class="ul-related-service-card__overlay">
+                                    <a href="<?= $relUrl ?>" class="ul-related-service-card__view-btn">
+                                        View Service
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="ul-related-service-card__body">
+                                <h3 class="ul-related-service-card__title">
+                                    <a href="<?= $relUrl ?>"><?= $relTitle ?></a>
+                                </h3>
+                                <p class="ul-related-service-card__desc"><?= $relDesc ?></p>
+                                <a href="<?= $relUrl ?>" class="ul-related-service-card__link">
+                                    Read More <i class="flaticon-next"></i>
+                                </a>
+                            </div>
+
                         </div>
                     </div>
-
-                    <!-- Body -->
-                    <div class="ul-related-service-card__body">
-                        <h3 class="ul-related-service-card__title">
-                            <a href="<?= $relUrl ?>"><?= $relTitle ?></a>
-                        </h3>
-                        <p class="ul-related-service-card__desc"><?= $relDesc ?></p>
-                        <a href="<?= $relUrl ?>" class="ul-related-service-card__link">
-                            Read More <i class="flaticon-next"></i>
-                        </a>
-                    </div>
-
+                    <?php endforeach; ?>
                 </div>
+
             </div>
-            <?php endforeach; ?>
-        </div>
+        </section>
+        <?php endif; ?>
 
-       s
-
-    </div>
-</section>
-
-<?php endif; ?>
     </main>
 
     <?php include __DIR__ . '/include/footer.php'; ?>
 
-    <!-- Vendor JS -->
-    <script src="assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
-    <script src="assets/vendor/animate-wow/wow.min.js"></script>
-    <script src="assets/vendor/splittype/index.min.js"></script>
-    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-    <script src="assets/vendor/fslightbox/fslightbox.js"></script>
-    <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    <script src="assets/js/main.js"></script>
-    <script src="assets/js/tab.js"></script>
-    <script src="assets/js/accordion.js"></script>
+<script src="/Saagar-Mosquito-Net-Website/assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+<script src="/Saagar-Mosquito-Net-Website/assets/vendor/animate-wow/wow.min.js"></script>
+<script src="/Saagar-Mosquito-Net-Website/assets/vendor/splittype/index.min.js"></script>
+<script src="/Saagar-Mosquito-Net-Website/assets/vendor/swiper/swiper-bundle.min.js"></script>
+<script src="/Saagar-Mosquito-Net-Website/assets/vendor/fslightbox/fslightbox.js"></script>
+<script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="/Saagar-Mosquito-Net-Website/assets/js/main.js"></script>
+<script src="/Saagar-Mosquito-Net-Website/assets/js/tab.js"></script>
+<script src="/Saagar-Mosquito-Net-Website/assets/js/accordion.js"></script>
 </body>
 </html>

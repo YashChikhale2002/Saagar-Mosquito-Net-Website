@@ -228,7 +228,7 @@ while ($row = $blogs_result->fetch_assoc()) {
             <div class="ul-container">
                 <h1 class="ul-breadcrumb-title">Our Blogs</h1>
                 <div class="ul-breadcrumb-nav">
-                    <a href="index.php">Home</a>
+                    <a href="index">Home</a>
                     <span class="separator"><i class="flaticon-next"></i></span>
                     <span class="current">Our Blogs</span>
                 </div>
@@ -259,11 +259,11 @@ while ($row = $blogs_result->fetch_assoc()) {
                                         <span><i class="flaticon-clock"></i> <?php echo !empty($blog['reading_time']) ? $blog['reading_time'] . ' Min Read' : '1 Min Read'; ?></span>
                                     </div>
                                     <h3 class="ul-2-blog-title">
-                                        <a href="blog-details.php?slug=<?php echo urlencode($blog['slug']); ?>">
+                                        <a href="<?= $_base ?><?php echo $blog['slug']; ?>">
                                             <?php echo htmlspecialchars($blog['title']); ?>
                                         </a>
                                     </h3>
-                                    <a href="blog-details.php?slug=<?php echo urlencode($blog['slug']); ?>" class="ul-2-blog-btn">
+                                    <a href="<?= $_base ?><?php echo $blog['slug']; ?>" class="ul-2-blog-btn">
                                         Read More <i class="flaticon-arrow-up-right"></i>
                                     </a>
                                 </div>

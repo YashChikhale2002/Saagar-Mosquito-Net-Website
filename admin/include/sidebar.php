@@ -52,25 +52,7 @@ function sbOpen(string $prefix, string $active): string {
                 </li>
                 <?php endif; ?>
 
-                <!-- ── Products ──────────────────────────────────────────── -->
-                <?php if (canAccess('products')): ?>
-                <li<?= sbParent('products', $activePage) ?>>
-                    <a href="#">
-                        <i class="fa fa-box"></i> <span>Products</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <ul style="display:<?= sbOpen('products', $activePage) ?>;">
-                        <li<?= sbActive('products-index', $activePage, ['products-edit']) ?>>
-                            <a href="<?= $adminBase ?>products/">All Products</a>
-                        </li>
-                        <?php if (!hasRole('viewer')): ?>
-                        <li<?= sbActive('products-add', $activePage) ?>>
-                            <a href="<?= $adminBase ?>products/add">Add Product</a>
-                        </li>
-                        <?php endif; ?>
-                    </ul>
-                </li>
-                <?php endif; ?>
+                
 
                 <!-- ── Blogs ─────────────────────────────────────────────── -->
                 <?php if (canAccess('blogs')): ?>

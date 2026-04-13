@@ -137,7 +137,7 @@ $opSym     = $opDisplay[$captcha['op']] ?? $captcha['op'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login – Niraj Industries</title>
+    <title>Admin Login – Sagar Enterprises</title>
     <link rel="stylesheet" href="<?= SITE_URL ?>/admin/assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="<?= SITE_URL ?>/admin/assets/plugins/fontawesome/css/all.min.css">
     <style>
@@ -497,7 +497,7 @@ $opSym     = $opDisplay[$captcha['op']] ?? $captcha['op'];
         <div class="brand-logo">
             <i class="fas fa-industry"></i>
         </div>
-        <h2 class="brand-name">Niraj Industries</h2>
+        <h2 class="brand-name">Sagar Enterprises</h2>
         <p class="brand-sub">Admin Control Panel</p>
 
         <div class="feat">
@@ -517,7 +517,7 @@ $opSym     = $opDisplay[$captcha['op']] ?? $captcha['op'];
             Activity Logged
         </div>
 
-        <span class="year-badge">&copy; <?= date('Y') ?> Niraj Industries</span>
+        <span class="year-badge">&copy; <?= date('Y') ?> Sagar Enterprises</span>
     </div>
 
     <!-- ── MAIN ── -->
@@ -628,8 +628,8 @@ $opSym     = $opDisplay[$captcha['op']] ?? $captcha['op'];
         </div>
         <?php endif; ?>
 
-        <div class="ni-divider"><span>NIRAJ INDUSTRIES</span></div>
-        <p class="footer-txt">&copy; <?= date('Y') ?> Niraj Industries. All rights reserved.</p>
+        <div class="ni-divider"><span>Sagar Enterprises</span></div>
+        <p class="footer-txt">&copy; <?= date('Y') ?> Sagar Enterprises. All rights reserved.</p>
 
     </div>
 </div>

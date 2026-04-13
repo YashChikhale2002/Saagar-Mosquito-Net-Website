@@ -2,6 +2,9 @@
 session_start();
 include 'include/config.php';
 
+$_base    = '/Saagar-Mosquito-Net-Website/';
+$_svcBase = '/Saagar-Mosquito-Net-Website/service/';
+
 // ── Fetch All Active Services ─────────────────────────────────
 $services = [];
 $result = $conn->query("SELECT id, title, slug, short_desc, image, sort_order FROM mosquito_services WHERE is_active = 1 ORDER BY sort_order ASC");
@@ -11,7 +14,6 @@ if ($result) {
     }
 }
 
-// ── Split into chunks of 4 (for row-wise display) ─────────────
 $serviceChunks = array_chunk($services, 4);
 ?>
 <!DOCTYPE html>
@@ -20,8 +22,6 @@ $serviceChunks = array_chunk($services, 4);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Our Services | Mosquito Net Solutions</title>
-
-    <!-- Vendor CSS -->
     <link rel="stylesheet" href="assets/vendor/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="assets/vendor/swiper/swiper-bundle.min.css">
     <link rel="stylesheet" href="assets/vendor/animate-wow/animate.min.css">
@@ -74,7 +74,7 @@ $serviceChunks = array_chunk($services, 4);
     <div class="ul-sidebar">
         <div class="ul-sidebar-header">
             <div class="ul-sidebar-header-logo">
-                <a href="index.php">
+                <a href="<?= $_base ?>">
                     <img src="assets/img/logo.svg" alt="logo" class="logo">
                 </a>
             </div>
@@ -112,7 +112,7 @@ $serviceChunks = array_chunk($services, 4);
             <div class="ul-container">
                 <h1 class="ul-breadcrumb-title">Services</h1>
                 <div class="ul-breadcrumb-nav">
-                    <a href="index.php">Home</a>
+                    <a href="<?= $_base ?>">Home</a>
                     <span class="separator"><i class="flaticon-next"></i></span>
                     <span class="current">Services</span>
                 </div>
@@ -120,225 +120,74 @@ $serviceChunks = array_chunk($services, 4);
         </section>
         <!-- BREADCRUMB SECTION END -->
 
-
         <!-- SERVICES LISTING SECTION START -->
-        <!-- SERVICES LISTING SECTION START -->
-<section class="ul-inner-services ul-section-spacing">
-    <div class="ul-container">
+        <section class="ul-inner-services ul-section-spacing">
+            <div class="ul-container">
 
-        <?php if (empty($services)): ?>
-        <div class="text-center py-5">
-            <p class="text-muted fs-5">No services found. Please check back later.</p>
-        </div>
-
-        <?php else: ?>
-        <div class="row g-4">
-            <?php foreach ($services as $index => $service): ?>
-            <?php
-                $img = !empty($service['image'])
-                    ? htmlspecialchars($service['image'])
-                    : 'assets/img/investment-img.jpg';
-                $title    = htmlspecialchars($service['title']);
-                $desc     = htmlspecialchars(mb_strimwidth($service['short_desc'] ?? '', 0, 100, '…'));
-                $url      = 'service-details.php?slug=' . urlencode($service['slug']);
-                $num      = str_pad($index + 1, 2, '0', STR_PAD_LEFT);
-            ?>
-            <div class="col-lg-4 col-md-6 col-12">
-                <div class="ul-service-blog-card">
-
-                    <!-- Image -->
-                    <div class="ul-service-blog-card__img">
-                        <a href="<?= $url ?>">
-                            <img src="<?= $img ?>" alt="<?= $title ?>" loading="lazy">
-                        </a>
-                    </div>
-
-                    <!-- Body -->
-                    <div class="ul-service-blog-card__body">
-                        <!-- Meta -->
-                        <div class="ul-service-blog-card__meta">
-                            <span class="ul-service-blog-card__num">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                                Service <?= $num ?>
-                            </span>
-                            <span class="ul-service-blog-card__badge">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                                Mosquito Net
-                            </span>
-                        </div>
-
-                        <!-- Title -->
-                        <h3 class="ul-service-blog-card__title">
-                            <a href="<?= $url ?>"><?= $title ?></a>
-                        </h3>
-
-                        <!-- Desc -->
-                        <p class="ul-service-blog-card__desc"><?= $desc ?></p>
-
-                        <!-- Read More -->
-                        <a href="<?= $url ?>" class="ul-service-blog-card__link">
-                            Read More
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
-                        </a>
-                    </div>
-
+                <?php if (empty($services)): ?>
+                <div class="text-center py-5">
+                    <p class="text-muted fs-5">No services found. Please check back later.</p>
                 </div>
+
+                <?php else: ?>
+                <div class="row g-4">
+                    <?php foreach ($services as $index => $service): ?>
+                    <?php
+                        $img  = !empty($service['image'])
+                            ? htmlspecialchars($service['image'])
+                            : 'assets/img/investment-img.jpg';
+                        $title = htmlspecialchars($service['title']);
+                        $desc  = htmlspecialchars(mb_strimwidth($service['short_desc'] ?? '', 0, 100, '…'));
+                        $url   = $_svcBase . htmlspecialchars($service['slug']); // ✅ /service/slug
+                        $num   = str_pad($index + 1, 2, '0', STR_PAD_LEFT);
+                    ?>
+                    <div class="col-lg-4 col-md-6 col-12">
+                        <div class="ul-service-blog-card">
+
+                            <div class="ul-service-blog-card__img">
+                                <a href="<?= $url ?>">
+                                    <img src="<?= $img ?>" alt="<?= $title ?>" loading="lazy">
+                                </a>
+                            </div>
+
+                            <div class="ul-service-blog-card__body">
+                                <div class="ul-service-blog-card__meta">
+                                    <span class="ul-service-blog-card__num">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                                        Service <?= $num ?>
+                                    </span>
+                                    <span class="ul-service-blog-card__badge">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                                        Mosquito Net
+                                    </span>
+                                </div>
+
+                                <h3 class="ul-service-blog-card__title">
+                                    <a href="<?= $url ?>"><?= $title ?></a>
+                                </h3>
+
+                                <p class="ul-service-blog-card__desc"><?= $desc ?></p>
+
+                                <a href="<?= $url ?>" class="ul-service-blog-card__link">
+                                    Read More
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                    <?php endforeach; ?>
+                </div>
+                <?php endif; ?>
+
             </div>
-            <?php endforeach; ?>
-        </div>
-        <?php endif; ?>
-
-    </div>
-</section>
-<!-- SERVICES LISTING SECTION END -->
-
+        </section>
         <!-- SERVICES LISTING SECTION END -->
-
-
-        <!-- TESTIMONIALS SECTION START -->
-        <section class="ul-2-testimonials ul-section-spacing">
-            <div class="ul-container">
-                <div class="ul-section-heading justify-content-center text-center">
-                    <div>
-                        <span class="ul-2-section-sub-title">Testimonials</span>
-                        <h2 class="ul-2-section-title mb-0">What People Say About Us</h2>
-                    </div>
-                </div>
-            </div>
-
-            <div class="ul-2-testimonials-slider swiper">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                        <div class="ul-2-testimony">
-                            <div class="ul-2-testimony-top">
-                                <div class="ul-2-testimony-reviewer">
-                                    <img src="assets/img/user-1.png" alt="Reviewer Image">
-                                    <div class="ul-2-testimony-reviewer-info">
-                                        <span class="ul-2-testimony-reviewer-name">Marvin McKinney</span>
-                                        <span class="ul-2-testimony-reviewer-role">Lead Designer</span>
-                                    </div>
-                                </div>
-                                <span class="ul-2-testimony-quote-icon"><i class="flaticon-double-quotes"></i></span>
-                            </div>
-                            <p class="ul-2-testimony-txt">Aonsectetur adipiscing elit Aenean scelerisque augue consequat Quisque eget congue velit in cursus leo sodales the turpis euismod quis sapien euismod now</p>
-                            <div class="ul-2-testimony-stars">
-                                <i class="flaticon-star"></i><i class="flaticon-star"></i>
-                                <i class="flaticon-star"></i><i class="flaticon-star"></i>
-                                <i class="flaticon-star"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="ul-2-testimony">
-                            <div class="ul-2-testimony-top">
-                                <div class="ul-2-testimony-reviewer">
-                                    <img src="assets/img/user-2.png" alt="Reviewer Image">
-                                    <div class="ul-2-testimony-reviewer-info">
-                                        <span class="ul-2-testimony-reviewer-name">Anjali Mehta</span>
-                                        <span class="ul-2-testimony-reviewer-role">Mother of Infant, Pune</span>
-                                    </div>
-                                </div>
-                                <span class="ul-2-testimony-quote-icon"><i class="flaticon-double-quotes"></i></span>
-                            </div>
-                            <p class="ul-2-testimony-txt">Our baby had mosquito bites every morning before we found this net. Since we started using the crib dome net, not a single bite. The elastic base fits the cot perfectly.</p>
-                            <div class="ul-2-testimony-stars">
-                                <i class="flaticon-star"></i><i class="flaticon-star"></i>
-                                <i class="flaticon-star"></i><i class="flaticon-star"></i>
-                                <i class="flaticon-star"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="ul-2-testimony">
-                            <div class="ul-2-testimony-top">
-                                <div class="ul-2-testimony-reviewer">
-                                    <img src="assets/img/user-3.png" alt="Reviewer Image">
-                                    <div class="ul-2-testimony-reviewer-info">
-                                        <span class="ul-2-testimony-reviewer-name">Rohan Deshmukh</span>
-                                        <span class="ul-2-testimony-reviewer-role">Trek Leader, Nagpur</span>
-                                    </div>
-                                </div>
-                                <span class="ul-2-testimony-quote-icon"><i class="flaticon-double-quotes"></i></span>
-                            </div>
-                            <p class="ul-2-testimony-txt">We took your hammock nets on a 12-day trek through Bastar. Zero mosquito bites across the entire group. The zippers held up perfectly through rain and rough handling.</p>
-                            <div class="ul-2-testimony-stars">
-                                <i class="flaticon-star"></i><i class="flaticon-star"></i>
-                                <i class="flaticon-star"></i><i class="flaticon-star"></i>
-                                <i class="flaticon-star"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="ul-2-testimony">
-                            <div class="ul-2-testimony-top">
-                                <div class="ul-2-testimony-reviewer">
-                                    <img src="assets/img/user-1.png" alt="Reviewer Image">
-                                    <div class="ul-2-testimony-reviewer-info">
-                                        <span class="ul-2-testimony-reviewer-name">Priya Sharma</span>
-                                        <span class="ul-2-testimony-reviewer-role">Homemaker, Nagpur</span>
-                                    </div>
-                                </div>
-                                <span class="ul-2-testimony-quote-icon"><i class="flaticon-double-quotes"></i></span>
-                            </div>
-                            <p class="ul-2-testimony-txt">We replaced chemical coils with your bedroom nets and the difference is remarkable. No more burning smell, no more coughing at night. The whole family sleeps peacefully now.</p>
-                            <div class="ul-2-testimony-stars">
-                                <i class="flaticon-star"></i><i class="flaticon-star"></i>
-                                <i class="flaticon-star"></i><i class="flaticon-star"></i>
-                                <i class="flaticon-star"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="ul-2-testimony">
-                            <div class="ul-2-testimony-top">
-                                <div class="ul-2-testimony-reviewer">
-                                    <img src="assets/img/user-2.png" alt="Reviewer Image">
-                                    <div class="ul-2-testimony-reviewer-info">
-                                        <span class="ul-2-testimony-reviewer-name">Suresh Patil</span>
-                                        <span class="ul-2-testimony-reviewer-role">Farmer, Wardha</span>
-                                    </div>
-                                </div>
-                                <span class="ul-2-testimony-quote-icon"><i class="flaticon-double-quotes"></i></span>
-                            </div>
-                            <p class="ul-2-testimony-txt">Living near fields means constant mosquito trouble. Your outdoor rooftop net changed everything. Easy to set up every evening and packs away quickly in the morning.</p>
-                            <div class="ul-2-testimony-stars">
-                                <i class="flaticon-star"></i><i class="flaticon-star"></i>
-                                <i class="flaticon-star"></i><i class="flaticon-star"></i>
-                                <i class="flaticon-star"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- TESTIMONIALS SECTION END -->
-
-
-        <!-- CLIENTS SECTION START -->
-        <section class="ul-2-clients ul-section-spacing pt-0">
-            <div class="ul-container">
-                <div class="ul-2-clients-slider swiper">
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide"><img src="assets/img/client-1.svg" alt="Clients Image"></div>
-                        <div class="swiper-slide"><img src="assets/img/client-2.svg" alt="Clients Image"></div>
-                        <div class="swiper-slide"><img src="assets/img/client-3.svg" alt="Clients Image"></div>
-                        <div class="swiper-slide"><img src="assets/img/client-4.svg" alt="Clients Image"></div>
-                        <div class="swiper-slide"><img src="assets/img/client-5.svg" alt="Clients Image"></div>
-                        <div class="swiper-slide"><img src="assets/img/client-6.svg" alt="Clients Image"></div>
-                        <div class="swiper-slide"><img src="assets/img/client-7.svg" alt="Clients Image"></div>
-                        <div class="swiper-slide"><img src="assets/img/client-8.svg" alt="Clients Image"></div>
-                        <div class="swiper-slide"><img src="assets/img/client-1.svg" alt="Clients Image"></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- CLIENTS SECTION END -->
 
     </main>
 
     <?php include 'include/footer.php'; ?>
 
-    <!-- Vendor JS -->
     <script src="assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
     <script src="assets/vendor/animate-wow/wow.min.js"></script>
     <script src="assets/vendor/splittype/index.min.js"></script>
