@@ -185,15 +185,15 @@ $meta_keywords    = "about Saagar Enterprises, mosquito net manufacturer Nagpur,
                     <!-- img -->
                     <div class="col">
                         <div class="ul-2-about-img">
-                            <img src="assets/img/about-2-img.png" alt="Saagar Enterprises Mosquito Net Dealer Nagpur" class="main-img">
+                            <img src="assets/img/home/about_choose.webp" alt="Saagar Enterprises Mosquito Net Dealer Nagpur" class="main-img">
                             <div class="ul-2-about-img-bgs">
                                 <div class="ul-2-about-img-bg-1">
                                     <img src="assets/img/about-2-img-bg-1.jpg" alt="Mosquito Net Installation Nagpur">
                                 </div>
-                                <img src="assets/img/about-2-img-bg-2.jpg" alt="Window Mosquito Net Nagpur">
+                               
                             </div>
-                            <a href="https://youtu.be/EEX0EHTTePE?si=TxbhzBCGoTx64WEe" data-fslightbox="video" class="ul-2-about-play-btn"><i class="flaticon-play-button-arrowhead"></i></a>
-                            <div class="ul-2-about-img-txt"><img src="assets/img/about-2-img-logo.svg" alt="Saagar Enterprises Logo"><span class="txt">SINCE 2013</span></div>
+                          
+                           
                         </div>
                     </div>
 
@@ -253,7 +253,7 @@ $meta_keywords    = "about Saagar Enterprises, mosquito net manufacturer Nagpur,
                                     </div>
                                 </div>
                                 <div class="ul-history-slide-img">
-                                    <img src="assets/img/history-slide-1.jpg" alt="Saagar Enterprises Founded 2013 Nagpur">
+                                    <img src="assets/img/home/history1.webp" alt="Saagar Enterprises Founded 2013 Nagpur">
                                 </div>
                             </div>
                         </div>
@@ -268,7 +268,7 @@ $meta_keywords    = "about Saagar Enterprises, mosquito net manufacturer Nagpur,
                                     </div>
                                 </div>
                                 <div class="ul-history-slide-img">
-                                    <img src="assets/img/banner-2-slide-1.jpg" alt="Pleated Mosquito Net Nagpur 2015">
+                                    <img src="assets/img/home/history2.webp" alt="Pleated Mosquito Net Nagpur 2015">
                                 </div>
                             </div>
                         </div>
@@ -283,7 +283,7 @@ $meta_keywords    = "about Saagar Enterprises, mosquito net manufacturer Nagpur,
                                     </div>
                                 </div>
                                 <div class="ul-history-slide-img">
-                                    <img src="assets/img/investment-bg.jpg" alt="Saagar Enterprises Raghuji Nagar Branch Nagpur">
+                                    <img src="assets/img/home/history3.webp" alt="Saagar Enterprises Raghuji Nagar Branch Nagpur">
                                 </div>
                             </div>
                         </div>
@@ -298,7 +298,7 @@ $meta_keywords    = "about Saagar Enterprises, mosquito net manufacturer Nagpur,
                                     </div>
                                 </div>
                                 <div class="ul-history-slide-img">
-                                    <img src="assets/img/history-slide-1.jpg" alt="Mosquito Net Installation Milestone Nagpur 2020">
+                                    <img src="assets/img/home/history4.webp" alt="Mosquito Net Installation Milestone Nagpur 2020">
                                 </div>
                             </div>
                         </div>
@@ -313,7 +313,7 @@ $meta_keywords    = "about Saagar Enterprises, mosquito net manufacturer Nagpur,
                                     </div>
                                 </div>
                                 <div class="ul-history-slide-img">
-                                    <img src="assets/img/banner-2-slide-1.jpg" alt="Saagar Enterprises 500 Customers Nagpur 2023">
+                                    <img src="assets/img/home/history5.webp" alt="Saagar Enterprises 500 Customers Nagpur 2023">
                                 </div>
                             </div>
                         </div>
@@ -328,7 +328,7 @@ $meta_keywords    = "about Saagar Enterprises, mosquito net manufacturer Nagpur,
                                     </div>
                                 </div>
                                 <div class="ul-history-slide-img">
-                                    <img src="assets/img/investment-bg.jpg" alt="Saagar Enterprises Mosquito Net Nagpur 2025">
+                                    <img src="assets/img/home/history6.webp" alt="Saagar Enterprises Mosquito Net Nagpur 2025">
                                 </div>
                             </div>
                         </div>
@@ -389,8 +389,8 @@ $meta_keywords    = "about Saagar Enterprises, mosquito net manufacturer Nagpur,
 
                     <div class="col-xl-7 col-lg-6">
                         <div class="ul-mission-img">
-                            <img src="assets/img/mission-img.jpg" alt="Saagar Enterprises Mission – Mosquito Net Nagpur">
-                            <a href="https://youtu.be/EEX0EHTTePE?si=TxbhzBCGoTx64WEe" data-fslightbox="mission-video" class="ul-2-about-play-btn"><i class="flaticon-play-button-arrowhead"></i></a>
+                            <img src="assets/img/home/mission.webp" alt="Saagar Enterprises Mission – Mosquito Net Nagpur">
+                           
                         </div>
                     </div>
                 </div>

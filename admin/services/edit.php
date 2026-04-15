@@ -117,72 +117,70 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $uploadDir = '../../assets/img/services/';
 
     // ── Main Image Upload ────────────────────────────────────────
-    $image    = $service['image']    ?? '';
-    $og_image = $service['og_image'] ?? '';
-    if (!empty($_FILES['image']['name'])) {
-        $allowed = ['image/jpeg','image/png','image/webp','image/gif'];
-        $mime    = mime_content_type($_FILES['image']['tmp_name']);
-        if (!in_array($mime, $allowed)) {
-            $errors[] = 'Invalid image type.';
-        } elseif ($_FILES['image']['size'] > 3 * 1024 * 1024) {
-            $errors[] = 'Image exceeds 3MB.';
+   $banner_image = $service['banner_image'] ?? '';
+$og_image     = $service['og_image']     ?? '';
+if (!empty($_FILES['banner_image']['name'])) {
+    $allowed = ['image/jpeg','image/png','image/webp','image/gif'];
+    $mime    = mime_content_type($_FILES['banner_image']['tmp_name']);
+    if (!in_array($mime, $allowed)) {
+        $errors[] = 'Invalid banner image type.';
+    } elseif ($_FILES['banner_image']['size'] > 3 * 1024 * 1024) {
+        $errors[] = 'Banner image exceeds 3MB.';
+    } else {
+        if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
+        $fileName   = $slug . '-banner-' . uniqid() . '.webp';
+        $targetPath = $uploadDir . $fileName;
+        if (convertToWebp($_FILES['banner_image']['tmp_name'], $targetPath, 85)) {
+            if (!empty($banner_image)) { $old = '../../' . ltrim($banner_image, '/'); if (file_exists($old)) @unlink($old); }
+            $banner_image = 'assets/img/services/' . $fileName;
+            $og_image     = $banner_image;
         } else {
-            if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
-            $fileName   = $slug . '-' . uniqid() . '.webp';
-            $targetPath = $uploadDir . $fileName;
-            if (convertToWebp($_FILES['image']['tmp_name'], $targetPath, 85)) {
-                if (!empty($image)) { $old = '../../' . ltrim($image, '/'); if (file_exists($old)) @unlink($old); }
-                $image    = 'assets/img/services/' . $fileName;
-                $og_image = $image;
-            } else {
-                $errors[] = 'Failed to convert main image to WebP.';
-            }
+            $errors[] = 'Failed to convert banner image to WebP.';
         }
     }
+}
 
-    // ── Inner Image Upload ───────────────────────────────────────
-    $inner_image = $service['inner_image'] ?? '';
-    if (!empty($_FILES['inner_image']['name'])) {
-        $allowed = ['image/jpeg','image/png','image/webp','image/gif'];
-        $mime    = mime_content_type($_FILES['inner_image']['tmp_name']);
-        if (!in_array($mime, $allowed)) {
-            $errors[] = 'Invalid inner image type.';
-        } elseif ($_FILES['inner_image']['size'] > 3 * 1024 * 1024) {
-            $errors[] = 'Inner image exceeds 3MB.';
+$focus_image = $service['focus_image'] ?? '';
+if (!empty($_FILES['focus_image']['name'])) {
+    $allowed = ['image/jpeg','image/png','image/webp','image/gif'];
+    $mime    = mime_content_type($_FILES['focus_image']['tmp_name']);
+    if (!in_array($mime, $allowed)) {
+        $errors[] = 'Invalid focus image type.';
+    } elseif ($_FILES['focus_image']['size'] > 3 * 1024 * 1024) {
+        $errors[] = 'Focus image exceeds 3MB.';
+    } else {
+        if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
+        $fileName   = $slug . '-focus-' . uniqid() . '.webp';
+        $targetPath = $uploadDir . $fileName;
+        if (convertToWebp($_FILES['focus_image']['tmp_name'], $targetPath, 85)) {
+            if (!empty($focus_image)) { $old = '../../' . ltrim($focus_image, '/'); if (file_exists($old)) @unlink($old); }
+            $focus_image = 'assets/img/services/' . $fileName;
         } else {
-            if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
-            $innerName = $slug . '-inner-' . uniqid() . '.webp';
-            $innerPath = $uploadDir . $innerName;
-            if (convertToWebp($_FILES['inner_image']['tmp_name'], $innerPath, 85)) {
-                if (!empty($inner_image)) { $old = '../../' . ltrim($inner_image, '/'); if (file_exists($old)) @unlink($old); }
-                $inner_image = 'assets/img/services/' . $innerName;
-            } else {
-                $errors[] = 'Failed to convert inner image to WebP.';
-            }
+            $errors[] = 'Failed to convert focus image to WebP.';
         }
     }
+}
 
-    // ── Testimonial Image Upload ─────────────────────────────────
-    $testimonial_image = $service['testimonial_image'] ?? '';
-    if (!empty($_FILES['testimonial_image']['name'])) {
-        $allowed = ['image/jpeg','image/png','image/webp','image/gif'];
-        $mime    = mime_content_type($_FILES['testimonial_image']['tmp_name']);
-        if (!in_array($mime, $allowed)) {
-            $errors[] = 'Invalid testimonial image type.';
-        } elseif ($_FILES['testimonial_image']['size'] > 2 * 1024 * 1024) {
-            $errors[] = 'Testimonial image exceeds 2MB.';
+$faq_image = $service['faq_image'] ?? '';
+if (!empty($_FILES['faq_image']['name'])) {
+    $allowed = ['image/jpeg','image/png','image/webp','image/gif'];
+    $mime    = mime_content_type($_FILES['faq_image']['tmp_name']);
+    if (!in_array($mime, $allowed)) {
+        $errors[] = 'Invalid FAQ image type.';
+    } elseif ($_FILES['faq_image']['size'] > 3 * 1024 * 1024) {
+        $errors[] = 'FAQ image exceeds 3MB.';
+    } else {
+        if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
+        $fileName   = $slug . '-faq-' . uniqid() . '.webp';
+        $targetPath = $uploadDir . $fileName;
+        if (convertToWebp($_FILES['faq_image']['tmp_name'], $targetPath, 85)) {
+            if (!empty($faq_image)) { $old = '../../' . ltrim($faq_image, '/'); if (file_exists($old)) @unlink($old); }
+            $faq_image = 'assets/img/services/' . $fileName;
         } else {
-            if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
-            $tName = $slug . '-testimonial-' . uniqid() . '.webp';
-            $tPath = $uploadDir . $tName;
-            if (convertToWebp($_FILES['testimonial_image']['tmp_name'], $tPath, 85)) {
-                if (!empty($testimonial_image)) { $old = '../../' . ltrim($testimonial_image, '/'); if (file_exists($old)) @unlink($old); }
-                $testimonial_image = 'assets/img/services/' . $tName;
-            } else {
-                $errors[] = 'Failed to convert testimonial image to WebP.';
-            }
+            $errors[] = 'Failed to convert FAQ image to WebP.';
         }
     }
+}
 
     // ── Schema JSON ──────────────────────────────────────────────
     $schema_json = '';
@@ -204,36 +202,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($errors)) {
         $robots_meta = $robots_index . ',' . $robots_follow;
 
-        $stmt = $conn->prepare("
-            UPDATE mosquito_services SET
-                title=?, slug=?, short_desc=?, description=?,
-                image=?, inner_image=?,
-                services_list=?, features_list=?, why_choose_list=?, faqs=?,
-                extra_block_title=?, extra_block_desc=?,
-                testimonial_text=?, testimonial_name=?, testimonial_role=?, testimonial_image=?,
-                is_active=?,
-                meta_title=?, meta_description=?, focus_keyword=?, canonical_url=?,
-                og_title=?, og_description=?, og_image=?, og_type=?,
-                twitter_title=?, twitter_description=?, twitter_card=?,
-                robots_meta=?, schema_type=?, schema_json=?,
-                updated_at=NOW()
-            WHERE id=?
-        ");
+      $stmt = $conn->prepare("
+    UPDATE mosquito_services SET
+        title=?, slug=?, short_desc=?, description=?,
+        banner_image=?, focus_image=?, faq_image=?,
+        services_list=?, features_list=?, why_choose_list=?, faqs=?,
+        extra_block_title=?, extra_block_desc=?,
+        testimonial_text=?, testimonial_name=?, testimonial_role=?, testimonial_image=?,
+        is_active=?,
+        meta_title=?, meta_description=?, focus_keyword=?, canonical_url=?,
+        og_title=?, og_description=?, og_image=?, og_type=?,
+        twitter_title=?, twitter_description=?, twitter_card=?,
+        robots_meta=?, schema_type=?, schema_json=?,
+        updated_at=NOW()
+    WHERE id=?
+");
 
-        $stmt->bind_param(
-            "ssss" . "ss" . "ssss" . "ss" . "ssss" . "i" . "ssss" . "ssss" . "sss" . "sss" . "i",
-            $title, $slug, $short_desc, $description,
-            $image, $inner_image,
-            $services_list, $features_list, $why_choose_list, $faqs,
-            $extra_block_title, $extra_block_desc,
-            $testimonial_text, $testimonial_name, $testimonial_role, $testimonial_image,
-            $is_active,
-            $meta_title, $meta_description, $focus_keyword, $canonical_url,
-            $og_title, $og_description, $og_image, $og_type,
-            $twitter_title, $twitter_description, $twitter_card,
-            $robots_meta, $schema_type, $schema_json,
-            $id
-        );
+$stmt->bind_param(
+    "ssss" . "sss" . "ssss" . "ss" . "ssss" . "i" . "ssss" . "ssss" . "sss" . "sss" . "i",
+    $title, $slug, $short_desc, $description,
+    $banner_image, $focus_image, $faq_image,
+    $services_list, $features_list, $why_choose_list, $faqs,
+    $extra_block_title, $extra_block_desc,
+    $testimonial_text, $testimonial_name, $testimonial_role, $testimonial_image,
+    $is_active,
+    $meta_title, $meta_description, $focus_keyword, $canonical_url,
+    $og_title, $og_description, $og_image, $og_type,
+    $twitter_title, $twitter_description, $twitter_card,
+    $robots_meta, $schema_type, $schema_json,
+    $id
+);
 
         if ($stmt->execute()) {
             // ── Activity Log ──────────────────────────────────────
@@ -273,15 +271,18 @@ $currentIndex  = trim($robotsParts[0] ?? 'index');
 $currentFollow = trim($robotsParts[1] ?? 'follow');
 
 // Current image URLs
-$mainImgUrl  = '';
-$innerImgUrl = '';
-$testImgUrl  = '';
-if (!empty($service['image']))
-    $mainImgUrl  = str_contains($service['image'], 'http') ? $service['image'] : SITE_URL . '/' . ltrim($service['image'], '/');
-if (!empty($service['inner_image']))
-    $innerImgUrl = str_contains($service['inner_image'], 'http') ? $service['inner_image'] : SITE_URL . '/' . ltrim($service['inner_image'], '/');
+$bannerImgUrl = '';
+$focusImgUrl  = '';
+$faqImgUrl    = '';
+$testImgUrl   = '';
+if (!empty($service['banner_image']))
+    $bannerImgUrl = str_contains($service['banner_image'], 'http') ? $service['banner_image'] : SITE_URL . '/' . ltrim($service['banner_image'], '/');
+if (!empty($service['focus_image']))
+    $focusImgUrl  = str_contains($service['focus_image'], 'http') ? $service['focus_image'] : SITE_URL . '/' . ltrim($service['focus_image'], '/');
+if (!empty($service['faq_image']))
+    $faqImgUrl    = str_contains($service['faq_image'], 'http') ? $service['faq_image'] : SITE_URL . '/' . ltrim($service['faq_image'], '/');
 if (!empty($service['testimonial_image']))
-    $testImgUrl  = str_contains($service['testimonial_image'], 'http') ? $service['testimonial_image'] : SITE_URL . '/' . ltrim($service['testimonial_image'], '/');
+    $testImgUrl   = str_contains($service['testimonial_image'], 'http') ? $service['testimonial_image'] : SITE_URL . '/' . ltrim($service['testimonial_image'], '/');
 
 $pageTitle  = 'Edit Service — ' . htmlspecialchars($service['title']);
 $activePage = 'services-edit';
@@ -739,57 +740,83 @@ require_once '../include/head.php';
                             </div>
                         </div>
 
-                        <!-- Main Image -->
-                        <div class="card border-0 shadow-sm rounded-4 mb-4">
-                            <div class="card-header bg-white border-bottom py-3 px-4 d-flex align-items-center gap-3 card-section-header">
-                                <div class="rounded d-flex align-items-center justify-content-center" style="width:32px;height:32px;background:var(--green-subtle);">
-                                    <i class="fa fa-image" style="color:var(--green-primary);"></i>
-                                </div>
-                                <h6 class="mb-0 fw-bold text-dark text-uppercase small" style="letter-spacing:0.5px;">Main Image</h6>
-                            </div>
-                            <div class="card-body p-4">
-                                <?php if ($mainImgUrl): ?>
-                                <div class="mb-3 text-center">
-                                    <img src="<?= htmlspecialchars($mainImgUrl) ?>" id="currentMainImg" class="current-thumb shadow-sm" alt="Current main image">
-                                    <div class="text-muted mt-1" style="font-size:0.7rem;">Current Main Image</div>
-                                </div>
-                                <?php endif; ?>
-                                <div class="img-upload-zone" id="zone_image" onclick="document.getElementById('input_image').click()">
-                                    <div class="upload-icon" id="uploadIcon_image"><i class="fa fa-image"></i></div>
-                                    <p id="uploadLabel_image">Click to replace main image</p>
-                                    <small class="text-muted d-block mt-1" id="uploadHint_image">JPG, PNG, WEBP — max 3MB · Auto-converted to WebP</small>
-                                    <img id="preview_image" class="preview-img" alt="Main image preview">
-                                </div>
-                                <input type="file" name="image" id="input_image" accept="image/*" class="d-none">
-                                <small class="text-muted mt-2 d-block text-center" style="font-size:0.7rem;">⚠️ Leave blank to keep current image.</small>
-                            </div>
-                        </div>
+                    <!-- Banner Image -->
+<div class="card border-0 shadow-sm rounded-4 mb-4">
+    <div class="card-header bg-white border-bottom py-3 px-4 d-flex align-items-center gap-3 card-section-header">
+        <div class="rounded d-flex align-items-center justify-content-center" style="width:32px;height:32px;background:var(--green-subtle);">
+            <i class="fa fa-image" style="color:var(--green-primary);"></i>
+        </div>
+        <h6 class="mb-0 fw-bold text-dark text-uppercase small" style="letter-spacing:0.5px;">Banner Image <small class="text-muted fw-normal text-lowercase">1820×450</small></h6>
+    </div>
+    <div class="card-body p-4">
+        <?php if ($bannerImgUrl): ?>
+        <div class="mb-3 text-center">
+            <img src="<?= htmlspecialchars($bannerImgUrl) ?>" id="currentBannerImg" class="current-thumb shadow-sm" alt="Current banner image">
+            <div class="text-muted mt-1" style="font-size:0.7rem;">Current Banner Image</div>
+        </div>
+        <?php endif; ?>
+        <div class="img-upload-zone" id="zone_banner" onclick="document.getElementById('input_banner').click()">
+            <div class="upload-icon" id="uploadIcon_banner"><i class="fa fa-image"></i></div>
+            <p id="uploadLabel_banner">Click to replace banner image</p>
+            <small class="text-muted d-block mt-1" id="uploadHint_banner">JPG, PNG, WEBP — max 3MB · Auto WebP</small>
+            <img id="preview_banner" class="preview-img" alt="Banner preview">
+        </div>
+        <input type="file" name="banner_image" id="input_banner" accept="image/*" class="d-none">
+        <small class="text-muted mt-2 d-block text-center" style="font-size:0.7rem;">⚠️ Leave blank to keep current image.</small>
+    </div>
+</div>
 
-                        <!-- Inner Image -->
-                        <div class="card border-0 shadow-sm rounded-4 mb-4">
-                            <div class="card-header bg-white border-bottom py-3 px-4 d-flex align-items-center gap-3 card-section-header">
-                                <div class="rounded d-flex align-items-center justify-content-center" style="width:32px;height:32px;background:var(--green-subtle);">
-                                    <i class="fa fa-images" style="color:var(--green-primary);"></i>
-                                </div>
-                                <h6 class="mb-0 fw-bold text-dark text-uppercase small" style="letter-spacing:0.5px;">Inner Image <span class="text-muted fw-normal text-lowercase">(optional)</span></h6>
-                            </div>
-                            <div class="card-body p-4">
-                                <?php if ($innerImgUrl): ?>
-                                <div class="mb-3 text-center">
-                                    <img src="<?= htmlspecialchars($innerImgUrl) ?>" id="currentInnerImg" class="current-thumb shadow-sm" alt="Current inner image">
-                                    <div class="text-muted mt-1" style="font-size:0.7rem;">Current Inner Image</div>
-                                </div>
-                                <?php endif; ?>
-                                <div class="img-upload-zone" id="zone_inner" onclick="document.getElementById('input_inner').click()">
-                                    <div class="upload-icon" id="uploadIcon_inner"><i class="fa fa-photo-video"></i></div>
-                                    <p id="uploadLabel_inner">Click to replace inner image</p>
-                                    <small class="text-muted d-block mt-1" id="uploadHint_inner">JPG, PNG, WEBP — max 3MB · Auto-converted to WebP</small>
-                                    <img id="preview_inner" class="preview-img" alt="Inner image preview">
-                                </div>
-                                <input type="file" name="inner_image" id="input_inner" accept="image/*" class="d-none">
-                                <small class="text-muted mt-2 d-block text-center" style="font-size:0.7rem;">⚠️ Leave blank to keep current image.</small>
-                            </div>
-                        </div>
+<!-- Focus Image -->
+<div class="card border-0 shadow-sm rounded-4 mb-4">
+    <div class="card-header bg-white border-bottom py-3 px-4 d-flex align-items-center gap-3 card-section-header">
+        <div class="rounded d-flex align-items-center justify-content-center" style="width:32px;height:32px;background:var(--green-subtle);">
+            <i class="fa fa-images" style="color:var(--green-primary);"></i>
+        </div>
+        <h6 class="mb-0 fw-bold text-dark text-uppercase small" style="letter-spacing:0.5px;">Focus Image <small class="text-muted fw-normal text-lowercase">1410×504</small></h6>
+    </div>
+    <div class="card-body p-4">
+        <?php if ($focusImgUrl): ?>
+        <div class="mb-3 text-center">
+            <img src="<?= htmlspecialchars($focusImgUrl) ?>" id="currentFocusImg" class="current-thumb shadow-sm" alt="Current focus image">
+            <div class="text-muted mt-1" style="font-size:0.7rem;">Current Focus Image</div>
+        </div>
+        <?php endif; ?>
+        <div class="img-upload-zone" id="zone_focus" onclick="document.getElementById('input_focus').click()">
+            <div class="upload-icon" id="uploadIcon_focus"><i class="fa fa-photo-video"></i></div>
+            <p id="uploadLabel_focus">Click to replace focus image</p>
+            <small class="text-muted d-block mt-1" id="uploadHint_focus">JPG, PNG, WEBP — max 3MB · Auto WebP</small>
+            <img id="preview_focus" class="preview-img" alt="Focus image preview">
+        </div>
+        <input type="file" name="focus_image" id="input_focus" accept="image/*" class="d-none">
+        <small class="text-muted mt-2 d-block text-center" style="font-size:0.7rem;">⚠️ Leave blank to keep current image.</small>
+    </div>
+</div>
+
+<!-- FAQ Image -->
+<div class="card border-0 shadow-sm rounded-4 mb-4">
+    <div class="card-header bg-white border-bottom py-3 px-4 d-flex align-items-center gap-3 card-section-header">
+        <div class="rounded d-flex align-items-center justify-content-center" style="width:32px;height:32px;background:var(--green-subtle);">
+            <i class="fa fa-question-circle" style="color:var(--green-primary);"></i>
+        </div>
+        <h6 class="mb-0 fw-bold text-dark text-uppercase small" style="letter-spacing:0.5px;">FAQ Image <small class="text-muted fw-normal text-lowercase">704×532</small></h6>
+    </div>
+    <div class="card-body p-4">
+        <?php if ($faqImgUrl): ?>
+        <div class="mb-3 text-center">
+            <img src="<?= htmlspecialchars($faqImgUrl) ?>" id="currentFaqImg" class="current-thumb shadow-sm" alt="Current FAQ image">
+            <div class="text-muted mt-1" style="font-size:0.7rem;">Current FAQ Image</div>
+        </div>
+        <?php endif; ?>
+        <div class="img-upload-zone" id="zone_faq" onclick="document.getElementById('input_faq').click()">
+            <div class="upload-icon" id="uploadIcon_faq"><i class="fa fa-question"></i></div>
+            <p id="uploadLabel_faq">Click to replace FAQ image</p>
+            <small class="text-muted d-block mt-1" id="uploadHint_faq">JPG, PNG, WEBP — max 3MB · Auto WebP</small>
+            <img id="preview_faq" class="preview-img" alt="FAQ image preview">
+        </div>
+        <input type="file" name="faq_image" id="input_faq" accept="image/*" class="d-none">
+        <small class="text-muted mt-2 d-block text-center" style="font-size:0.7rem;">⚠️ Leave blank to keep current image.</small>
+    </div>
+</div>
 
                         <!-- SEO Tips -->
                         <div class="card border-0 shadow-sm rounded-4 mb-4">
@@ -953,9 +980,9 @@ function setupImgPreview(inputId, previewId, iconId, labelId, hintId, currentId)
         reader.readAsDataURL(file);
     });
 }
-setupImgPreview('input_image',       'preview_image',       'uploadIcon_image', 'uploadLabel_image', 'uploadHint_image', 'currentMainImg');
-setupImgPreview('input_inner',       'preview_inner',       'uploadIcon_inner', 'uploadLabel_inner', 'uploadHint_inner', 'currentInnerImg');
-setupImgPreview('input_testimonial', 'preview_testimonial', 'uploadIcon_test',  'uploadLabel_test',  'uploadHint_test',  'currentTestImg');
+setupImgPreview('input_banner', 'preview_banner', 'uploadIcon_banner', 'uploadLabel_banner', 'uploadHint_banner', 'currentBannerImg');
+setupImgPreview('input_focus',  'preview_focus',  'uploadIcon_focus',  'uploadLabel_focus',  'uploadHint_focus',  'currentFocusImg');
+setupImgPreview('input_faq',    'preview_faq',    'uploadIcon_faq',    'uploadLabel_faq',    'uploadHint_faq',    'currentFaqImg');
 
 // ── Robots ────────────────────────────────────────────────────
 function setRobots(val, btn) {

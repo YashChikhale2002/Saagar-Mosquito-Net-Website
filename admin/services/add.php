@@ -113,49 +113,71 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // ── Main Image Upload ────────────────────────────────────────
-    $image     = '';
-    $og_image  = '';
-    $uploadDir = '../../assets/img/services/';
-    if (!empty($_FILES['image']['name'])) {
-        $allowed = ['image/jpeg','image/png','image/webp','image/gif'];
-        $mime    = mime_content_type($_FILES['image']['tmp_name']);
-        if (!in_array($mime, $allowed)) {
-            $errors[] = 'Invalid image type. JPG, PNG, WEBP, GIF only.';
-        } elseif ($_FILES['image']['size'] > 3 * 1024 * 1024) {
-            $errors[] = 'Image exceeds 3MB limit.';
+   // ── Banner Image Upload (was: image) ────────────────────────
+$banner_image = '';
+$og_image     = '';
+$uploadDir    = '../../assets/img/services/';
+if (!empty($_FILES['banner_image']['name'])) {
+    $allowed = ['image/jpeg','image/png','image/webp','image/gif'];
+    $mime    = mime_content_type($_FILES['banner_image']['tmp_name']);
+    if (!in_array($mime, $allowed)) {
+        $errors[] = 'Invalid banner image type. JPG, PNG, WEBP, GIF only.';
+    } elseif ($_FILES['banner_image']['size'] > 3 * 1024 * 1024) {
+        $errors[] = 'Banner image exceeds 3MB limit.';
+    } else {
+        if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
+        $fileName   = $slug . '-banner-' . uniqid() . '.webp';
+        $targetPath = $uploadDir . $fileName;
+        if (convertToWebp($_FILES['banner_image']['tmp_name'], $targetPath, 85)) {
+            $banner_image = 'assets/img/services/' . $fileName;
+            $og_image     = $banner_image;
         } else {
-            if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
-            $fileName   = $slug . '-' . uniqid() . '.webp';
-            $targetPath = $uploadDir . $fileName;
-            if (convertToWebp($_FILES['image']['tmp_name'], $targetPath, 85)) {
-                $image    = 'assets/img/services/' . $fileName;
-                $og_image = $image;
-            } else {
-                $errors[] = 'Failed to convert main image to WebP.';
-            }
+            $errors[] = 'Failed to convert banner image to WebP.';
         }
     }
+}
 
-    // ── Inner Image Upload ───────────────────────────────────────
-    $inner_image = '';
-    if (!empty($_FILES['inner_image']['name'])) {
-        $allowed = ['image/jpeg','image/png','image/webp','image/gif'];
-        $mime    = mime_content_type($_FILES['inner_image']['tmp_name']);
-        if (!in_array($mime, $allowed)) {
-            $errors[] = 'Invalid inner image type.';
-        } elseif ($_FILES['inner_image']['size'] > 3 * 1024 * 1024) {
-            $errors[] = 'Inner image exceeds 3MB limit.';
+// ── Focus Image Upload (was: inner_image) ───────────────────
+$focus_image = '';
+if (!empty($_FILES['focus_image']['name'])) {
+    $allowed = ['image/jpeg','image/png','image/webp','image/gif'];
+    $mime    = mime_content_type($_FILES['focus_image']['tmp_name']);
+    if (!in_array($mime, $allowed)) {
+        $errors[] = 'Invalid focus image type.';
+    } elseif ($_FILES['focus_image']['size'] > 3 * 1024 * 1024) {
+        $errors[] = 'Focus image exceeds 3MB limit.';
+    } else {
+        if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
+        $focusName  = $slug . '-focus-' . uniqid() . '.webp';
+        $focusPath  = $uploadDir . $focusName;
+        if (convertToWebp($_FILES['focus_image']['tmp_name'], $focusPath, 85)) {
+            $focus_image = 'assets/img/services/' . $focusName;
         } else {
-            if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
-            $innerName  = $slug . '-inner-' . uniqid() . '.webp';
-            $innerPath  = $uploadDir . $innerName;
-            if (convertToWebp($_FILES['inner_image']['tmp_name'], $innerPath, 85)) {
-                $inner_image = 'assets/img/services/' . $innerName;
-            } else {
-                $errors[] = 'Failed to convert inner image to WebP.';
-            }
+            $errors[] = 'Failed to convert focus image to WebP.';
         }
     }
+}
+
+// ── FAQ Image Upload (NEW) ───────────────────────────────────
+$faq_image = '';
+if (!empty($_FILES['faq_image']['name'])) {
+    $allowed = ['image/jpeg','image/png','image/webp','image/gif'];
+    $mime    = mime_content_type($_FILES['faq_image']['tmp_name']);
+    if (!in_array($mime, $allowed)) {
+        $errors[] = 'Invalid FAQ image type.';
+    } elseif ($_FILES['faq_image']['size'] > 3 * 1024 * 1024) {
+        $errors[] = 'FAQ image exceeds 3MB limit.';
+    } else {
+        if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
+        $faqName  = $slug . '-faq-' . uniqid() . '.webp';
+        $faqPath  = $uploadDir . $faqName;
+        if (convertToWebp($_FILES['faq_image']['tmp_name'], $faqPath, 85)) {
+            $faq_image = 'assets/img/services/' . $faqName;
+        } else {
+            $errors[] = 'Failed to convert FAQ image to WebP.';
+        }
+    }
+}
 
     // ── Testimonial Image Upload ─────────────────────────────────
     $testimonial_image = '';
@@ -198,47 +220,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($errors)) {
         $robots_meta = $robots_index . ',' . $robots_follow;
 
-        $stmt = $conn->prepare("
-            INSERT INTO mosquito_services (
-                title, slug, short_desc, description,
-                image, inner_image,
-                services_list, features_list, why_choose_list, faqs,
-                extra_block_title, extra_block_desc,
-                testimonial_text, testimonial_name, testimonial_role, testimonial_image,
-                is_active,
-                meta_title, meta_description, focus_keyword, canonical_url,
-                og_title, og_description, og_image, og_type,
-                twitter_title, twitter_description, twitter_card,
-                robots_meta, schema_type, schema_json,
-                created_at, updated_at
-            ) VALUES (
-                ?, ?, ?, ?,
-                ?, ?,
-                ?, ?, ?, ?,
-                ?, ?,
-                ?, ?, ?, ?,
-                ?,
-                ?, ?, ?, ?,
-                ?, ?, ?, ?,
-                ?, ?, ?,
-                ?, ?, ?,
-                NOW(), NOW()
-            )
-        ");
+       $stmt = $conn->prepare("
+    INSERT INTO mosquito_services (
+        title, slug, short_desc, description,
+        banner_image, focus_image, faq_image,       -- 3 columns
+        services_list, features_list, why_choose_list, faqs,
+        extra_block_title, extra_block_desc,
+        testimonial_text, testimonial_name, testimonial_role, testimonial_image,
+        is_active,
+        meta_title, meta_description, focus_keyword, canonical_url,
+        og_title, og_description, og_image, og_type,
+        twitter_title, twitter_description, twitter_card,
+        robots_meta, schema_type, schema_json,
+        created_at, updated_at
+    ) VALUES (
+        ?, ?, ?, ?,
+        ?, ?, ?,                                    -- 3 placeholders
+        ?, ?, ?, ?,
+        ?, ?,
+        ?, ?, ?, ?,
+        ?,
+        ?, ?, ?, ?,
+        ?, ?, ?, ?,
+        ?, ?, ?,
+        ?, ?, ?,
+        NOW(), NOW()
+    )
+");
 
-        $stmt->bind_param(
-            "ssss" . "ss" . "ssss" . "ss" . "ssss" . "i" . "ssss" . "ssss" . "sss" . "sss",
-            $title, $slug, $short_desc, $description,
-            $image, $inner_image,
-            $services_list, $features_list, $why_choose_list, $faqs,
-            $extra_block_title, $extra_block_desc,
-            $testimonial_text, $testimonial_name, $testimonial_role, $testimonial_image,
-            $is_active,
-            $meta_title, $meta_description, $focus_keyword, $canonical_url,
-            $og_title, $og_description, $og_image, $og_type,
-            $twitter_title, $twitter_description, $twitter_card,
-            $robots_meta, $schema_type, $schema_json
-        );
+$stmt->bind_param(
+    "ssss" . "sss" . "ssss" . "ss" . "ssss" . "i" . "ssss" . "ssss" . "sss" . "sss",
+    $title, $slug, $short_desc, $description,
+    $banner_image, $focus_image, $faq_image,        // 3 vars
+    $services_list, $features_list, $why_choose_list, $faqs,
+    $extra_block_title, $extra_block_desc,
+    $testimonial_text, $testimonial_name, $testimonial_role, $testimonial_image,
+    $is_active,
+    $meta_title, $meta_description, $focus_keyword, $canonical_url,
+    $og_title, $og_description, $og_image, $og_type,
+    $twitter_title, $twitter_description, $twitter_card,
+    $robots_meta, $schema_type, $schema_json
+);
 
         if ($stmt->execute()) {
             // Log activity
@@ -755,43 +777,62 @@ require_once '../include/head.php';
                             </div>
                         </div>
 
-                        <!-- Featured Image -->
-                        <div class="card border-0 shadow-sm rounded-4 mb-4">
-                            <div class="card-header bg-white border-bottom py-3 px-4 d-flex align-items-center gap-3 card-section-header">
-                                <div class="rounded d-flex align-items-center justify-content-center" style="width:32px;height:32px;background:var(--green-subtle);">
-                                    <i class="fa fa-image" style="color:var(--green-primary);"></i>
-                                </div>
-                                <h6 class="mb-0 fw-bold text-dark text-uppercase small" style="letter-spacing:0.5px;">Main Image</h6>
-                            </div>
-                            <div class="card-body p-4">
-                                <div class="img-upload-zone" id="zone_image" onclick="document.getElementById('input_image').click()">
-                                    <div class="upload-icon"><i class="fa fa-image"></i></div>
-                                    <p>Click to upload main service image</p>
-                                    <small class="text-muted d-block mt-1">JPG, PNG, WEBP — max 3MB<br>Auto-converted to WebP</small>
-                                    <img id="preview_image" class="preview-img" alt="Main image preview">
-                                </div>
-                                <input type="file" name="image" id="input_image" accept="image/*" class="d-none">
-                            </div>
-                        </div>
+                        <!-- Banner Image -->
+<div class="card border-0 shadow-sm rounded-4 mb-4">
+    <div class="card-header bg-white border-bottom py-3 px-4 d-flex align-items-center gap-3 card-section-header">
+        <div class="rounded d-flex align-items-center justify-content-center" style="width:32px;height:32px;background:var(--green-subtle);">
+            <i class="fa fa-image" style="color:var(--green-primary);"></i>
+        </div>
+        <h6 class="mb-0 fw-bold text-dark text-uppercase small" style="letter-spacing:0.5px;">Banner Image <small class="text-muted fw-normal text-lowercase">1820×450</small></h6>
+    </div>
+    <div class="card-body p-4">
+        <div class="img-upload-zone" id="zone_banner" onclick="document.getElementById('input_banner').click()">
+            <div class="upload-icon"><i class="fa fa-image"></i></div>
+            <p>Breadcrumb Banner</p>
+            <small class="text-muted d-block mt-1">JPG, PNG, WEBP — max 3MB · Auto WebP</small>
+            <img id="preview_banner" class="preview-img" alt="Banner preview">
+        </div>
+        <input type="file" name="banner_image" id="input_banner" accept="image/*" class="d-none">
+    </div>
+</div>
 
-                        <!-- Inner Image -->
-                        <div class="card border-0 shadow-sm rounded-4 mb-4">
-                            <div class="card-header bg-white border-bottom py-3 px-4 d-flex align-items-center gap-3 card-section-header">
-                                <div class="rounded d-flex align-items-center justify-content-center" style="width:32px;height:32px;background:var(--green-subtle);">
-                                    <i class="fa fa-images" style="color:var(--green-primary);"></i>
-                                </div>
-                                <h6 class="mb-0 fw-bold text-dark text-uppercase small" style="letter-spacing:0.5px;">Inner Image <span class="text-muted fw-normal text-lowercase">(optional)</span></h6>
-                            </div>
-                            <div class="card-body p-4">
-                                <div class="img-upload-zone" id="zone_inner" onclick="document.getElementById('input_inner').click()">
-                                    <div class="upload-icon"><i class="fa fa-photo-video"></i></div>
-                                    <p>Click to upload inner section image</p>
-                                    <small class="text-muted d-block mt-1">JPG, PNG, WEBP — max 3MB<br>Auto-converted to WebP</small>
-                                    <img id="preview_inner" class="preview-img" alt="Inner image preview">
-                                </div>
-                                <input type="file" name="inner_image" id="input_inner" accept="image/*" class="d-none">
-                            </div>
-                        </div>
+<!-- Focus Image -->
+<div class="card border-0 shadow-sm rounded-4 mb-4">
+    <div class="card-header bg-white border-bottom py-3 px-4 d-flex align-items-center gap-3 card-section-header">
+        <div class="rounded d-flex align-items-center justify-content-center" style="width:32px;height:32px;background:var(--green-subtle);">
+            <i class="fa fa-images" style="color:var(--green-primary);"></i>
+        </div>
+        <h6 class="mb-0 fw-bold text-dark text-uppercase small" style="letter-spacing:0.5px;">Focus Image <small class="text-muted fw-normal text-lowercase">1410×504</small></h6>
+    </div>
+    <div class="card-body p-4">
+        <div class="img-upload-zone" id="zone_focus" onclick="document.getElementById('input_focus').click()">
+            <div class="upload-icon"><i class="fa fa-photo-video"></i></div>
+            <p>Detail Focus Image</p>
+            <small class="text-muted d-block mt-1">JPG, PNG, WEBP — max 3MB · Auto WebP</small>
+            <img id="preview_focus" class="preview-img" alt="Focus image preview">
+        </div>
+        <input type="file" name="focus_image" id="input_focus" accept="image/*" class="d-none">
+    </div>
+</div>
+
+<!-- FAQ Image -->
+<div class="card border-0 shadow-sm rounded-4 mb-4">
+    <div class="card-header bg-white border-bottom py-3 px-4 d-flex align-items-center gap-3 card-section-header">
+        <div class="rounded d-flex align-items-center justify-content-center" style="width:32px;height:32px;background:var(--green-subtle);">
+            <i class="fa fa-question-circle" style="color:var(--green-primary);"></i>
+        </div>
+        <h6 class="mb-0 fw-bold text-dark text-uppercase small" style="letter-spacing:0.5px;">FAQ Image <small class="text-muted fw-normal text-lowercase">704×532</small></h6>
+    </div>
+    <div class="card-body p-4">
+        <div class="img-upload-zone" id="zone_faq" onclick="document.getElementById('input_faq').click()">
+            <div class="upload-icon"><i class="fa fa-question"></i></div>
+            <p>FAQ Section Image</p>
+            <small class="text-muted d-block mt-1">JPG, PNG, WEBP — max 3MB · Auto WebP</small>
+            <img id="preview_faq" class="preview-img" alt="FAQ image preview">
+        </div>
+        <input type="file" name="faq_image" id="input_faq" accept="image/*" class="d-none">
+    </div>
+</div>
 
                         <!-- SEO Tips -->
                         <div class="card border-0 shadow-sm rounded-4 mb-4">

@@ -5,16 +5,18 @@ include 'include/config.php';
 $_base    = '/Saagar-Mosquito-Net-Website/';
 $_svcBase = '/Saagar-Mosquito-Net-Website/service/';
 
-// ── Fetch All Active Services ─────────────────────────────────
 $services = [];
-$result = $conn->query("SELECT id, title, slug, short_desc, image, sort_order FROM mosquito_services WHERE is_active = 1 ORDER BY sort_order ASC");
+$result = $conn->query("
+    SELECT id, title, slug, short_desc, banner_image, sort_order 
+    FROM mosquito_services 
+    WHERE is_active = 1 
+    ORDER BY sort_order ASC
+");
 if ($result) {
     while ($row = $result->fetch_assoc()) {
         $services[] = $row;
     }
 }
-
-$serviceChunks = array_chunk($services, 4);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,10 +30,9 @@ $serviceChunks = array_chunk($services, 4);
     <link rel="stylesheet" href="assets/icon/flaticon_cashflow.css">
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
-
 <body class="home-2">
 
-    <!-- LOGIN FORM START -->
+    <!-- LOGIN FORM -->
     <div class="ul-form-modal-bg" id="login-form-modal">
         <div class="ul-form-modal-content">
             <button class="ul-form-modal-closer"><i class="flaticon-close"></i></button>
@@ -60,7 +61,9 @@ $serviceChunks = array_chunk($services, 4);
                                 <a href="#">Forgot Password?</a>
                             </div>
                             <div class="form-group mt-4">
-                                <button class="ul-btn w-100 justify-content-center">Login <i class="flaticon-arrow-up-right"></i></button>
+                                <button class="ul-btn w-100 justify-content-center">
+                                    Login <i class="flaticon-arrow-up-right"></i>
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -68,7 +71,6 @@ $serviceChunks = array_chunk($services, 4);
             </div>
         </div>
     </div>
-    <!-- LOGIN FORM END -->
 
     <!-- SIDEBAR -->
     <div class="ul-sidebar">
@@ -107,7 +109,7 @@ $serviceChunks = array_chunk($services, 4);
 
     <main>
 
-        <!-- BREADCRUMB SECTION START -->
+        <!-- BREADCRUMB -->
         <section class="ul-breadcrumb ul-2-banner">
             <div class="ul-container">
                 <h1 class="ul-breadcrumb-title">Services</h1>
@@ -118,9 +120,8 @@ $serviceChunks = array_chunk($services, 4);
                 </div>
             </div>
         </section>
-        <!-- BREADCRUMB SECTION END -->
 
-        <!-- SERVICES LISTING SECTION START -->
+        <!-- SERVICES LISTING -->
         <section class="ul-inner-services ul-section-spacing">
             <div class="ul-container">
 
@@ -133,47 +134,53 @@ $serviceChunks = array_chunk($services, 4);
                 <div class="row g-4">
                     <?php foreach ($services as $index => $service): ?>
                     <?php
-                        $img  = !empty($service['image'])
-                            ? htmlspecialchars($service['image'])
-                            : 'assets/img/investment-img.jpg';
+                        // ✅ Now uses banner_image as the card thumbnail
+                        $img   = !empty($service['banner_image'])
+                                    ? htmlspecialchars($service['banner_image'])
+                                    : 'assets/img/investment-img.jpg';
                         $title = htmlspecialchars($service['title']);
                         $desc  = htmlspecialchars(mb_strimwidth($service['short_desc'] ?? '', 0, 100, '…'));
-                        $url   = $_svcBase . htmlspecialchars($service['slug']); // ✅ /service/slug
+                        $url   = $_svcBase . htmlspecialchars($service['slug']);
                         $num   = str_pad($index + 1, 2, '0', STR_PAD_LEFT);
                     ?>
                     <div class="col-lg-4 col-md-6 col-12">
                         <div class="ul-service-blog-card">
-
                             <div class="ul-service-blog-card__img">
                                 <a href="<?= $url ?>">
                                     <img src="<?= $img ?>" alt="<?= $title ?>" loading="lazy">
                                 </a>
                             </div>
-
                             <div class="ul-service-blog-card__body">
                                 <div class="ul-service-blog-card__meta">
                                     <span class="ul-service-blog-card__num">
-                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <rect x="3" y="4" width="18" height="18" rx="2"/>
+                                            <line x1="16" y1="2" x2="16" y2="6"/>
+                                            <line x1="8" y1="2" x2="8" y2="6"/>
+                                            <line x1="3" y1="10" x2="21" y2="10"/>
+                                        </svg>
                                         Service <?= $num ?>
                                     </span>
                                     <span class="ul-service-blog-card__badge">
-                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <circle cx="12" cy="12" r="10"/>
+                                            <polyline points="12 6 12 12 16 14"/>
+                                        </svg>
                                         Mosquito Net
                                     </span>
                                 </div>
-
                                 <h3 class="ul-service-blog-card__title">
                                     <a href="<?= $url ?>"><?= $title ?></a>
                                 </h3>
-
                                 <p class="ul-service-blog-card__desc"><?= $desc ?></p>
-
                                 <a href="<?= $url ?>" class="ul-service-blog-card__link">
                                     Read More
-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                        <line x1="7" y1="17" x2="17" y2="7"/>
+                                        <polyline points="7 7 17 7 17 17"/>
+                                    </svg>
                                 </a>
                             </div>
-
                         </div>
                     </div>
                     <?php endforeach; ?>
@@ -182,7 +189,6 @@ $serviceChunks = array_chunk($services, 4);
 
             </div>
         </section>
-        <!-- SERVICES LISTING SECTION END -->
 
     </main>
 

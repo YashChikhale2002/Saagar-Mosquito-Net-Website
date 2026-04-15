@@ -442,7 +442,7 @@ button {
   z-index: 1;
   color: var(--white);
   overflow: hidden;
-  background: url(../img/breadcrumb-bg.jpg) no-repeat center center/cover;
+  background: url(../img/home/about.webp) no-repeat center center/cover;
   border-radius: 20px;
 }
 .ul-breadcrumb::before {
@@ -4071,7 +4071,7 @@ button {
   position: absolute;
   content: "";
   inset: 0;
-  background-image: url(../img/stat-bg.png);
+  background-image: url(../img/home/customer1.webp);
   background-size: cover;
   mix-blend-mode: multiply;
   opacity: 0;

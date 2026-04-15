@@ -7,7 +7,7 @@ $totalServices   = (int)$conn->query("SELECT COUNT(*) AS c FROM mosquito_service
 $activeServices  = (int)$conn->query("SELECT COUNT(*) AS c FROM mosquito_services WHERE is_active=1")->fetch_assoc()['c'];
 $inactiveServices = $totalServices - $activeServices;
 
-$withImageServices = (int)$conn->query("SELECT COUNT(*) AS c FROM mosquito_services WHERE image != '' AND image IS NOT NULL")->fetch_assoc()['c'];
+$withImageServices = (int)$conn->query("SELECT COUNT(*) AS c FROM mosquito_services WHERE banner_image != '' AND banner_image IS NOT NULL")->fetch_assoc()['c'];
 
 $totalFaqs = 0;
 $faqRes = $conn->query("SELECT faqs FROM mosquito_services WHERE faqs IS NOT NULL AND faqs != '' AND faqs != '[]'");
@@ -47,7 +47,7 @@ if ($res) while ($r = $res->fetch_assoc()) $blogCatStats[] = $r;
 // ── Recent Services ───────────────────────────────────────────────────────────
 $recentServices = [];
 $res = $conn->query("
-    SELECT id, title, slug, image, schema_type, focus_keyword,
+    SELECT id, title, slug, banner_image, schema_type, focus_keyword,
            is_active, faqs, services_list, features_list, created_at
     FROM mosquito_services
     ORDER BY created_at DESC
@@ -349,9 +349,9 @@ require_once __DIR__ . '/include/head.php';
                                             </td>
                                         </tr>
                                         <?php else: foreach ($recentServices as $s):
-                                            $sImgUrl = !empty($s['image'])
-                                                ? SITE_URL . '/' . ltrim($s['image'], '/')
-                                                : '';
+                                           $sImgUrl = !empty($s['banner_image'])
+    ? SITE_URL . '/' . ltrim($s['banner_image'], '/')
+    : '';
                                             $sFaqs   = json_decode($s['faqs'] ?? '[]', true) ?: [];
                                             $faqCount = count($sFaqs);
                                             $keyword  = trim(explode(',', $s['focus_keyword'] ?? '')[0]);

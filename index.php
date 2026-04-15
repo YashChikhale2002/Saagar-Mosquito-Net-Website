@@ -567,7 +567,7 @@ $meta_keywords    = "mosquito net Nagpur, mosquito net dealer Nagpur, window mos
                             <div class="img-1-wrapper">
                                 <img src="assets/img/home/427X318.webp" alt="Mosquito Net Types Nagpur" class="ul-2-cards-img img-1 wow animate__fadeInUpBig">
                             </div>
-                            <img src="assets/img/credit-card-2.png" alt="Window Door Mosquito Net Nagpur" class="ul-2-cards-img img-2 wow animate__bounceInUp">
+                            <img src="assets/img/home/why1.webp" alt="Window Door Mosquito Net Nagpur" class="ul-2-cards-img img-2 wow animate__bounceInUp">
                         </div>
                     </div>
 
@@ -613,7 +613,7 @@ $meta_keywords    = "mosquito net Nagpur, mosquito net dealer Nagpur, window mos
                     </div>
                     <div class="ul-2-investment-item">
                         <div class="ul-2-investment-item-img">
-                            <img src="assets/img/home/img2.webp" alt="Professional Mosquito Net Installation Nagpur">
+                            <img src="assets/img/home/img3.webp" alt="Professional Mosquito Net Installation Nagpur">
                         </div>
                         <div class="ul-2-investment-item-txt">
                             <span class="ul-2-investment-item-index">02</span>
@@ -622,7 +622,7 @@ $meta_keywords    = "mosquito net Nagpur, mosquito net dealer Nagpur, window mos
                     </div>
                     <div class="ul-2-investment-item">
                         <div class="ul-2-investment-item-img">
-                            <img src="assets/img/home/img3.webp" alt="Premium Quality Mosquito Net Nagpur">
+                            <img src="assets/img/home/img2.webp" alt="Premium Quality Mosquito Net Nagpur">
                         </div>
                         <div class="ul-2-investment-item-txt">
                             <span class="ul-2-investment-item-index">03</span>

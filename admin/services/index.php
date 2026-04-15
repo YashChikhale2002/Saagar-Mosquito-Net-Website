@@ -62,13 +62,14 @@ $totalRecords = $countResult ? (int)$countResult->fetch_assoc()['total'] : 0;
 $totalPages   = $totalRecords > 0 ? (int)ceil($totalRecords / $limit) : 1;
 
 // ── Stats ─────────────────────────────────────────────────────
+// ── Stats query fix ──────────────────────────────────────────
 $statsRes = $conn->query("
     SELECT
         COUNT(*)              AS total,
         SUM(is_active)        AS active_count,
         SUM(!is_active)       AS inactive_count,
         COUNT(DISTINCT schema_type) AS total_schema_types,
-        SUM(CASE WHEN image != '' AND image IS NOT NULL THEN 1 ELSE 0 END) AS with_image
+        SUM(CASE WHEN banner_image != '' AND banner_image IS NOT NULL THEN 1 ELSE 0 END) AS with_image
     FROM mosquito_services
 ");
 $stats = $statsRes ? $statsRes->fetch_assoc() : [];
@@ -113,8 +114,8 @@ function calcServiceSeoScore($service) {
     else                                   { $issues[] = 'Focus keyword not set'; }
 
     // Main Image
-    if (!empty($service['image'])) { $score += 10; $good[] = 'Main image uploaded'; }
-    else                           { $issues[] = 'No main image uploaded'; }
+  if (!empty($service['banner_image'])) { $score += 10; $good[] = 'Main image uploaded'; }
+else                                  { $issues[] = 'No main image uploaded'; }
 
     // Meta Title
     if (!empty($service['meta_title'])) { $score += 10; $good[] = 'Meta title set'; }
@@ -457,7 +458,7 @@ require_once '../include/head.php';
                                     [$grade, $gradeTextColor] = serviceSeoGrade($score);
                                     $issueCount   = count($seo['issues']);
                                     $gradeBgClass = str_replace('text-', 'bg-', $gradeTextColor);
-                                    $imgSrc       = resolveImageSrcService($service['image'] ?? '');
+                                    $imgSrc       = resolveImageSrcService($service['banner_image'] ?? '');
                                     $isActive     = (bool)($service['is_active'] ?? 0);
                                     $createdDate  = $service['created_at'] ? date('d M Y', strtotime($service['created_at'])) : '—';
 

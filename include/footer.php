@@ -26,10 +26,9 @@ $year = date("Y");
 
                     <!-- SOCIAL -->
                     <div class="ul-2-footer-socials">
-                        <a href="#" aria-label="Facebook"><i class="flaticon-facebook-app-symbol"></i></a>
-                        <a href="#" aria-label="Twitter"><i class="flaticon-twitter"></i></a>
-                        <a href="#" aria-label="LinkedIn"><i class="flaticon-linkedin"></i></a>
-                        <a href="#" aria-label="Instagram"><i class="flaticon-instagram"></i></a>
+                        <a href="https://www.facebook.com/sagarenterprisesnagpur" aria-label="Facebook"><i class="flaticon-facebook-app-symbol"></i></a>
+                       
+                        <a href="https://www.instagram.com/saagar.enterprises/" aria-label="Instagram"><i class="flaticon-instagram"></i></a>
                     </div>
                 </div>
 
