@@ -36,6 +36,7 @@ $meta_keywords    = "mosquito net Nagpur, mosquito net dealer Nagpur, window mos
     <link rel="stylesheet" href="assets/vendor/swiper/swiper-bundle.min.css">
     <link rel="stylesheet" href="assets/vendor/animate-wow/animate.min.css">
     <link rel="stylesheet" href="assets/icon/flaticon_cashflow.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="assets/css/style.css">
@@ -237,38 +238,83 @@ $meta_keywords    = "mosquito net Nagpur, mosquito net dealer Nagpur, window mos
 
 
         <!-- FEATURES SECTION START -->
-        <section class="ul-2-features ul-section-spacing">
-            <div class="ul-container">
-                <div class="ul-2-features-content">
+  <section class="ul-2-features ul-section-spacing">
+    <div class="ul-container">
+        <div class="ul-2-features-content">
 
-                    <div class="ul-2-feature">
-                        <div class="ul-2-feature-icon"><i class="flaticon-insurance-agent"></i></div>
-                        <h3 class="ul-2-feature-title">Pleated Mosquito Net</h3>
-                    </div>
-
-                    <div class="ul-2-feature">
-                        <div class="ul-2-feature-icon"><i class="flaticon-accounting"></i></div>
-                        <h3 class="ul-2-feature-title">Roll-Up Mosquito Net</h3>
-                    </div>
-
-                    <div class="ul-2-feature">
-                        <div class="ul-2-feature-icon"><i class="flaticon-money"></i></div>
-                        <h3 class="ul-2-feature-title">Roll-A-Side Net</h3>
-                    </div>
-
-                    <div class="ul-2-feature">
-                        <div class="ul-2-feature-icon"><i class="flaticon-pension"></i></div>
-                        <h3 class="ul-2-feature-title">Velcro Mosquito Net</h3>
-                    </div>
-
-                    <div class="ul-2-feature">
-                        <div class="ul-2-feature-icon"><i class="flaticon-mutual-fund"></i></div>
-                        <h3 class="ul-2-feature-title">Bed Mosquito Net</h3>
-                    </div>
-
+            <div class="ul-2-feature">
+                <div class="ul-2-feature-icon">
+                    <!-- Pleated / Folded Net -->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="40" height="40" fill="currentColor">
+                        <rect x="8" y="10" width="48" height="6" rx="2"/>
+                        <rect x="8" y="22" width="48" height="6" rx="2"/>
+                        <rect x="8" y="34" width="48" height="6" rx="2"/>
+                        <rect x="8" y="46" width="48" height="6" rx="2"/>
+                    </svg>
                 </div>
+                <h3 class="ul-2-feature-title">Pleated Mosquito Net</h3>
             </div>
-        </section>
+
+            <div class="ul-2-feature">
+                <div class="ul-2-feature-icon">
+                    <!-- Roll-Up Net -->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="40" height="40" fill="currentColor">
+                        <rect x="8" y="8" width="48" height="8" rx="3"/>
+                        <rect x="12" y="20" width="40" height="6" rx="2"/>
+                        <rect x="16" y="30" width="32" height="6" rx="2"/>
+                        <ellipse cx="32" cy="48" rx="14" ry="8"/>
+                    </svg>
+                </div>
+                <h3 class="ul-2-feature-title">Roll-Up Mosquito Net</h3>
+            </div>
+
+            <div class="ul-2-feature">
+                <div class="ul-2-feature-icon">
+                    <!-- Roll-A-Side Net -->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="40" height="40" fill="currentColor">
+                        <rect x="28" y="8" width="8" height="48" rx="3"/>
+                        <polygon points="8,32 20,20 20,44"/>
+                        <polygon points="56,32 44,20 44,44"/>
+                    </svg>
+                </div>
+                <h3 class="ul-2-feature-title">Roll-A-Side Net</h3>
+            </div>
+
+            <div class="ul-2-feature">
+                <div class="ul-2-feature-icon">
+                    <!-- Velcro Net -->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="40" height="40" fill="currentColor">
+                        <rect x="8" y="10" width="48" height="10" rx="3"/>
+                        <rect x="8" y="44" width="48" height="10" rx="3"/>
+                        <line x1="16" y1="24" x2="16" y2="40" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+                        <line x1="26" y1="24" x2="26" y2="40" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+                        <line x1="36" y1="24" x2="36" y2="40" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+                        <line x1="46" y1="24" x2="46" y2="40" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <h3 class="ul-2-feature-title">Velcro Mosquito Net</h3>
+            </div>
+
+            <div class="ul-2-feature">
+                <div class="ul-2-feature-icon">
+                    <!-- Bed Net -->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="40" height="40" fill="currentColor">
+                        <rect x="6" y="34" width="52" height="10" rx="3"/>
+                        <rect x="6" y="44" width="6" height="12" rx="2"/>
+                        <rect x="52" y="44" width="6" height="12" rx="2"/>
+                        <rect x="10" y="20" width="44" height="16" rx="3"/>
+                        <!-- Net lines on top -->
+                        <line x1="10" y1="8" x2="54" y2="8" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                        <line x1="10" y1="8" x2="10" y2="20" stroke="currentColor" stroke-width="2"/>
+                        <line x1="54" y1="8" x2="54" y2="20" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                </div>
+                <h3 class="ul-2-feature-title">Bed Mosquito Net</h3>
+            </div>
+
+        </div>
+    </div>
+</section> 
         <!-- FEATURES SECTION END -->
 
 
@@ -562,7 +608,7 @@ $meta_keywords    = "mosquito net Nagpur, mosquito net dealer Nagpur, window mos
                         </div>
                         <div class="ul-2-investment-item-txt">
                             <span class="ul-2-investment-item-index">01</span>
-                            <h3 class="ul-2-investment-item-title"><a href="service-details.html">100% Custom-Fitted Mosquito Nets</a></h3>
+                            <h3 class="ul-2-investment-item-title"><a href="services">100% Custom-Fitted Mosquito Nets</a></h3>
                         </div>
                     </div>
                     <div class="ul-2-investment-item">
@@ -571,7 +617,7 @@ $meta_keywords    = "mosquito net Nagpur, mosquito net dealer Nagpur, window mos
                         </div>
                         <div class="ul-2-investment-item-txt">
                             <span class="ul-2-investment-item-index">02</span>
-                            <h3 class="ul-2-investment-item-title"><a href="service-details.html">Expert Installation — Zero Gap Guarantee</a></h3>
+                            <h3 class="ul-2-investment-item-title"><a href="services">Expert Installation — Zero Gap Guarantee</a></h3>
                         </div>
                     </div>
                     <div class="ul-2-investment-item">
@@ -580,7 +626,7 @@ $meta_keywords    = "mosquito net Nagpur, mosquito net dealer Nagpur, window mos
                         </div>
                         <div class="ul-2-investment-item-txt">
                             <span class="ul-2-investment-item-index">03</span>
-                            <h3 class="ul-2-investment-item-title"><a href="service-details.html">Premium Nylon, HDPE & Aluminium Frame Nets</a></h3>
+                            <h3 class="ul-2-investment-item-title"><a href="services">Premium Nylon, HDPE & Aluminium Frame Nets</a></h3>
                         </div>
                     </div>
                     <div class="ul-2-investment-item">
@@ -589,7 +635,7 @@ $meta_keywords    = "mosquito net Nagpur, mosquito net dealer Nagpur, window mos
                         </div>
                         <div class="ul-2-investment-item-txt">
                             <span class="ul-2-investment-item-index">04</span>
-                            <h3 class="ul-2-investment-item-title"><a href="service-details.html">On-Site Repair & After-Sales Support in Nagpur</a></h3>
+                            <h3 class="ul-2-investment-item-title"><a href="services">On-Site Repair & After-Sales Support in Nagpur</a></h3>
                         </div>
                     </div>
                 </div>
