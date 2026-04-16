@@ -214,10 +214,9 @@ if (!empty($blog['tags'])) {
         <div class="ul-sidebar-footer">
             <span class="ul-sidebar-footer-title">Follow us</span>
             <div class="ul-sidebar-footer-social">
-                <a href="#"><i class="flaticon-facebook-app-symbol"></i></a>
-                <a href="#"><i class="flaticon-twitter"></i></a>
-                <a href="#"><i class="flaticon-linkedin"></i></a>
-                <a href="#"><i class="flaticon-instagram"></i></a>
+                <a href="https://www.facebook.com/sagarenterprisesnagpur"><i class="flaticon-facebook-app-symbol"></i></a>
+              
+                <a href="https://www.instagram.com/saagar.enterprises/"><i class="flaticon-instagram"></i></a>
             </div>
         </div>
     </div>
@@ -300,10 +299,9 @@ if (!empty($blog['tags'])) {
                                 <div class="shares-wrapper">
                                     <div class="share-options">
                                         <?php $share_url = urlencode('http://' . $_SERVER['HTTP_HOST'] . $_base . $blog['slug']); ?>
-                                        <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo $share_url; ?>" target="_blank"><i class="flaticon-facebook-app-symbol"></i></a>
-                                        <a href="https://twitter.com/intent/tweet?url=<?php echo $share_url; ?>&text=<?php echo urlencode($blog['title']); ?>" target="_blank"><i class="flaticon-twitter"></i></a>
-                                        <a href="https://www.linkedin.com/sharing/share-offsite/?url=<?php echo $share_url; ?>" target="_blank"><i class="flaticon-linkedin"></i></a>
-                                        <a href="https://www.instagram.com/" target="_blank"><i class="flaticon-instagram"></i></a>
+                                        <a href="https://www.facebook.com/sagarenterprisesnagpur=<?php echo $share_url; ?>" target="_blank"><i class="flaticon-facebook-app-symbol"></i></a>
+                                      
+                                        <a href="https://www.instagram.com/saagar.enterprises/" target="_blank"><i class="flaticon-instagram"></i></a>
                                     </div>
                                 </div>
                             </div>

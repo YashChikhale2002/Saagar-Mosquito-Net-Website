@@ -6073,20 +6073,25 @@ p{
     box-shadow: 0 12px 35px rgba(0,0,0,.13);
 }
 
-/* Image */
 .ul-service-blog-card__img {
     width: 100%;
     height: 220px;
     overflow: hidden;
+    border-radius: 8px 8px 0 0;
 }
-.ul-service-blog-card__img img {
+
+.ul-service-blog-card__img a {
+    display: block;
+    width: 100%;
+    height: 100%;        
+}
+
+.ul-service-blog-card__img a img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform .4s ease;
-}
-.ul-service-blog-card:hover .ul-service-blog-card__img img {
-    transform: scale(1.06);
+    object-position: center;
+    display: block;
 }
 
 /* Body */

@@ -584,7 +584,7 @@ $meta_keywords    = "contact mosquito net Nagpur, Saagar Enterprises contact, mo
                                     </div>
                                 </div>
                             </div>
-                            <img src="assets/img/contact-info-img.jpg" alt="Saagar Enterprises Mosquito Net Showroom Nagpur" class="ul-contact-infos-img">
+                          
                         </div>
                     </div>
 
