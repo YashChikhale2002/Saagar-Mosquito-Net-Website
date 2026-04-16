@@ -8,7 +8,7 @@ define('DB_PASS', '');
 define('DB_NAME', 'saagar-mosquito');
 
 // ─── Site Configuration ───────────────────────────────────────────────────────
-define('SITE_URL', 'http://localhost/Saagar-Mosquito-Net-Website');
+define('SITE_URL', 'http://saagarmosquitonet.com');
 
 define('BLOG_IMG_PATH',   'assets/img/blog/');
 define('BLOGS_PER_PAGE',  6);

@@ -2,8 +2,8 @@
 session_start();
 include 'include/config.php';
 
-$_base    = '/Saagar-Mosquito-Net-Website/';
-$_svcBase = '/Saagar-Mosquito-Net-Website/service/';
+$_base    = '/';
+$_svcBase = '/service/';
 
 $services = [];
 $result = $conn->query("
